@@ -1,7 +1,7 @@
 #include <minix/drivers.h>
 #include <sys/video.h>
 #include <sys/mman.h>
-
+#include <string.h>
 #include <assert.h>
 
 #include "vt_info.h"
@@ -36,6 +36,9 @@ void vt_blank() {
 
 int vt_print_char(char ch, char attr, int r, int c) {
   
+	/*if(r > scr_lines || c > scr_width)
+		return -1;*/
+
 	char* vptr = video_mem;
 
 	vptr = vptr + 2*r*scr_width + 2*c;
@@ -43,9 +46,13 @@ int vt_print_char(char ch, char attr, int r, int c) {
 	*vptr = ch;
 	vptr++;
 	*vptr = attr;
+	return 0;
 }
 
 int vt_print_string(char* str, char attr, int r, int c) {
+
+	if(str == NULL)
+		return -1;
 
 	char *vptr = video_mem;
 
@@ -62,15 +69,48 @@ int vt_print_string(char* str, char attr, int r, int c) {
 
 int vt_print_int(int num, char attr, int r, int c) {
 
-  /* To complete ... */
+  char[] str;
+  itoa(num, *str, 10);
 
+  vt_print_string(*str, attr, r, c);
 }
 
 
 int vt_draw_frame(int width, int height, char attr, int r, int c) {
 
-  /* To complete ... */
+  char* vptr = video_mem;
 
+  vptr = vptr + 2*r*scr_width + 2*c;
+
+  unsigned i;
+  for(i = 0; i < width; i++){
+	  *vptr = ' ';
+	  vptr++;
+	  *vptr = attr;
+	  vptr++;
+  }
+
+
+  for(i = 0; i < height - 2; i++){
+	  vptr = video_mem + 2*r*scr_width + 2*c + 2*scr_width*(1+i);
+	  *vptr = ' ';
+	  vptr++;
+	  *vptr = attr;
+	  vptr++;
+	  vptr += 2*width-2;
+	  *vptr = ' ';
+	  vptr++;
+	  *vptr = attr;
+  }
+
+  vptr = video_mem + 2*(r+height)*scr_width + 2*c;
+
+  for(i = 0; i < width; i++){
+  	  *vptr = ' ';
+  	  vptr++;
+  	  *vptr = attr;
+  	  vptr++;
+    }
 }
 
 /*
