@@ -19,8 +19,9 @@ void vt_fill(char ch, char attr) {
   
 	char* vptr = video_mem;
 
-	for(unsigned int i = 0; i < scr_lines; i++){
-	  for(unsigned int j = 0; j < scr_width; j++){
+	unsigned int i,j;
+	for(i = 0; i < scr_lines; i++){
+	  for(j = 0; j < scr_width; j++){
 		 *vptr = ch;
 		 vptr++;
 		 *vptr = attr;
@@ -36,12 +37,10 @@ void vt_blank() {
 
 int vt_print_char(char ch, char attr, int r, int c) {
   
-	/*if(r > scr_lines || c > scr_width)
-		return -1;*/
+	if(r >= scr_lines || c >= scr_width || r < 0 || c < 0)
+		return -1;
 
-	char* vptr = video_mem;
-
-	vptr = vptr + 2*r*scr_width + 2*c;
+	char* vptr = video_mem + 2*r*scr_width + 2*c;
 
 	*vptr = ch;
 	vptr++;
@@ -51,7 +50,7 @@ int vt_print_char(char ch, char attr, int r, int c) {
 
 int vt_print_string(char* str, char attr, int r, int c) {
 
-	if(str == NULL)
+	if(str == NULL || r < 0 || c < 0 || r*scr_width+c+strlen(str) > scr_width*scr_lines)
 		return -1;
 
 	char *vptr = video_mem;
@@ -69,48 +68,42 @@ int vt_print_string(char* str, char attr, int r, int c) {
 
 int vt_print_int(int num, char attr, int r, int c) {
 
-  char[] str;
-  itoa(num, *str, 10);
+  char* str = (char*) malloc(10);
 
-  vt_print_string(*str, attr, r, c);
+  sprintf(str, "%d", num);
+
+  vt_print_string(str, attr, r, c);
 }
 
 
 int vt_draw_frame(int width, int height, char attr, int r, int c) {
 
-  char* vptr = video_mem;
+	if(r+height > scr_lines || c+width > scr_width || c < 0 || r < 0 || width < 0 || height < 0)
+		return -1;
 
-  vptr = vptr + 2*r*scr_width + 2*c;
+	vt_print_char(0xC9,attr, r, c);
 
-  unsigned i;
-  for(i = 0; i < width; i++){
-	  *vptr = ' ';
-	  vptr++;
-	  *vptr = attr;
-	  vptr++;
+	unsigned i;
+  for(i = 1; i < width-1; i++){
+	  vt_print_char(0xCD, attr, r, c+i);
   }
+
+  vt_print_char(0xBB, attr, r, c+width-1);
 
 
   for(i = 0; i < height - 2; i++){
-	  vptr = video_mem + 2*r*scr_width + 2*c + 2*scr_width*(1+i);
-	  *vptr = ' ';
-	  vptr++;
-	  *vptr = attr;
-	  vptr++;
-	  vptr += 2*width-2;
-	  *vptr = ' ';
-	  vptr++;
-	  *vptr = attr;
+	  vt_print_char(0xBA, attr, r+1+i, c);
+	  vt_print_char(0xBA, attr, r+1+i, c+width-1);
   }
 
-  vptr = video_mem + 2*(r+height)*scr_width + 2*c;
+  vt_print_char(0xC8, attr, r+height-1, c);
 
-  for(i = 0; i < width; i++){
-  	  *vptr = ' ';
-  	  vptr++;
-  	  *vptr = attr;
-  	  vptr++;
+  for(i = 1; i < width-1; i++){
+  	  vt_print_char(0xCD, attr, r+height-1, c+i);
     }
+
+  vt_print_char(0xBC, attr, r+height-1, c+width-1);
+  return 0;
 }
 
 /*
