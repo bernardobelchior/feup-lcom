@@ -17,14 +17,21 @@ static unsigned scr_lines;	/* Height of screen in lines */
 
 void vt_fill(char ch, char attr) {
   
-  /* To complete */
+	char* vptr = video_mem;
+
+	for(unsigned int i = 0; i < scr_lines; i++){
+	  for(unsigned int j = 0; j < scr_width; j++){
+		 *vptr = ch;
+		 vptr++;
+		 *vptr = attr;
+		 vptr++;
+	  }
+	}
   
 }
 
 void vt_blank() {
-
-  /* To complete ... */
-
+	vt_fill(' ', 15);
 }
 
 int vt_print_char(char ch, char attr, int r, int c) {
