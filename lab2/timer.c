@@ -1,6 +1,6 @@
 #include <minix/syslib.h>
 #include <minix/drivers.h>
-#include "i8254"
+#include "i8254.h"
 #include "timer.h"
 
 int timer_set_square(unsigned long timer, unsigned long freq) {
