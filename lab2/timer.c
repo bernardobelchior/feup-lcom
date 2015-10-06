@@ -5,6 +5,15 @@
 
 int timer_set_square(unsigned long timer, unsigned long freq) {
 
+	unsigned int n = TIMER_FREQ / freq;
+
+	char lsb = (char) n;
+	char msb = (char) n >> 8;
+
+	sys_outb(TIMER_CTRL, TIMER_SEL0 | TIMER_LSB_MSB | TIMER_SQR_WAVE | TIMER_BIN);
+	sys_outb(TIMER_0, n);
+	sys_outb(TIMER_0, 0x00);
+
 	return 1;
 }
 
@@ -65,14 +74,7 @@ int timer_display_conf(unsigned char conf) {
 }
 
 int timer_test_square(unsigned long freq) {
-	
-	unsigned char n = TIMER_FREQ / freq;
-
-	sys_outb(TIMER_CTRL, TIMER_SEL0 | TIMER_LSB_MSB | TIMER_SQR_WAVE | TIMER_BIN);
-	sys_outb(TIMER_0, n);
-	sys_outb(TIMER_0, 0x00);
-
-	return 1;
+	timer_set_square(0, freq);
 }
 
 int timer_test_int(unsigned long time) {
