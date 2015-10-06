@@ -1,5 +1,7 @@
 #include <minix/syslib.h>
 #include <minix/drivers.h>
+#include "i8254"
+#include "timer.h"
 
 int timer_set_square(unsigned long timer, unsigned long freq) {
 
@@ -64,6 +66,12 @@ int timer_display_conf(unsigned char conf) {
 
 int timer_test_square(unsigned long freq) {
 	
+	unsigned char n = TIMER_FREQ / freq;
+
+	sys_outb(TIMER_CTRL, TIMER_SEL0 | TIMER_LSB_MSB | TIMER_SQR_WAVE | TIMER_BIN);
+	sys_outb(TIMER_0, n);
+	sys_outb(TIMER_0, 0x00);
+
 	return 1;
 }
 
@@ -73,6 +81,9 @@ int timer_test_int(unsigned long time) {
 }
 
 int timer_test_config(unsigned long timer) {
+	unsigned char st;
+	timer_get_conf(timer, &st);
+	timer_display_conf(st);
 	
 	return 1;
 }
