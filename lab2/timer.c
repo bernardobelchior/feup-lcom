@@ -21,34 +21,31 @@ void timer_int_handler() {
 }
 
 int timer_get_conf(unsigned long timer, unsigned char *st) {
-	char read = 0xC0;
-	char memory = 0x40;
+	char read = TIMER_RB_CMD | TIMER_RB_SEL(timer);
+	char memory;
 	unsigned long conf;
 
-	swtich(timer){
+	switch(timer){
 		case 0:
-			read += 2;
+			memory = TIMER_0;
 			break;
 		case 1:
-			memory += 1;
-			read += 4;
+			memory = TIMER_1;
 			break;
 		case 2:
-			memory += 2;
-			read += 8;
+			memory = TIMER_2;
 			break;
 	}
 
-	sys_outb(0x43, read);
-	sys_outb(memory, &conf);
-	
-	*st = conf;
-
-	return 1;
+	sys_outb(TIMER_CTRL, read);
+	int ret = sys_outb(memory, &conf);
+	*st = (char) conf;
+	return ret;
 }
 
 int timer_display_conf(unsigned char conf) {
 	
+
 	return 1;
 }
 
