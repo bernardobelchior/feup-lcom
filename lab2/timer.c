@@ -67,7 +67,24 @@ int timer_display_conf(unsigned char conf) {
 		else
 			printf("LSB\n");
 
-	printf("Programmed Mode: %d%d%d\n", (conf & 0x08) >> 3, (conf & 0x04) >> 2, (conf & 0x02) >> 1 );
+	printf("Programmed Mode: " );
+
+	switch((conf & 0x0E) >> 1){
+	case 0x00: printf("Interrupt on Terminal Count");
+		break;
+	case 0x01: printf("Hardware Retriggerable One-Shot");
+		break;
+	case 0x02: printf("Rate Generator");
+		break;
+	case 0x03: printf("Square Wave Mode");
+		break;
+	case 0x04: printf("Software Triggered Strobe");
+			break;
+	case 0x05: printf("Hardware Triggered Strobe (Retriggerable)");
+			break;
+	}
+
+	printf("\n");
 	printf("BCD: %s", (conf & 0x01) ? "BCD\n" : "Binary\n");
 
 	return 0;
