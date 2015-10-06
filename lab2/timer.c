@@ -45,8 +45,21 @@ int timer_get_conf(unsigned long timer, unsigned char *st) {
 
 int timer_display_conf(unsigned char conf) {
 	
+	printf("Output: %d\n", (conf & 0x80) >> 7 );
+	printf("Null Count: %d\n", (conf & 0x40) >> 6 );
+	printf("Type of Access: );
 
-	return 1;
+	if(conf & 0x30 == 0x30)
+			printf("LSB followed by MSB\n");
+		else if (conf & 0x20 == 0x20)
+			printf("MSB\n");
+		else
+			printf("LSB\n");
+
+	printf("Programmed Mode: %d%d%d\n", (conf & 0x08) >> 3, (conf & 0x04) >> 2, (conf & 0x02) >> 1 );
+	printf("BCD: %s", (conf & 0x01) ? "BCD\n" : "Binary\n");
+
+	return 0;
 }
 
 int timer_test_square(unsigned long freq) {
