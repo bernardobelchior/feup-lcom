@@ -21,7 +21,29 @@ void timer_int_handler() {
 }
 
 int timer_get_conf(unsigned long timer, unsigned char *st) {
+	char read = 0xC0;
+	char memory = 0x40;
+	unsigned long conf;
+
+	swtich(timer){
+		case 0:
+			read += 2;
+			break;
+		case 1:
+			memory += 1;
+			read += 4;
+			break;
+		case 2:
+			memory += 2;
+			read += 8;
+			break;
+	}
+
+	sys_outb(0x43, read);
+	sys_outb(memory, &conf);
 	
+	*st = conf;
+
 	return 1;
 }
 
