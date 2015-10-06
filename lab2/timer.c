@@ -49,7 +49,7 @@ int timer_display_conf(unsigned char conf) {
 	
 	printf("Output: %d\n", (conf & 0x80) >> 7 );
 	printf("Null Count: %d\n", (conf & 0x40) >> 6 );
-	printf("Type of Access: );
+	printf("Type of Access: ");
 
 	if(conf & 0x30 == 0x30)
 			printf("LSB followed by MSB\n");
