@@ -124,12 +124,16 @@ int timer_test_square(unsigned long freq) {
 }
 
 int timer_test_int(unsigned long time) {
-	
+
 	int ipc_status;
 	 message msg;
+	 int irq_set = timer_subscribe_int();
+	 int r;
 
-
-	 int irq_set = BIT(timer_subscribe_int);
+	 if(irq_set >= 0)
+		 irq_set = BIT(irq_set);
+	 else
+		 irq_set = 0;
 
 	 while( counter/60 < time ) { /* You may want to use a different condition */
 	    /* Get a request message. */
@@ -152,6 +156,7 @@ int timer_test_int(unsigned long time) {
 	        /* no standard messages expected: do nothing */
 	    }
 	 }
+
 
 	return 1;
 }

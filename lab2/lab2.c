@@ -9,5 +9,7 @@ int main(int argc, char **argv) {
 	timer_test_config(0);
 	timer_test_config(0);
 
+	timer_test_int(5);
+
 	return 0;
 }
