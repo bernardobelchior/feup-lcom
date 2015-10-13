@@ -3,31 +3,60 @@
 #include "i8254.h"
 #include "timer.h"
 
+unsigned int counter = 0;
+int hook_id;
+
 int timer_set_square(unsigned long timer, unsigned long freq) {
 
 	unsigned int n = TIMER_FREQ / freq;
 
-	char lsb = (char) n;
-	char msb = (char) n >> 8;
+	char lsb = (char) n ;
+	char msb = (char) (n >> 8);
 
 	sys_outb(TIMER_CTRL, TIMER_SEL0 | TIMER_LSB_MSB | TIMER_SQR_WAVE | TIMER_BIN);
-	sys_outb(TIMER_0, n);
-	sys_outb(TIMER_0, 0x00);
+	sys_outb(TIMER_0, lsb);
+	sys_outb(TIMER_0, msb);
+
+
 
 	return 1;
 }
 
 int timer_subscribe_int(void ) {
 
-	return 1;
+
+	hook_id = 10;
+	int temp=hook_id;
+
+	if(sys_irqsetpolicy(TIMER0_IRQ, IRQ_REENABLE, &hook_id) != 0)
+		return -1;
+
+	if(sys_irqenable(&hook_id) != 0)
+		return -1;
+
+
+	return temp;
+	return -1;
 }
 
 int timer_unsubscribe_int() {
 
+	if(sys_irqrmpolicy(&hook_id) != 0)
+		return 1;
+
+	if(sys_irqdisable (&hook_id) !=0)
+		return 1;
+
+	return 0;
 	return 1;
 }
 
 void timer_int_handler() {
+
+	counter++;
+	if(counter % 60 == 0){
+		printf ("%d segundo(s)\n", counter/60);
+	}
 
 }
 
@@ -96,6 +125,34 @@ int timer_test_square(unsigned long freq) {
 
 int timer_test_int(unsigned long time) {
 	
+	int ipc_status;
+	 message msg;
+
+
+	 int irq_set = BIT(timer_subscribe_int);
+
+	 while( counter/60 < time ) { /* You may want to use a different condition */
+	    /* Get a request message. */
+	    if ( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) {
+	        printf("driver_receive failed with: %d", r);
+	        continue;
+	    }
+	    if (is_ipc_notify(ipc_status)) { /* received notification */
+	        switch (_ENDPOINT_P(msg.m_source)) {
+	            case HARDWARE: /* hardware interrupt notification */
+	                if (msg.NOTIFY_ARG & irq_set) { /* subscribed interrupt */
+	                    timer_int_handler();
+	                    /* process it */
+	                }
+	                break;
+	            default:
+	                break; /* no other notifications expected: do nothing */
+	        }
+	    } else { /* received a standard message, not a notification */
+	        /* no standard messages expected: do nothing */
+	    }
+	 }
+
 	return 1;
 }
 
