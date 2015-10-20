@@ -3,6 +3,7 @@
 
 #define DELAY_US    20000
 #define BIT(n) (0x01<<(n))
+#define KB_IRQ 1
 
 /**
  * @brief Subscribes and enables keyboard interrupts
