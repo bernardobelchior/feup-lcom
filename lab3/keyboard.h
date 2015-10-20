@@ -11,7 +11,6 @@
 #define KB_OUTBUF_FULL BIT(0)
 #define KB_STAT_PARITY BIT(7)
 #define KB_STAT_TIMEOUT BIT(6)
-#define ESC_BREAKCODE 0x81
 #define KB_2BYTE_SCODE 0xE0
 /**
  * @brief Subscribes and enables keyboard interrupts
@@ -33,4 +32,5 @@ int kb_unsubscribe_int(void);
  * Increments counter
  */
 long kb_int_handler(void);
+
 

@@ -1,6 +1,9 @@
 #ifndef __TEST3_H
 #define __TEST3_H
 
+#define ESC_BREAKCODE 0x81
+#define KB_BREAKCODE BIT(7)
+
 /** @defgroup test3 test3
  * @{
  *
@@ -45,3 +48,4 @@ int kbd_test_leds(unsigned short n, unsigned short *leds);
 int kbd_test_timed_scan(unsigned short n);
 
 #endif /* __TEST3_H */
+
