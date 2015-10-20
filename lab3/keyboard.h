@@ -17,10 +17,10 @@ int kb_subscribe_int(void );
  *
  * @return Return 0 upon success and non-zero otherwise
  */
-int kb_unsubscribe_int();
+int kb_unsubscribe_int(void);
 
 /**
- * @brief Timer 0 interrupt handler
+ * @brief  keyboard interrupt handler
  *
  * Increments counter
  */
