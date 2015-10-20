@@ -28,3 +28,35 @@ int kb_unsubscribe_int(void){
 	return 0;
 }
 
+long kb_int_handler(void){
+
+	unsigned long stat,word;
+	static unsigned long last = 0x00;
+
+	while(1){
+		sys_inb(KB_STATUS,&stat);
+		if((stat & KB_OUTBUF) && !(stat & (KB_STAT_PARITY | KB_STAT_TIMEOUT))
+		{
+			sys_inb(KB_OUT_BUF, &word);
+			if(word == KB_2BYTE_SCODE)
+			{
+				last=word;
+				return word;
+			}
+
+
+			if(last == KB_2BYTE_SCODE)
+			{
+				word=(last<<4 | word);
+				last=0x00;
+				return word;
+			}
+
+			return word;
+		}
+		tickdelay(micros_to_ticks(DELAY_US));
+	}
+
+
+}
+

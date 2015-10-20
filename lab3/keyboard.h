@@ -4,7 +4,15 @@
 #define DELAY_US    20000
 #define BIT(n) (0x01<<(n))
 #define KB_IRQ 1
-
+#define KB_STATUS 0x64
+#define KBC_COMMAND 0x64
+#define KB_OUT_BUF 0x60
+#define KB_INBUF_FULL BIT(1)
+#define KB_OUTBUF_FULL BIT(0)
+#define KB_STAT_PARITY BIT(7)
+#define KB_STAT_TIMEOUT BIT(6)
+#define ESC_BREAKCODE 0x81
+#define KB_2BYTE_SCODE 0xE0
 /**
  * @brief Subscribes and enables keyboard interrupts
  *
@@ -24,5 +32,5 @@ int kb_unsubscribe_int(void);
  *
  * Increments counter
  */
-void kb_int_handler();
+long kb_int_handler(void);
 
