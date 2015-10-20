@@ -1,6 +1,8 @@
-#include <minix/sysutil.h>
+#include <minix/syslib.h>
+#include <minix/drivers.h>
 
 #define DELAY_US    20000
+#define BIT(n) (0x01<<(n))
 
 /**
  * @brief Subscribes and enables keyboard interrupts
