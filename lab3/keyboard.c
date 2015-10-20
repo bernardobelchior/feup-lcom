@@ -38,8 +38,7 @@ long kb_int_handler(void){
 	while(i < attempts){
 		i++;
 		sys_inb(KB_STATUS,&stat);
-		printf("Interrupcao!");
-		if((stat & KB_OUT_BUF) && !(stat & (KB_STAT_PARITY | KB_STAT_TIMEOUT))){
+		if((stat & KB_OUTBUF_FULL) && !(stat & (KB_STAT_PARITY | KB_STAT_TIMEOUT))){
 			sys_inb(KB_OUT_BUF, &word);
 			if(word == KB_2BYTE_SCODE){
 				last=word;
