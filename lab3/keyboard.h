@@ -27,10 +27,16 @@ int kb_subscribe_int(void );
 int kb_unsubscribe_int(void);
 
 /**
- * @brief  keyboard interrupt handler
+ * @brief Keyboard interrupt handler
  *
- * Increments counter
+ * @return Returns character read from keyboard
  */
 long kb_int_handler(void);
 
+/**
+ * @brief Toggles LED state
+ *
+ * @param led LED number, ranges from 0 to 2
+ */
+void kb_toggle_led(unsigned int led);
 

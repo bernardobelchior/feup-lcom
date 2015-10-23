@@ -59,4 +59,7 @@ long kb_int_handler(void){
 
 }
 
+void kb_toggle_led(unsigned int led){
+
+}
 
