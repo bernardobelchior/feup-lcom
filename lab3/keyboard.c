@@ -60,6 +60,16 @@ long kb_int_handler(void){
 }
 
 void kb_toggle_led(unsigned int led){
+	unsigned long stat;
+	int i=0, attempts=5;
 
+	while(i < attempts){
+		i++;
+		sys_inb(KB_STATUS,&stat);
+		if((stat & KB_OUTBUF_FULL) && !(stat & (KB_STAT_PARITY | KB_STAT_TIMEOUT))){
+			sys_outb(0xED,led);
+		}
+		tickdelay(micros_to_ticks(DELAY_US));
+	}
 }
 
