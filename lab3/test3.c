@@ -1,6 +1,7 @@
 #include "test3.h"
 #include "keyboard.h"
 #include "timer.h"
+#define LED_RESET -1
 
 int kbd_test_scan(unsigned short ass) {
 	long character = 0x00;
@@ -35,14 +36,17 @@ int kbd_test_scan(unsigned short ass) {
 	}
 }
 int kbd_test_leds(unsigned short n, unsigned short *leds) {
+
+	kb_toggle_led(LED_RESET); //toggles off the 3 leds
+
 	unsigned short j = 0;
 	int irq_set = timer_subscribe_int();
 	int r, ipc_status;
 	message msg;
 
-	 if(irq_set >= 0)
-		 irq_set = BIT(irq_set);
-	 else
+	if (irq_set >= 0)
+		irq_set = BIT(irq_set);
+	else
 		irq_set = 0;
 
 	while (j < n) {
@@ -55,15 +59,14 @@ int kbd_test_leds(unsigned short n, unsigned short *leds) {
 			switch (_ENDPOINT_P(msg.m_source)) {
 			case HARDWARE:
 				if (msg.NOTIFY_ARG & irq_set) { /* subscribed interrupt */
-					timer_int_handler_leds(&j,leds[j]);
+					timer_int_handler_leds(&j, leds[j]);
 					/* process it */
 				}
 				break;
 			default:
 				break; /* no other notifications expected: do nothing */
 			}
-		}
-		else{/*received a standard message, not a notification*/
+		} else {/*received a standard message, not a notification*/
 			/*no standard messages expected, do nothing*/
 		}
 	}

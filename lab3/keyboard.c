@@ -69,55 +69,57 @@ void kb_toggle_led(unsigned int led) {
 	int i = 0, attempts = 5;
 	unsigned short cmd = 0;
 
-
-
-
-
 	switch (led) {
-	case (0):{
-		scrlock = abs(scrlock-1);
+	case (0): {
+		scrlock = (scrlock ^ 1);
 		break;
 	}
 
 	case (1): {
-		numlock = abs(numlock-1);
+		numlock = (numlock ^ 1);
 		break;
 	}
 
 	case (2): {
-		capslock = abs(capslock-1);
+		capslock = (capslock ^ 1);
 		break;
 	}
 
-	default: {
-		printf("Invalid input\n");
+	case (-1): {			//reset command
+		scrlock = 0;
+		numlock = 0;
+		capslock = 0;
+		break;
+	}
+
+	default: {	// no other input is expected, aborts function
 		return;
 	}
 	}
 
-	cmd = (capslock << 2) | (numlock << 1) | scrlock;
+	cmd = (capslock << 2) | (numlock << 1) | scrlock; //sets up the 3 bit command word, the global variables preserve the state of the leds
 
 	do {
 		sys_outb(KB_IN_BUF, KB_LED_CMD);
 		tickdelay(micros_to_ticks(DELAY_US));
 		sys_inb(KB_OUT_BUF, &msg);
-	} while (msg != ACK);
+	} while (msg != ACK);  //the "set keyboard leds" command was received
 
 	do {
 
 		sys_outb(KB_OUT_BUF, cmd);
 		tickdelay(micros_to_ticks(DELAY_US));
 		sys_inb(KB_OUT_BUF, &msg);
-		if(msg == ACK)
+		if (msg == ACK)		//the leds were set
 			break;
 
-		if(msg == ERROR){
-			kb_toggle_led(led);
-			break;
+		if (msg == ERROR) {
+			kb_toggle_led(led); //if an error occurs, the function will restart. The "break;" avoids repeating the function
+			break;				//the retry is successful
+
 		}
 
 	} while (msg == RESEND);
-
 
 }
 
