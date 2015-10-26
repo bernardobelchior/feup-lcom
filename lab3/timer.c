@@ -174,7 +174,6 @@ void timer_int_handler_leds(unsigned short *j, unsigned short led){
 	counterleds++;
 	if(counterleds % 60 == 0){			//a second has passed
 		kb_toggle_led(led);
-		(*j)--;
-		printf("%d\n",*j);
+		(*j)++;
 	}
 }

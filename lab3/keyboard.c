@@ -63,11 +63,14 @@ void kb_toggle_led(unsigned int led){
 	unsigned long stat;
 	int i=0, attempts=5;
 
+	sys_outb(KB_OUT_BUF, KB_LED_CMD);
+
 	while(i < attempts){
 		i++;
-		sys_inb(KB_STATUS,&stat);
-		if((stat & KB_OUTBUF_FULL) && !(stat & (KB_STAT_PARITY | KB_STAT_TIMEOUT))){
-			sys_outb(0xED,led);
+		sys_inb(KB_OUT_BUF,&stat);
+		if(!(stat & KB_OUTBUF_FULL)){
+			sys_outb(KB_OUT_BUF, led);
+			break;
 		}
 		tickdelay(micros_to_ticks(DELAY_US));
 	}

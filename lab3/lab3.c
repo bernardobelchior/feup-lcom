@@ -59,7 +59,7 @@ static int proc_args(int argc, char *argv[]) {
 
 	  for(;i<n;i++){
 		  if(parse_ushort(argv[3+i],10) == USHRT_MAX)
-			  break;
+			  return 1;
 		  toggle[i]=parse_ushort(argv[3+i],10);
 	  }
 	  printf("keyboard:: kbd_test_leds\n");

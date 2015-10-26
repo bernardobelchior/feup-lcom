@@ -35,7 +35,7 @@ int kbd_test_scan(unsigned short ass) {
 	}
 }
 int kbd_test_leds(unsigned short n, unsigned short *leds) {
-	unsigned short j = n;
+	unsigned short j = 0;
 	int irq_set = timer_subscribe_int();
 	int r, ipc_status;
 	message msg;
@@ -45,8 +45,7 @@ int kbd_test_leds(unsigned short n, unsigned short *leds) {
 	 else
 		irq_set = 0;
 
-	while (j > 0) {
-		printf("j = %d\n",j);
+	while (j < n) {
 		if (r = driver_receive(ANY, &msg, &ipc_status)) {
 			printf("driver_receive failed with: %d", r);
 			continue;

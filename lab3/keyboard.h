@@ -12,6 +12,8 @@
 #define KB_STAT_PARITY BIT(7)
 #define KB_STAT_TIMEOUT BIT(6)
 #define KB_2BYTE_SCODE 0xE0
+#define KB_LED_CMD 0xED
+
 /**
  * @brief Subscribes and enables keyboard interrupts
  *
