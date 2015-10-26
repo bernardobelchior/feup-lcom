@@ -1,15 +1,16 @@
 #include <minix/drivers.h>
 #include "test3.h"
 
+
 static int proc_args(int argc, char *argv[]);
-static unsigned long parse_ulong(char *str, int base);
+static unsigned short parse_ushort(char *str, int base);
 static long parse_long(char *str, int base);
 static void print_usage(char *argv[]);
 
 int main(int argc, char **argv) {
 	sef_startup();
 
-	kbd_test_scan(0);
+	proc_args(argc,argv);
 
 	return 0;
 }
@@ -24,60 +25,78 @@ static void print_usage(char *argv[]) {
 
 static int proc_args(int argc, char *argv[]) {
 
-  unsigned long freq, time;
+  unsigned short ass, n, time;
   unsigned char conf;
 
   /* check the function to test: if the first characters match, accept it */
-  if (strncmp(argv[1], "test_scan", strlen("test_scan")) == 0) {
+  if(argc == 1){
+	  print_usage(argv);
+	  return 1;
+  }
+
+  else if (strncmp(argv[1], "test_scan", strlen("test_scan")) == 0) {
 	  if( argc != 3 ) {
 		  printf("keyboard: wrong no of arguments for test of kbd_test_scan() \n");
 		  return 1;
 	  }
-	  if( (conf = parse_ulong(argv[2], 0)) == ULONG_MAX )
-	 		  return 1;
-	  printf("keyboard:: kbd_test_scan(%d)\n", conf);
-	  timer_display_conf(conf);
+
+	  if( (ass = parse_ushort(argv[2], 10)) == USHRT_MAX )
+		  return 1;
+
+	  printf("keyboard:: kbd_test_scan(%d)\n", ass);
+	  kbd_test_scan(ass);
 	  return 0;
+
   } else if (strncmp(argv[1], "test_leds", strlen("test_leds")) == 0) {
-	  if( argc < 3 || argc > 6 ) {
+	  if( argc < 4) {
 		  printf("keyboard: wrong no of arguments for test of kbd_test_leds() \n");
 		  return 1;
 	  }
-	  if( (time = parse_ulong(argv[2], 16)) == ULONG_MAX )
+	  if( (n = parse_ushort(argv[2], 10)) == USHRT_MAX )
 		  return 1;
-	  printf("keyboard:: kbd_test_leds(%d)\n", time);
-	  timer_test_int(time);
+
+	  unsigned short i=0, toggle[n];
+
+	  for(;i<n;i++){
+		  if(parse_ushort(argv[3+i],10) == USHRT_MAX)
+			  break;
+		  toggle[i]=parse_ushort(argv[3+i],10);
+	  }
+	  printf("keyboard:: kbd_test_leds\n");
+	  kbd_test_leds(n,toggle);
 	  return 0;
+
+
   } else if (strncmp(argv[1], "test_timed_scan", strlen("test_timed_scan")) == 0) {
 	  if( argc != 3 ) {
-		  printf("keyboard: wrong no of arguments for test of timer_test_square() \n");
+		  printf("keyboard: wrong no of arguments for test of test_timed_scan \n");
 		  return 1;
 	  }
-	  if( (freq = parse_ulong(argv[2], 16)) == ULONG_MAX )
+	  if( (time = parse_ushort(argv[2], 16)) == USHRT_MAX )
 		  return 1;
-	  printf("keyboard:: kbd_test_timed_scan(%d)\n", freq);
-	  return timer_test_square(freq);
+	  printf("keyboard:: kbd_test_timed_scan(%d)\n", time);
+	  return kbd_test_timed_scan(time);
   } else {
 	  printf("keyboard: non valid function \"%s\" to test\n", argv[1]);
 	  return 1;
   }
 }
 
-static unsigned long parse_ulong(char *str, int base) {
+static unsigned short parse_ushort(char *str, int base) {
   char *endptr;
   unsigned long val;
 
-  val = strtoul(str, &endptr, base);
+  val =(unsigned short) strtoul(str, &endptr, base);
 
-  if ((errno == ERANGE && val == ULONG_MAX )
+  if ((errno == ERANGE && val == USHRT_MAX )
 	  || (errno != 0 && val == 0)) {
 	  perror("strtol");
-	  return ULONG_MAX;
+	  return USHRT_MAX;
   }
 
   if (endptr == str) {
-	  printf("video_txt: parse_ulong: no digits were found in %s \n", str);
-	  return ULONG_MAX;
+	  printf("video_txt: parse_ushort: no digits were found in %s \n", str);
+	  return USHRT_MAX;
   }
 
   /* Successful conversion */
