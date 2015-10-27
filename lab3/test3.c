@@ -20,7 +20,12 @@ int kbd_test_scan(unsigned short ass) {
 			switch (_ENDPOINT_P(msg.m_source)) {
 			case HARDWARE: /* hardware interrupt notification */
 				//if (msg.NOTIFY_ARG & irq_set) { /* subscribed interrupt */
-				character = kb_int_handler();
+				if(ass == 0)
+					character = kb_int_handler();
+				else {
+					sys_enable_iop(SELF);
+					funcasm();
+				}
 				if (character & KB_BREAKCODE)
 					printf("Key released: %d\n", character);
 				else
