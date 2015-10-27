@@ -177,3 +177,12 @@ void timer_int_handler_leds(unsigned short *j, unsigned short led){
 		(*j)++;
 	}
 }
+
+void timed_scan_int_handler(unsigned short *time) {
+
+	counter++;
+	if(counter % 60 == 0){
+		(*time)++;
+	}
+
+}
