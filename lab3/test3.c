@@ -1,6 +1,8 @@
 #include "test3.h"
 #include "keyboard.h"
 #include "timer.h"
+#include <minix/syslib.h>
+#include <minix/drivers.h>
 #define LED_RESET -1
 
 int kbd_test_scan(unsigned short ass) {
