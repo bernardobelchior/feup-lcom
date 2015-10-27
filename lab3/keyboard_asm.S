@@ -1,7 +1,7 @@
 #include "i8042.h"
 
 .data
-long last 0x00
+last = 0x00
 attempts = 5
 
 .global _funcasm
