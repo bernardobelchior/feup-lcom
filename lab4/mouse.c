@@ -8,7 +8,7 @@ int hook_id;
 
 int write_to_KBC(char destination, char information){
 	char status;
-	sys_inb(KBC_STATUS, *status);
+	sys_inb(KBC_STATUS, &status);
 
 	if(!(status & (KBC_INBUF_FULL | KBC_STAT_PARITY | KBC_STAT_TIMEOUT))){
 		sys_outb(destination, information);

@@ -1,4 +1,5 @@
-#include "../lab2/timer.h"
+#include "timer.h"
+#include "test4.h"
 
 unsigned int count = 0;
 
@@ -6,7 +7,7 @@ int test_packet(unsigned short cnt) {
 	int irq_set = mouse_subscribe_int();
 	int r;
 	int ipc_status;
-	char[3] packet;
+	char packet[3];
 	message msg;
 
 	unsigned int i;
