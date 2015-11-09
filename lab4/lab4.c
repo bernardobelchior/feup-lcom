@@ -1,3 +1,5 @@
+#include "test4.h"
+
 int main(int argc, char *argv[]) {
-    /* To be completed ... */
+    test_packet(5);
 }

@@ -20,7 +20,7 @@ int write_to_KBC(char destination, char information){
 
 int read_from_KBC(char origin, char* information){
 	char status;
-	sys_inb(KBC_STATUS, *status);
+	sys_inb(KBC_STATUS, &status);
 
 	if(!(status & (!KBC_OUTBUF_FULL | KBC_STAT_PARITY | KBC_STAT_TIMEOUT))){
 		sys_inb(origin, information);
@@ -41,6 +41,8 @@ int mouse_subscribe_int(void) {
 		return -1;
 
 	write_to_KBC(KBC_COMMAND, KBC_ENABLE_MOUSE);
+	write_to_KBC(KBC_COMMAND, WRITE_TO_MOUSE);
+	write_to_KBC(KBC_OUT_BUF, ENABLE_DATA_PACKETS);
 
 	return temp;
 }
@@ -58,7 +60,7 @@ int mouse_unsubscribe_int(void) {
 
 void mouse_int_handler(int counter, char packets[]){
 	char info;
-	sys_inb(KBC_OUT_BUF, *info);
+	read_from_KBC(KBC_OUT_BUF, &info);
 
 	packets[counter-1] = info;
 }

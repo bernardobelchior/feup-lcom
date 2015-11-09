@@ -59,7 +59,7 @@ int test_async(unsigned short idle_time) {
 					time = 0;
 					count++;
 					mouse_int_handler(count, packet);
-					printf("Byte %d: %x", count, packet[count - 1]);
+					printf("Byte %d: %x\t", count, packet[count - 1]);
 					if (count == 3) {
 						printf("\n");
 						count = 0;
@@ -96,7 +96,7 @@ int test_config(void) {
 			}
 			else{
 				read_from_KBC(KBC_OUT_BUF, packet[i]);
-				printf("Byte %d: %x", i, packet[i]);
+				printf("Byte %d: %x\t", i, packet[i]);
 			}
 		}
 	}
