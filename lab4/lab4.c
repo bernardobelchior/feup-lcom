@@ -9,9 +9,7 @@ static long parse_short(char *str, int base);
 
 int main(int argc, char **argv) {
 	sef_startup();
-
 	proc_args(argc, argv);
-
 	return 0;
 }
 

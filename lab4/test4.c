@@ -1,5 +1,9 @@
 #include "timer.h"
 #include "test4.h"
+#include "timer.h"
+#include "i8254.h"
+#include <minix/syslib.h>
+#include <minix/drivers.h>
 
 unsigned int count = 0;
 
@@ -43,11 +47,12 @@ int test_async(unsigned short idle_time) {
 	int irq_set_timer = timer_subscribe_int();
 	int r;
 	int ipc_status;
+	unsigned short time=0;
 
-	char[3] packet;
+	char packet[3];
 	message msg;
 
-	while (time/60 < idle_time) {
+	while (time < idle_time) {
 		/* Get a request message. */
 		if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
 			printf("driver_receive failed with: %d", r);
@@ -67,7 +72,7 @@ int test_async(unsigned short idle_time) {
 					}
 				}
 				if (msg.NOTIFY_ARG & irq_set_timer){
-					time++;
+					timed_scan_int_handler(&time);
 				}
 
 				break;
@@ -81,7 +86,7 @@ int test_async(unsigned short idle_time) {
 }
 
 int test_config(void) {
-	char[3] packet;
+	char packet[3];
 	char ack;
 	int error = 0;
 	while(error){
@@ -96,7 +101,7 @@ int test_config(void) {
 				break;
 			}
 			else{
-				read_from_KBC(KBC_OUT_BUF, packet[i]);
+				read_from_KBC(KBC_OUT_BUF, &packet[i]);
 				printf("Byte %d: %x\t", i, packet[i]);
 			}
 		}
