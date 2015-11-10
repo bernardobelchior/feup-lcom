@@ -54,12 +54,12 @@ int test_packet(unsigned short cnt) {
 				(packet[0] & BIT(6)) >> 6, (packet[0] & BIT(7)) >> 7);
 		printf("X: ");
 		if(packet[0] & BIT(4))
-			printf("%d", ~packet[1]+1);
+			printf("-%d", 256 - packet[1]);
 		else
 			printf("%d", packet[1]);
 		printf("\tY: ");
 		if(packet[0] & BIT(5))
-			printf("%d", ~packet[2]+1);
+			printf("-%d", 256 - packet[2]);
 		else
 			printf("%d", packet[2]);
 		printf("\n");
@@ -103,11 +103,23 @@ int test_async(unsigned short idle_time) {
 					time = 0;
 					mouse_int_handler(count, packet);
 					if (packet[0] != MOUSE_ACK && (packet[0] & BIT(3))) {
-						printf("Byte %d: %x\t", count + 1, packet[count]);
 						count++;
 						if (count == 3) {
-							printf("\n");
 							count = 0;
+							printf("B1: %x\tB2: %x\tB3: %x\tLB: %d\tMB: %d\tRB: %d\tXOV: %d\tYOV: %d\t",
+									packet[0], packet[1], packet[2], (packet[0] & BIT(0)), (packet[0] & BIT(2)) >> 2, (packet[0] & BIT(1)) >> 1,
+									(packet[0] & BIT(6)) >> 6, (packet[0] & BIT(7)) >> 7);
+							printf("X: ");
+							if(packet[0] & BIT(4))
+								printf("-%d", 256 - packet[1]);
+							else
+								printf("%d", packet[1]);
+							printf("\tY: ");
+							if(packet[0] & BIT(5))
+								printf("-%d", 256 - packet[2]);
+							else
+								printf("%d", packet[2]);
+							printf("\n");
 						}
 					}
 				}
@@ -224,16 +236,27 @@ int test_gesture(short length, unsigned short tolerance) {
 				if (msg.NOTIFY_ARG & irq_set_mouse) { /* subscribed interrupt */
 					mouse_int_handler(count, packet);
 					if (packet[0] != MOUSE_ACK && (packet[0] & BIT(3))) {
-						printf("Byte %d: %x\t", count + 1, packet[count]);
 						count++;
 						if (count == 3) { /*finished packet*/
-
-							printf("\n");
+							printf("B1: %x\tB2: %x\tB3: %x\tLB: %d\tMB: %d\tRB: %d\tXOV: %d\tYOV: %d\t",
+											packet[0], packet[1], packet[2], (packet[0] & BIT(0)), (packet[0] & BIT(2)) >> 2, (packet[0] & BIT(1)) >> 1,
+											(packet[0] & BIT(6)) >> 6, (packet[0] & BIT(7)) >> 7);
+									printf("X: ");
+									if(packet[0] & BIT(4))
+										printf("-%d", 256 - packet[1]);
+									else
+										printf("%d", packet[1]);
+									printf("\tY: ");
+									if(packet[0] & BIT(5))
+										printf("-%d", 256 - packet[2]);
+									else
+										printf("%d", packet[2]);
+									printf("\n");
 							count = 0;
 
 							if (packet[0] & BIT(1)) { /*right button was pressed  -- goes to drawing state*/
-								if(packet[0] & BIT(4)){
-									tolerance_sum-= 256 - packet[1]; printf("\n\n%d\n\n",256 - packet[1]);}
+								if(packet[0] & BIT(4))
+									tolerance_sum-= 256 - packet[1];
 								else
 									tolerance_sum+= packet[1];
 
