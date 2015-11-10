@@ -1,6 +1,5 @@
 #include "timer.h"
 #include "test4.h"
-#include "timer.h"
 #include "i8254.h"
 #include <minix/syslib.h>
 #include <minix/drivers.h>
@@ -96,7 +95,7 @@ int test_async(unsigned short idle_time) {
 	}
 }
 
-int test_config(void) {
+int test_config(void) { //merdando
 	char packet[3];
 	char ack;
 	int error = 0;
@@ -106,12 +105,15 @@ int test_config(void) {
 		write_to_KBC(KBC_OUT_BUF, MOUSE_STATUS_REQUEST);
 		unsigned int i;
 		for (i = 0; i < 3; i++) {
-			read_from_KBC(KBC_IN_BUF, &ack);
+			unsigned long tmp;
+			read_from_KBC(KBC_IN_BUF, &tmp);
+			ack = (char) tmp;
 			if (ack != ACK) {
 				error = 1;
 				break;
 			} else {
-				read_from_KBC(KBC_OUT_BUF, &packet[i]);
+				read_from_KBC(KBC_OUT_BUF, &tmp);
+				packet[i] = (char) tmp;
 				printf("Byte %d: %x\t", i, packet[i]);
 			}
 		}
