@@ -41,9 +41,13 @@ int mouse_subscribe_int(void) {
 	if (sys_irqenable(&hook_id) != 0)
 		return -1;
 
-	write_to_KBC(KBC_COMMAND, 0x00000000 | KBC_ENABLE_MOUSE);
-	write_to_KBC(KBC_COMMAND, 0x00000000 | WRITE_TO_MOUSE);
-	write_to_KBC(KBC_OUT_BUF, 0x00000000 | ENABLE_DATA_PACKETS);
+	unsigned long stat;
+	do{
+		write_to_KBC(KBC_COMMAND, 0 | KBC_ENABLE_MOUSE);
+		write_to_KBC(KBC_COMMAND, 0 | WRITE_TO_MOUSE);
+		write_to_KBC(KBC_OUT_BUF, 0 | ENABLE_DATA_PACKETS);
+		read_from_KBC(KBC_IN_BUF, &stat);
+	} while (stat != MOUSE_ACK);
 
 	return temp;
 }
@@ -63,8 +67,16 @@ void mouse_int_handler(int counter, char packets[]){
 	unsigned long info;
 	read_from_KBC(KBC_OUT_BUF, &info);
 
-	packets[counter-1] = (char) info;
+	packets[counter] = (char) info;
 }
 
-
+void empty_out_buf(void){
+	unsigned long status;
+	sys_inb(KBC_STATUS, &status);
+	while(status & KBC_OUTBUF_FULL){
+		unsigned long tmp;
+		sys_inb(KBC_OUT_BUF, &tmp);
+		sys_inb(KBC_STATUS, &status);
+	}
+}
 

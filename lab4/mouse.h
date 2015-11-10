@@ -44,4 +44,9 @@ int mouse_unsubscribe_int(void);
  */
 void mouse_int_handler(int counter, char packets[]);
 
+/**
+ * @brief Empties output buffer
+ */
+void empty_out_buf(void);
+
 #endif

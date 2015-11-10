@@ -11,7 +11,7 @@
 #define KBC_STAT_TIMEOUT BIT(6)
 #define KB_2BYTE_SCODE 0xE0
 #define KB_LED_CMD 0xED
-#define ACK 0xFA
+#define MOUSE_ACK 0xFA
 #define RESEND 0xFE
 #define ERROR 0xFC
 #define MOUSE_IRQ 12
@@ -23,7 +23,7 @@
 #define MOUSE_SET_DEFAULT 0xF6
 #define DISABLE_STRM_MODE 0xF5
 #define SET_SAMPLE_RATE 0xF3
-#define SET_REMOTE_MODE 0xEA
+#define SET_STREAM_MODE 0xEA
 #define SET_RES 0xE8
 #define SET_ACC_SCALE 0xE7
 #define SET_LIN_SCALE 0xE6

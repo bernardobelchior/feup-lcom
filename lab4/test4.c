@@ -1,10 +1,9 @@
 #include "timer.h"
 #include "test4.h"
 #include "i8254.h"
+#include "i8042.h"
 #include <minix/syslib.h>
 #include <minix/drivers.h>
-
-unsigned int count = 0;
 
 int test_packet(unsigned short cnt) {
 	int irq_set_mouse = mouse_subscribe_int();
@@ -13,6 +12,20 @@ int test_packet(unsigned short cnt) {
 	char packet[3];
 	message msg;
 
+	packet[0] = MOUSE_ACK;
+	printf("%x\n", packet[0]);
+	//packet[0] = 0xFA;
+	printf("%x\n", packet[0]);
+	if(packet[0] == MOUSE_ACK)
+		printf("sou igual\n");
+
+	unsigned long stat;
+	do {
+		write_to_KBC(KBC_STATUS, WRITE_TO_MOUSE);
+		write_to_KBC(KBC_OUT_BUF, SET_STREAM_MODE);
+		read_from_KBC(KBC_IN_BUF, &stat);
+	} while (stat != MOUSE_ACK);
+
 	if (irq_set_mouse >= 0)
 		irq_set_mouse = BIT(irq_set_mouse);
 	else
@@ -20,31 +33,36 @@ int test_packet(unsigned short cnt) {
 
 	unsigned int i;
 	for (i = 0; i < cnt; i++) {
-		/* Get a request message. */
-		if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
-			printf("driver_receive failed with: %d", r);
-			continue;
-		}
-		if (is_ipc_notify(ipc_status)) { /* received notification */
-			switch (_ENDPOINT_P(msg.m_source)) {
-			case HARDWARE: /* hardware interrupt notification */
-				if (msg.NOTIFY_ARG & irq_set_mouse) { /* subscribed interrupt */
-					count++;
-					mouse_int_handler(count, packet);
-					printf("Byte %d: %x\t", count, packet[count - 1]);
-					if (count == 3) {
-						printf("\n");
-						count = 0;
+		unsigned int j = 0;
+		while (j < 3) {
+			/* Get a request message. */
+			if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
+				printf("driver_receive failed with: %d", r);
+				continue;
+			}
+			if (is_ipc_notify(ipc_status)) { /* received notification */
+				switch (_ENDPOINT_P(msg.m_source)) {
+				case HARDWARE: /* hardware interrupt notification */
+					if (msg.NOTIFY_ARG & irq_set_mouse) { /* subscribed interrupt */
+						mouse_int_handler(j, packet);
+						//if(j!=0 || ((BIT(3) & packet[j]) && !(packet[j] == ACK))){
+						if(packet[0] != MOUSE_ACK && (packet[0] & BIT(3))){
+							printf("Byte %d: %x\t", j + 1, packet[j]);
+							j++;
+						}
+						break;
+				default:
+					break; /* no other notifications expected: do nothing */
+					} else { /* received a standard message, not a notification */
+						/* no standard messages expected: do nothing */
 					}
-					break;
-			default:
-				break; /* no other notifications expected: do nothing */
-				} else { /* received a standard message, not a notification */
-					/* no standard messages expected: do nothing */
 				}
 			}
 		}
+		printf("\n");
 	}
+	mouse_unsubscribe_int();
+	empty_out_buf();
 }
 
 int test_async(unsigned short idle_time) {
@@ -73,13 +91,13 @@ int test_async(unsigned short idle_time) {
 			case HARDWARE: /* hardware interrupt notification */
 				if (msg.NOTIFY_ARG & irq_set_mouse) { /* subscribed interrupt */
 					time = 0;
-					count++;
-					mouse_int_handler(count, packet);
-					printf("Byte %d: %x\t", count, packet[count - 1]);
-					if (count == 3) {
-						printf("\n");
-						count = 0;
-					}
+					/*count++;
+					 mouse_int_handler(count, packet);
+					 printf("Byte %d: %x\t", count, packet[count - 1]);
+					 if (count == 3) {
+					 printf("\n");
+					 count = 0;
+					 }*/
 				}
 				if (msg.NOTIFY_ARG & irq_set_timer) {
 					timed_scan_int_handler(&time);
@@ -108,7 +126,7 @@ int test_config(void) { //merdando
 			unsigned long tmp;
 			read_from_KBC(KBC_IN_BUF, &tmp);
 			ack = (char) tmp;
-			if (ack != ACK) {
+			if (ack != MOUSE_ACK) {
 				error = 1;
 				break;
 			} else {
