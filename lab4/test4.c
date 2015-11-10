@@ -55,6 +55,7 @@ int test_packet(unsigned short cnt) {
 	}
 	mouse_unsubscribe_int();
 	empty_out_buf();
+	return 0;
 }
 
 int test_async(unsigned short idle_time) {
@@ -109,28 +110,70 @@ int test_async(unsigned short idle_time) {
 }
 
 int test_config(void) {
+	int irq_set_mouse = mouse_subscribe_int();
 	unsigned char packet[3];
-	char ack;
-	int error = 0;
-	while (error) {
-		error = 0;
-		write_to_KBC(KBC_COMMAND, WRITE_TO_MOUSE);
+
+	unsigned long stat;
+
+	do{
+		write_to_KBC(KBC_STATUS, WRITE_TO_MOUSE);
+		write_to_KBC(KBC_OUT_BUF, DISABLE_STRM_MODE);
+		read_from_KBC(KBC_IN_BUF, &stat);
+	}while(stat != MOUSE_ACK);
+
+	do{
+		write_to_KBC(KBC_STATUS, WRITE_TO_MOUSE);
 		write_to_KBC(KBC_OUT_BUF, MOUSE_STATUS_REQUEST);
-		unsigned int i;
-		for (i = 0; i < 3; i++) {
-			unsigned long tmp;
-			read_from_KBC(KBC_IN_BUF, &tmp);
-			ack = (char) tmp;
-			if (ack != MOUSE_ACK) {
-				error = 1;
-				break;
-			} else {
-				read_from_KBC(KBC_OUT_BUF, &tmp);
-				packet[i] = (char) tmp;
-				printf("Byte %d: %x\t", i, packet[i]);
-			}
-		}
+		read_from_KBC(KBC_IN_BUF, &stat);
+	}while(stat != MOUSE_ACK);
+
+	unsigned long tmp;
+	unsigned int i;
+	for(i = 0; i < 3; i++){
+		read_from_KBC(KBC_OUT_BUF, &tmp);
+		packet[i] = (unsigned char) tmp;
 	}
+
+	if(packet[0] & BIT(6))
+		printf("Remote mode");
+	else
+		printf("Stream mode");
+
+	printf("\nData reporting ");
+	if(packet[0] & BIT(5))
+		printf("enabled");
+	else
+		printf("disabled");
+
+	printf("\nScaling ");
+	if(packet[0] & BIT(4))
+		printf("2:1");
+	else
+		printf("1:1");
+
+	printf("\nLeft mouse button is ");
+	if(!(packet[0] & BIT(2)))
+		printf("not ");
+	printf("being pressed");
+
+	printf("\nMiddle mouse button is ");
+	if(!(packet[0] & BIT(1)))
+		printf("not ");
+	printf("being pressed");
+
+	printf("\nRight mouse button is ");
+	if(!(packet[0] & BIT(0)))
+		printf("not ");
+	printf("being pressed");
+
+	printf("\nResolution: %d", packet[1]);
+	printf("\nSample rate: %d\n", packet[2]);
+
+	printf("Bytes: %x\t%x\t%x\n", packet[0], packet[1], packet[2]);
+
+	mouse_unsubscribe_int();
+	empty_out_buf();
+	return 0;
 }
 
 int test_gesture(short length, unsigned short tolerance) {

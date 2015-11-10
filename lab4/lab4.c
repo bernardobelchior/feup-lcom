@@ -36,7 +36,7 @@ static int proc_args(int argc, char *argv[]) {
 
 	else if (strncmp(argv[1], "test_packet", strlen("test_packet")) == 0) {
 		if (argc != 3) {
-			printf("keyboard: wrong no of arguments for test_packet() \n");
+			printf("mouse: wrong no of arguments for test_packet() \n");
 			return 1;
 		}
 
@@ -62,8 +62,8 @@ else if (strncmp(argv[1], "test_async", strlen("test_async")) == 0) {
 }
 
 else if (strncmp(argv[1], "test_config", strlen("test_config")) == 0) {
-	if (argc != 1) {
-		printf("keyboard: wrong no of arguments for test of test_config \n");
+	if (argc != 2) {
+		printf("mouse: wrong no of arguments for test of test_config \n");
 		return 1;
 	}
 	printf("mouse::test_config()\n");
@@ -73,7 +73,7 @@ else if (strncmp(argv[1], "test_config", strlen("test_config")) == 0) {
 
 else if (strncmp(argv[1], "test_gesture", strlen("test_gesture")) == 0) {
 	if (argc != 3) {
-		printf("keyboard: wrong no of arguments for test of test_gesture \n");
+		printf("mouse: wrong no of arguments for test of test_gesture \n");
 		return 1;
 
 	}
@@ -88,7 +88,7 @@ else if (strncmp(argv[1], "test_gesture", strlen("test_gesture")) == 0) {
 	return test_gesture(length,tolerance);
 
 } else {
-	printf("keyboard: non valid function \"%s\" to test\n", argv[1]);
+	printf("mouse: non valid function \"%s\" to test\n", argv[1]);
 	return 1;
 }
 }

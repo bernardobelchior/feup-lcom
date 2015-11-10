@@ -43,9 +43,9 @@ int mouse_subscribe_int(void) {
 
 	unsigned long stat;
 	do{
-		write_to_KBC(KBC_COMMAND, 0 | KBC_ENABLE_MOUSE);
-		write_to_KBC(KBC_COMMAND, 0 | WRITE_TO_MOUSE);
-		write_to_KBC(KBC_OUT_BUF, 0 | ENABLE_DATA_PACKETS);
+		write_to_KBC(KBC_COMMAND, KBC_ENABLE_MOUSE);
+		write_to_KBC(KBC_COMMAND, WRITE_TO_MOUSE);
+		write_to_KBC(KBC_OUT_BUF, ENABLE_DATA_PACKETS);
 		read_from_KBC(KBC_IN_BUF, &stat);
 	} while (stat != MOUSE_ACK);
 
