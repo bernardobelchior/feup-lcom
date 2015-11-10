@@ -2,17 +2,6 @@
 #define __MOUSE_H
 #include "i8042.h"
 
-#define MOUSE_RESET 0xFF
-#define MOUSE_RESEND 0xFE
-#define MOUSE_SET_DEFAULT 0xF6
-#define DISABLE_STRM_MODE 0xF5
-#define ENABLE_SEND_PCKT 0xF4
-#define SET_SAMPLE_RATE 0xF3
-#define SET_REMOTE_MODE 0xEA
-#define STATUS_REQ 0xE9
-#define SET_RES 0xE8
-#define SET_ACC_SCALE 0xE7
-#define SET_LIN_SCALE 0xE6
 
 /**
  * @brief Write to KBC
