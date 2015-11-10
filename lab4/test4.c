@@ -9,15 +9,8 @@ int test_packet(unsigned short cnt) {
 	int irq_set_mouse = mouse_subscribe_int();
 	int r;
 	int ipc_status;
-	char packet[3];
+	unsigned char packet[3];
 	message msg;
-
-	packet[0] = MOUSE_ACK;
-	printf("%x\n", packet[0]);
-	//packet[0] = 0xFA;
-	printf("%x\n", packet[0]);
-	if(packet[0] == MOUSE_ACK)
-		printf("sou igual\n");
 
 	unsigned long stat;
 	do {
