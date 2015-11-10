@@ -38,10 +38,8 @@ int test_packet(unsigned short cnt) {
 				case HARDWARE: /* hardware interrupt notification */
 					if (msg.NOTIFY_ARG & irq_set_mouse) { /* subscribed interrupt */
 						mouse_int_handler(j, packet);
-						if(packet[0] != MOUSE_ACK && (packet[0] & BIT(3))){
-							printf("Byte %d: %x\t", j + 1, packet[j]);
+						if(packet[0] != MOUSE_ACK && (packet[0] & BIT(3)))
 							j++;
-						}
 						break;
 				default:
 					break; /* no other notifications expected: do nothing */
@@ -51,6 +49,19 @@ int test_packet(unsigned short cnt) {
 				}
 			}
 		}
+		printf("B1: %x\tB2: %x\tB3: %x\tLB: %d\tMB: %d\tRB: %d\tXOV: %d\tYOV: %d\t",
+				packet[0], packet[1], packet[2], (packet[0] & BIT(0)), (packet[0] & BIT(2)) >> 2, (packet[0] & BIT(1)) >> 1,
+				(packet[0] & BIT(6)) >> 6, (packet[0] & BIT(7)) >> 7);
+		printf("X: ");
+		if(packet[0] & BIT(4))
+			printf("%d", ~packet[1]+1);
+		else
+			printf("%d", packet[1]);
+		printf("\tY: ");
+		if(packet[0] & BIT(5))
+			printf("%d", ~packet[2]+1);
+		else
+			printf("%d", packet[2]);
 		printf("\n");
 	}
 	mouse_unsubscribe_int();
