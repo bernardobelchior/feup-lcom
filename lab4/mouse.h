@@ -11,7 +11,7 @@
  *
  * @return Returns 1 if information was written successfully. Returns 0 otherwise.
  */
-int write_to_KBC(char destination, char information);
+int write_to_KBC(char destination, unsigned long information);
 
 /**
  * @brief Read from KBC
@@ -21,7 +21,7 @@ int write_to_KBC(char destination, char information);
  *
  * @return Returns 1 if information was read successfully. Returns 0 otherwise.
  */
-int read_from_KBC(char origin, char *information);
+int read_from_KBC(char origin, unsigned long *information);
 
 /**
  * @brief Subscribes and enables mouse interrupts
