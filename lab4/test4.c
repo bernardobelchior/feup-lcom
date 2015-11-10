@@ -85,6 +85,11 @@ int test_async(unsigned short idle_time) {
 	else
 		irq_set_mouse = 0;
 
+	if (irq_set_timer >= 0)
+		irq_set_timer = BIT(irq_set_timer);
+	else
+		irq_set_timer = 0;
+
 	while (time < idle_time) {
 		/* Get a request message. */
 		if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
@@ -96,15 +101,17 @@ int test_async(unsigned short idle_time) {
 			case HARDWARE: /* hardware interrupt notification */
 				if (msg.NOTIFY_ARG & irq_set_mouse) { /* subscribed interrupt */
 					time = 0;
-					count++;
 					mouse_int_handler(count, packet);
-					printf("Byte %d: %x\t", count, packet[count - 1]);
-					if (count == 3) {
-						printf("\n");
-						count = 0;
+					if (packet[0] != MOUSE_ACK && (packet[0] & BIT(3))) {
+						printf("Byte %d: %x\t", count + 1, packet[count]);
+						count++;
+						if (count == 3) {
+							printf("\n");
+							count = 0;
+						}
 					}
 				}
-				if (msg.NOTIFY_ARG & irq_set_timer) {
+				if (msg.NOTIFY_ARG & irq_set_timer) { /*received timer interrupt*/
 					timed_scan_int_handler(&time);
 				}
 
@@ -118,6 +125,8 @@ int test_async(unsigned short idle_time) {
 	}
 	mouse_unsubscribe_int();
 	empty_out_buf();
+
+	return 0;
 }
 
 int test_config(void) {
@@ -189,4 +198,81 @@ int test_config(void) {
 
 int test_gesture(short length, unsigned short tolerance) {
 
+	int irq_set_mouse = mouse_subscribe_int();
+	int r;
+	int ipc_status;
+	unsigned int count = 0;
+	message msg;
+	unsigned char packet[3];
+	int length_sum=0;
+	int tolerance_sum=0;
+
+	if (irq_set_mouse >= 0)
+		irq_set_mouse = BIT(irq_set_mouse);
+	else
+		irq_set_mouse = 0;
+
+	while (1) {
+		/* Get a request message. */
+		if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
+			printf("driver_receive failed with: %d", r);
+			continue;
+		}
+		if (is_ipc_notify(ipc_status)) { /* received notification */
+			switch (_ENDPOINT_P(msg.m_source)) {
+			case HARDWARE: /* hardware interrupt notification */
+				if (msg.NOTIFY_ARG & irq_set_mouse) { /* subscribed interrupt */
+					mouse_int_handler(count, packet);
+					if (packet[0] != MOUSE_ACK && (packet[0] & BIT(3))) {
+						printf("Byte %d: %x\t", count + 1, packet[count]);
+						count++;
+						if (count == 3) { /*finished packet*/
+
+							printf("\n");
+							count = 0;
+
+							if (packet[0] & BIT(1)) { /*right button was pressed  -- goes to drawing state*/
+								if(packet[0] & BIT(4)){
+									tolerance_sum-= 256 - packet[1]; printf("\n\n%d\n\n",256 - packet[1]);}
+								else
+									tolerance_sum+= packet[1];
+
+								if(tolerance_sum > tolerance || (-1 * tolerance_sum) > tolerance){
+									length_sum=0; 		//the movement exceeded the tolerance
+									tolerance_sum=0;	//resets values
+
+									break;
+								}
+
+								if(packet[0] & BIT(5)){
+									length_sum -= 256 - packet[2];
+								}
+								else
+									length_sum += packet[2]; // sums the length
+
+
+								if((length_sum >= length && length > 0) || (length_sum <= length && length < 0)){
+									mouse_unsubscribe_int();
+									empty_out_buf();
+									return 0;
+								}
+							}
+							else {
+								length_sum = 0;
+								tolerance_sum=0;
+							}
+						}
+					}
+				}
+				break;
+			default:
+				break; /* no other notifications expected: do nothing */
+			}
+		} else { /* received a standard message, not a notification */
+			/* no standard messages expected: do nothing */
+		}
+	}
+	mouse_unsubscribe_int();
+	empty_out_buf();
+	return 1;
 }

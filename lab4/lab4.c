@@ -72,7 +72,7 @@ else if (strncmp(argv[1], "test_config", strlen("test_config")) == 0) {
 }
 
 else if (strncmp(argv[1], "test_gesture", strlen("test_gesture")) == 0) {
-	if (argc != 3) {
+	if (argc != 4) {
 		printf("mouse: wrong no of arguments for test of test_gesture \n");
 		return 1;
 
@@ -141,7 +141,7 @@ unsigned long val;
 val = strtol(str, &endptr, base);
 
 if ((errno == ERANGE && (val == LONG_MAX || val == LONG_MIN))
-		|| (errno != 0 && val == 0) || (val > SHRT_MAX || val < SHRT_MIN)) {
+		|| (errno != 0 && val == 0) || (errno == ERANGE && (val < SHRT_MIN || val > SHRT_MAX))) {
 	perror("strtol");
 	return SHRT_MAX;
 }
