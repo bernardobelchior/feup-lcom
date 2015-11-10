@@ -38,7 +38,6 @@ int test_packet(unsigned short cnt) {
 				case HARDWARE: /* hardware interrupt notification */
 					if (msg.NOTIFY_ARG & irq_set_mouse) { /* subscribed interrupt */
 						mouse_int_handler(j, packet);
-						//if(j!=0 || ((BIT(3) & packet[j]) && !(packet[j] == ACK))){
 						if(packet[0] != MOUSE_ACK && (packet[0] & BIT(3))){
 							printf("Byte %d: %x\t", j + 1, packet[j]);
 							j++;
@@ -64,8 +63,9 @@ int test_async(unsigned short idle_time) {
 	int r;
 	int ipc_status;
 	unsigned short time = 0;
+	unsigned int count = 0;
 
-	char packet[3];
+	unsigned char packet[3];
 	message msg;
 
 	if (irq_set_mouse >= 0)
@@ -84,13 +84,13 @@ int test_async(unsigned short idle_time) {
 			case HARDWARE: /* hardware interrupt notification */
 				if (msg.NOTIFY_ARG & irq_set_mouse) { /* subscribed interrupt */
 					time = 0;
-					/*count++;
-					 mouse_int_handler(count, packet);
-					 printf("Byte %d: %x\t", count, packet[count - 1]);
-					 if (count == 3) {
-					 printf("\n");
-					 count = 0;
-					 }*/
+					count++;
+					mouse_int_handler(count, packet);
+					printf("Byte %d: %x\t", count, packet[count - 1]);
+					if (count == 3) {
+						printf("\n");
+						count = 0;
+					}
 				}
 				if (msg.NOTIFY_ARG & irq_set_timer) {
 					timed_scan_int_handler(&time);
@@ -104,10 +104,12 @@ int test_async(unsigned short idle_time) {
 			/* no standard messages expected: do nothing */
 		}
 	}
+	mouse_unsubscribe_int();
+	empty_out_buf();
 }
 
-int test_config(void) { //merdando
-	char packet[3];
+int test_config(void) {
+	unsigned char packet[3];
 	char ack;
 	int error = 0;
 	while (error) {

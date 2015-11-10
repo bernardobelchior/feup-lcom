@@ -17,7 +17,7 @@ static void print_usage(char *argv[]) {
 	printf(
 			"Usage: one of the following:\n"
 					"\t service run %s -args \"test_packet <unsigned short cnt>\" \n"
-					"\t service run %s -args \"test_async <unsigned short idle_time> <unsigned int array leds>\" \n"
+					"\t service run %s -args \"test_async <unsigned short idle_time>\" \n"
 					"\t service run %s -args \"test_config \" \n"
 					"\t service run %s -args \"test_gesture <short length> <unsigned short tolerance>\" \n",
 			argv[0], argv[0], argv[0], argv[0]);
@@ -49,15 +49,15 @@ static int proc_args(int argc, char *argv[]) {
 }
 
 else if (strncmp(argv[1], "test_async", strlen("test_async")) == 0) {
-	if (argc != 2) {
-		printf("keyboard: wrong no of arguments for test_async() \n");
+	if (argc != 3) {
+		printf("mouse: wrong no of arguments for test_async() \n");
 		return 1;
 	}
 	if ((idle_time = parse_ushort(argv[2], 10)) == USHRT_MAX)
 		return 1;
 
 	printf("mouse::test_async(%d)\n",idle_time);
-	return test_async(test_async(idle_time));
+	return test_async(idle_time);
 
 }
 
