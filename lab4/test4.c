@@ -32,7 +32,7 @@ int test_packet(unsigned short cnt) {
 				if (msg.NOTIFY_ARG & irq_set_mouse) { /* subscribed interrupt */
 					count++;
 					mouse_int_handler(count, packet);
-					printf("Byte %d: %c", count, packet[count - 1]);
+					printf("Byte %d: %x\t", count, packet[count - 1]);
 					if (count == 3) {
 						printf("\n");
 						count = 0;
