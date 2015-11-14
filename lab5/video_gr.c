@@ -28,17 +28,54 @@ static unsigned h_res;		/* Horizontal screen resolution in pixels */
 static unsigned v_res;		/* Vertical screen resolution in pixels */
 static unsigned bits_per_pixel; /* Number of VRAM bits per pixel */
 
+void *vg_init(unsigned short mode){
+	struct vbe_mode_info_t info;
+	struct reg86u reg86;
+	struct mmap_t map;
+
+	reg86.u.w.intno = 0x10; /* BIOS video services */
+	reg86.u.w.ax = 0x4f02;    /* Set Video Mode function */
+	reg86.u.w.bx = mode;    /* Mode */
+
+	if( sys_int86(&reg86) != OK ) { // Sets video mode
+		printf("\tvg_init(): sys_int86() failed \n");
+		return 1;
+	}
+
+	/*vbe_get_mode_info(mode, info); // Gets info
+
+	h_res = info.XResolution;
+	v_res = info.YResolution; //Sets global variables
+	bits_per_pixel = info.BitsPerPixel;*/
+
+	h_res = H_RES;
+	v_res = V_RES; //temporary until the function get_mode_info is done
+	bits_per_pixel = BITS_PER_PIXEL;
+
+	if((video_mem = lm_init()) == NULL){
+		printf("\tvg_init(): lm_init() failed \n");
+		return 1;
+	}
+
+	if((video_mem = lm_alloc(h_res*v_res, map)) == NULL){
+			printf("\tvg_init(): lm_alloc() failed \n");
+			return 1;
+		}
+
+	return VRAM_PHYS_ADDR; //temporary until the function get_mode_info is done
+}
+
 int vg_exit() {
-  struct reg86u reg86;
+	struct reg86u reg86;
 
-  reg86.u.b.intno = 0x10; /* BIOS video services */
+	reg86.u.b.intno = 0x10; /* BIOS video services */
 
-  reg86.u.b.ah = 0x00;    /* Set Video Mode function */
-  reg86.u.b.al = 0x03;    /* 80x25 text mode*/
+	reg86.u.b.ah = 0x00;    /* Set Video Mode function */
+	reg86.u.b.al = 0x03;    /* 80x25 text mode*/
 
-  if( sys_int86(&reg86) != OK ) {
-      printf("\tvg_exit(): sys_int86() failed \n");
-      return 1;
-  } else
-      return 0;
+	if( sys_int86(&reg86) != OK ) {
+		printf("\tvg_exit(): sys_int86() failed \n");
+		return 1;
+	} else
+		return 0;
 }
