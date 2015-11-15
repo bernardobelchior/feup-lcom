@@ -62,7 +62,7 @@ void *vg_init(unsigned short mode){
 			return 1;
 		}
 
-	return VRAM_PHYS_ADDR; //temporary until the function get_mode_info is done
+	return video_mem;
 }
 
 int vg_exit() {
