@@ -1,6 +1,10 @@
 #ifndef __TIMER_H
 #define __TIMER_H
 
+#include <minix/syslib.h>
+#include <minix/drivers.h>
+#include "i8254.h"
+
 /** @defgroup timer timer
  * @{
  *

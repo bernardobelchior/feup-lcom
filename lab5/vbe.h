@@ -2,6 +2,7 @@
 #define __VBE_H
 
 #include <stdint.h>
+#include "lmlib.h"
 
 /** @defgroup vbe vbe
  * @{
@@ -14,7 +15,23 @@
  *
  * Packed VBE Mode Info Block 
  */ 
- 
+
+/*Symbolic constants for functions*/
+
+#define VBE_FUNC 0x4F
+
+#define VBE_CTRL_INFO 0x4F00
+#define VBE_MODE_INFO 0x4F01
+#define SET_VBE_MODE 0x4F02
+#define RETURN_VBE_MODE 0x4F03
+#define SAVE_OR_RESTORE_STATE 0x4F04
+#define DISPLAY_WINDOW_CTRL 0x4F05
+#define SET_OR_GET_LOGICAL_SCANLINE_LENGTH 0x4F06
+#define SET_OR_GET_DISPLAY_START 0x4F07
+#define SET_OR_GET_DAC_PALETTE_FORMAT 0x4F08
+#define SET_OR_GET_PALETTE_DATA 0x4F09
+#define VBE_PROTECTED_MODE_INTERFACE 0x4F0A
+
 typedef struct {
   /*  Mandatory information for all VBE revisions */
   uint16_t ModeAttributes; 	/**< @brief mode attributes */

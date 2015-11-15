@@ -2,6 +2,7 @@
 #include "pixmap.h"
 #include <minix/drivers.h>
 
+
 static int proc_args(int argc, char *argv[]);
 static unsigned short parse_ushort(char *str, int base);
 static long parse_long(char *str, int base);
@@ -32,7 +33,7 @@ static int proc_args(int argc, char *argv[]) {
 	unsigned short mode, delay, x, y, size, xf, yf, hor, time;
 	short delta;
 	unsigned long color;
-	char[] *xpm;
+	//char[] *xpm;
 
 	/* check the function to test: if the first characters match, accept it */
 	if (argc == 1) {
@@ -53,10 +54,12 @@ static int proc_args(int argc, char *argv[]) {
 			return 1;
 
 		printf("VBE:: test_init(%d, %d)\n", mode, delay);
-		return test_init(mode, delay);
+		if(test_init(mode, delay) == NULL)
+			return 1;
+		return 0;
 	}
 
-	else if (strncmp(argv[1], "test_square", strlen("test_square")) == 0) {
+	/*else if (strncmp(argv[1], "test_square", strlen("test_square")) == 0) {
 		if (argc != 6) {
 			printf("VBE: wrong no of arguments for test_square() \n");
 			return 1;
@@ -154,7 +157,7 @@ static int proc_args(int argc, char *argv[]) {
 		printf("VBE::test_xpm()\n");
 		return test_controller();
 
-	}
+	}*/
 	else {
 		printf("VBE: non valid function \"%s\" to test\n", argv[1]);
 		return 1;
@@ -181,7 +184,7 @@ static unsigned short parse_ushort(char *str, int base) {
 	return val;
 }
 
-static unsigned long parse_ulong(char *str, int base) {
+/*static unsigned long parse_ulong(char *str, int base) {
 	char *endptr;
 	unsigned long val;
 
@@ -199,7 +202,7 @@ static unsigned long parse_ulong(char *str, int base) {
 	}
 
 	/* Successful conversion */
-	return val;
+	/*return val;
 }
 
 static long parse_long(char *str, int base) {
@@ -220,7 +223,7 @@ static long parse_long(char *str, int base) {
 	}
 
 	/* Successful conversion */
-	return val;
+	/*return val;
 }
 
 static long parse_short(char *str, int base) {
@@ -242,6 +245,6 @@ static long parse_short(char *str, int base) {
 	}
 
 	/* Successful conversion */
-	return val;
+	/*return val;
 }
-
+*/

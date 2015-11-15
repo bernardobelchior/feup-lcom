@@ -6,7 +6,7 @@
  *
  * Functions related to low memory (first 1 MB of physical memory), required for BIOS
  */
-
+#include <minix/type.h>
 /** @name  Memory Map Struct*/
 /**@{
  *

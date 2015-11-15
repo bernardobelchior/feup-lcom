@@ -1,6 +1,10 @@
 #ifndef __TEST5_H
 #define __TEST5_H
 
+#include "vbe.h"
+#include "timer.h"
+#include "video_gr.h"
+
 /** @defgroup lab5 lab5
  * @{
  *
