@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "lmlib.h"
+#include "i8254.h"
 
 /** @defgroup vbe vbe
  * @{
@@ -19,6 +20,9 @@
 /*Symbolic constants for functions*/
 
 #define VBE_FUNC 0x4F
+
+#define SET_LINEAR_MODE BIT(14)
+#define BIOS_VIDEO_INT 0x10
 
 #define VBE_CTRL_INFO 0x4F00
 #define VBE_MODE_INFO 0x4F01

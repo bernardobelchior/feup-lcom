@@ -31,14 +31,13 @@ static unsigned bits_per_pixel; /* Number of VRAM bits per pixel */
 void *vg_init(unsigned short mode) {
 	vbe_mode_info_t info;
 	struct reg86u reg86;
-	mmap_t map;
 
-	reg86.u.b.intno = 0x10; /* BIOS video services */
+	reg86.u.b.intno = BIOS_VIDEO_INT; /* BIOS video services */
 	reg86.u.w.ax = SET_VBE_MODE; /* Set Video Mode function */
-	reg86.u.w.bx = 1<<14|mode; /* Mode */
+	reg86.u.w.bx = SET_LINEAR_MODE | mode; /* Mode */
 
-	if ((map.virtual = lm_init()) == NULL) {
-		printf("\tvg_init(): vbe_get_mode_info() lm_init() failed \n");
+	if ((video_mem = lm_init()) == NULL) {
+		printf("\tvg_init(): lm_init() failed \n");
 		return NULL;
 	}
 
@@ -47,20 +46,18 @@ void *vg_init(unsigned short mode) {
 		return NULL;
 	}
 
-	vbe_get_mode_info(mode, &info); // Gets info
+	/*if(vbe_get_mode_info(mode, &info) != 0 ){ // Gets info
+		printf("\tvg_init(): vbe_get_mode_info() failed \n");
+		return NULL;
+	}
 
 	h_res = info.XResolution;
 	v_res = info.YResolution; //Sets global variables
-	bits_per_pixel = info.BitsPerPixel;
+	bits_per_pixel = info.BitsPerPixel;*/
 
-	/*h_res = H_RES;
-	 v_res = V_RES; //temporary until the function get_mode_info is done
-	 bits_per_pixel = BITS_PER_PIXEL;*/
-
-	if ((video_mem = lm_alloc(h_res * v_res, &map)) == NULL) {
-		printf("\tvg_init(): lm_alloc() failed \n");
-		return 1;
-	}
+	h_res = H_RES;
+	v_res = V_RES; //temporary until the function get_mode_info is done
+	bits_per_pixel = BITS_PER_PIXEL;
 
 	return video_mem;
 }

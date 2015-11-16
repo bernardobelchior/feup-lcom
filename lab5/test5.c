@@ -1,12 +1,11 @@
 #include "test5.h"
 
 void *test_init(unsigned short mode, unsigned short delay) {
-
-
 	void *ret;
 
-	if (ret = vg_init(mode) == NULL)
-		return NULL;
+	ret = vg_init(mode);
+	/*if (ret = vg_init(mode) == NULL)
+		return NULL;*/
 
 	timer_test_int(delay);
 
@@ -14,7 +13,6 @@ void *test_init(unsigned short mode, unsigned short delay) {
 		return NULL;
 
 	return ret;
-
 }
 
 int test_square(unsigned short x, unsigned short y, unsigned short size,

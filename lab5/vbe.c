@@ -15,7 +15,7 @@ int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p) {
 	struct reg86u reg86;
 	phys_bytes buf = vmi_p;
 
-	reg86.u.b.intno = 0x10;
+	reg86.u.b.intno = BIOS_VIDEO_INT;
 
 	reg86.u.w.ax = VBE_MODE_INFO;
 	reg86.u.w.cx = mode;

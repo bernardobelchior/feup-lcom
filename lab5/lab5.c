@@ -47,7 +47,7 @@ static int proc_args(int argc, char *argv[]) {
 			return 1;
 		}
 
-		if ((mode = parse_ushort(argv[2], 10)) == USHRT_MAX)
+		if ((mode = parse_ushort(argv[2], 16)) == USHRT_MAX)
 			return 1;
 
 		if ((delay = parse_ushort(argv[3], 10)) == USHRT_MAX)
