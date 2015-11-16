@@ -27,6 +27,8 @@ void *vg_init(unsigned short mode);
  */
 int vg_exit(void);
 
+int vg_draw_rectangle(unsigned short x, unsigned short y, unsigned short width, unsigned short height, unsigned long color);
+
  /** @} end of video_gr */
  
 #endif /* __VIDEO_GR_H */

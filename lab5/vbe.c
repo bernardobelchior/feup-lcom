@@ -11,7 +11,6 @@
 #define PB2OFF(x) ((x) & 0x0FFFF)
 
 int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p) {
-
 	struct reg86u reg86;
 	phys_bytes buf = vmi_p;
 
@@ -24,12 +23,10 @@ int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p) {
 	reg86.u.w.di = PB2OFF(buf);
 
 	if (sys_int86(&reg86) != OK) {
-		printf("\tvg_init(): vbe_get_mode_info(): sys_int86() failed. \n");
+		printf("\tvbe_get_mode_info(): sys_int86() failed. \n");
 		return 1;
 	}
 
 	return 0;
-
-	return 1;
 }
 

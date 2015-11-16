@@ -4,6 +4,7 @@
 #include "vbe.h"
 #include "timer.h"
 #include "video_gr.h"
+#include "test3.h"
 
 /** @defgroup lab5 lab5
  * @{

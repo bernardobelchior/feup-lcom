@@ -5,6 +5,7 @@
 #include <sys/types.h>
 
 #include "vbe.h"
+#include "timer.h"
 
 /* Constants for VBE 0x105 mode */
 
@@ -58,8 +59,21 @@ void *vg_init(unsigned short mode) {
 	h_res = H_RES;
 	v_res = V_RES; //temporary until the function get_mode_info is done
 	bits_per_pixel = BITS_PER_PIXEL;
+	video_mem = VRAM_PHYS_ADDR;
 
 	return video_mem;
+}
+
+int vg_draw_rectangle(unsigned short x, unsigned short y, unsigned short width, unsigned short height, unsigned long color){
+	unsigned int i;
+	unsigned int j;
+	for(i = 0; i < height; i++){
+		for(j = 0; j < width; j++){
+			*(video_mem + i*h_res + j) = 0x15;
+		}
+	}
+
+	return 0;
 }
 
 int vg_exit() {

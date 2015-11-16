@@ -59,7 +59,7 @@ static int proc_args(int argc, char *argv[]) {
 		return 0;
 	}
 
-	/*else if (strncmp(argv[1], "test_square", strlen("test_square")) == 0) {
+	else if (strncmp(argv[1], "test_square", strlen("test_square")) == 0) {
 		if (argc != 6) {
 			printf("VBE: wrong no of arguments for test_square() \n");
 			return 1;
@@ -74,7 +74,7 @@ static int proc_args(int argc, char *argv[]) {
 		if ((size = parse_ushort(argv[4], 10)) == USHRT_MAX)
 			return 1;
 
-		if ((color = parse_ulong(argv[5], 10)) == ULONG_MAX)
+		if ((color = parse_ulong(argv[5], 16)) == ULONG_MAX)
 			return 1;
 
 		printf("VBE::test_square(%d, %d, %d, %d)\n", x, y, size, color);
@@ -99,14 +99,14 @@ static int proc_args(int argc, char *argv[]) {
 		if ((yf = parse_ushort(argv[5], 10)) == USHRT_MAX)
 			return 1;
 
-		if ((color = parse_ulong(argv[6], 10)) == ULONG_MAX)
+		if ((color = parse_ulong(argv[6], 16)) == ULONG_MAX)
 			return 1;
 
 		printf("VBE::test_line(%d, %d, %d, %d, %d)\n", x, y, xf, yf, color);
 		return test_line(x, y, xf, yf, color);
 	}
 
-	else if (strncmp(argv[1], "test_xpm", strlen("test_xpm")) == 0) {
+	/*else if (strncmp(argv[1], "test_xpm", strlen("test_xpm")) == 0) {
 		if (argc != 4) {
 			printf("VBE: wrong no of arguments for test of test_xpm() \n");
 			return 1;
@@ -184,13 +184,13 @@ static unsigned short parse_ushort(char *str, int base) {
 	return val;
 }
 
-/*static unsigned long parse_ulong(char *str, int base) {
+static unsigned long parse_ulong(char *str, int base) {
 	char *endptr;
 	unsigned long val;
 
 	val = strtoul(str, &endptr, base);
 
-	if ((errno == ERANGE && (val == ULONG_MAX || val == ULONG_MIN))
+	if ((errno == ERANGE && (val == ULONG_MAX || val == 0))
 			|| (errno != 0 && val == 0)) {
 		perror("strtol");
 		return ULONG_MAX;
@@ -202,7 +202,7 @@ static unsigned short parse_ushort(char *str, int base) {
 	}
 
 	/* Successful conversion */
-	/*return val;
+	return val;
 }
 
 static long parse_long(char *str, int base) {
@@ -223,7 +223,7 @@ static long parse_long(char *str, int base) {
 	}
 
 	/* Successful conversion */
-	/*return val;
+	return val;
 }
 
 static long parse_short(char *str, int base) {
@@ -245,6 +245,5 @@ static long parse_short(char *str, int base) {
 	}
 
 	/* Successful conversion */
-	/*return val;
+	return val;
 }
-*/
