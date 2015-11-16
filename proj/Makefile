@@ -1,11 +1,11 @@
-# Makefile for the lab1 driver (based on that of hello).
+# Makefile for the proj driver.
 
 COMPILER_TYPE= gnu
 
 CC=gcc
 
 PROG=	proj
-SRCS=	proj.c timer.c
+SRCS=	proj.c timer.c keyboard.c
 
 CCFLAGS= -Wall
 
