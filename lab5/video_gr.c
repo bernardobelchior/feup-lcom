@@ -106,6 +106,23 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsign
 	vmem += yi * h_res + xi;
 
 
+	if(xi == xf){
+		unsigned int i;
+		for(i = 0; i < yf-yi; i++){
+			*(vmem + i*h_res) = color;
+		}
+	}
+	else if(yi == yf){
+		unsigned int i;
+		for(i = 0; i < xf-xi; i++){
+			*(vmem + i) = color;
+		}
+	}
+	else{
+		float m = (xf-xi)/(yf-yi);
+
+	}
+
 }
 
 int vg_exit() {

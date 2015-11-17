@@ -41,9 +41,14 @@ int test_square(unsigned short x, unsigned short y, unsigned short size,
 
 int test_line(unsigned short xi, unsigned short yi, unsigned short xf,
 		unsigned short yf, unsigned long color) {
+	vg_init(VBE_VIDEO_MODE);
 
-	/* To be completed */
+	vg_draw_line(xi, yi, xf, yf, color);
 
+	kbd_test_scan(0);
+
+	vg_exit();
+	return 0;
 }
 
 int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {

@@ -19,11 +19,10 @@ int kb_subscribe_int(void) {
 }
 
 int kb_unsubscribe_int(void) {
+	if (sys_irqdisable(&hook_id) != 0)
+			return -1;
 
 	if (sys_irqrmpolicy(&hook_id) != 0)
-		return -1;
-
-	if (sys_irqdisable(&hook_id) != 0)
 		return -1;
 
 	return 0;
