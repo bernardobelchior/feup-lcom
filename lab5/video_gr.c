@@ -117,19 +117,21 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsign
 		}
 	}
 	else{
+		unsigned int offset = 0;
 		float m = ((double)(yf-yi))/(xf-xi);
-		if(m > 1){
-			float x;
-			unsigned int i;
-			for(i = 0; i <= yf-yi; i++){
-				*(vmem + (yi+i)*h_res + (int) ((i+yi)/m)) = color;
+		if (m < 0)
+			offset = 1;
+
+		if (m > -1 && m < 1){
+			int i;
+			for(i = xi; i <= xf; i++){
+				*(vmem + i + offset*yi*h_res + h_res*((int)(m*i))) = color;
 			}
 		}
-		else{
-			float y;
-			unsigned int i;
-			for(i = xi; i <= xf; i++){
-				*(vmem + h_res*((int)(m*i)) + i) = color;
+		else {
+			int i;
+			for(i = yi; i <= yf; i++){
+				*(vmem + i*h_res + offset*xi + (int) (i/m)) = color;
 			}
 		}
 	}
