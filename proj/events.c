@@ -1,10 +1,12 @@
 #include "events.h"
 #include "keyboard.h"
 #include "mouse.h"
+#include "menu.h"
+#include "button.h"
 
 static mouse_info mouse;
-static game_state state;
-
+static enum game_state state;
+static menu* start_menu;
 
 unsigned short get_h_res(){ //temporary
 	return 1024;
@@ -17,6 +19,11 @@ unsigned short get_v_res(){ //temporary
 void game_init(){
 	state = main_menu;
 	mouse_init();
+	/* How to use menus and buttons:
+	start_menu = create_menu();
+	button* test = create_button(100, 100, 200, 200, &test_function, 2);
+	menu_add_button(start_menu, test);
+	delete_menu(start_menu);*/
 }
 
 void mouse_init(){
@@ -96,8 +103,6 @@ void mouse_event_handler(unsigned char packet[3]){
 		if(mouse.y < 0)
 			mouse.y = 0;
 	}
-
-	//printf("Mouse position: (%d, %d)\n", mouse.x, mouse.y);
 }
 
 void key_pressed(unsigned long key){
@@ -126,6 +131,9 @@ void rmb_pressed(){
 
 void lmb_released(){
 	//printf("Left mouse button released.\n");
+	if(state == main_menu){
+		click_button(start_menu, mouse.x, mouse.y);
+	}
 }
 
 void lmb_pressed(){

@@ -1,7 +1,7 @@
 #ifndef EVENTS_H
 #define EVENTS_H
 
-typedef enum { main_menu, singleplayer, multiplayer, highscore, options } game_state;
+enum game_state { main_menu, singleplayer, multiplayer, highscore, options };
 
 //Initialization
 

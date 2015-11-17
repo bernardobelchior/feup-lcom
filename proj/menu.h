@@ -1,0 +1,58 @@
+#ifndef MENU_H
+#define MENU_H
+
+#include "button.h"
+
+/** @name Menu Information Struct*/
+/**@{
+ *
+ * Struct that stores info regarding a menu and its buttons
+ */
+typedef struct{
+	button* (*buttons);
+	unsigned char buttons_size;
+} menu;
+/** @} end of Menu Information Struct */
+
+/**
+ * @brief Initializes menu struct
+ *
+ * @return Returns pointer to initialized menu
+ */
+menu* create_menu();
+
+/**
+ * @brief Adds button to menu
+ *
+ * @param m Menu in which to add the button
+ * @param b Button to be added
+ */
+void menu_add_button(menu* m, button* b);
+
+/**
+ * @brief Deletes button from menu and updates the array. Frees the deleted button.
+ *
+ * @param m Menu in which to delete the button
+ * @param index Index of button to be destroyed
+ */
+void menu_delete_button(menu* m, unsigned char index);
+
+/**
+ * @brief Checks if a button contained in menu is clicked and calls its function.
+ *
+ * @param m Menu in which to check
+ * @param x Mouse position in the x axis
+ * @param y Mouse position in the y axis
+ *
+ * @return Returns 1 if a button was clicked. Returns 0 otherwise.
+ */
+unsigned char click_button(menu* m, unsigned short x, unsigned short y);
+
+/**
+ * @brief Deletes and frees menu and its buttons.
+ *
+ * @param m Menu to be deleted
+ */
+void delete_menu(menu* m);
+
+#endif
