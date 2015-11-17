@@ -12,6 +12,7 @@
 #define KB_OUTBUF_FULL BIT(0)
 #define KB_STAT_PARITY BIT(7)
 #define KB_STAT_TIMEOUT BIT(6)
+#define KB_BREAKCODE BIT(8)
 #define KB_2BYTE_SCODE 0xE0
 #define KB_LED_CMD 0xED
 #define ACK 0xFA
@@ -37,7 +38,7 @@ int kb_unsubscribe_int(void);
  *
  * @return Returns character read from keyboard
  */
-long kb_int_handler(void);
+unsigned long kb_int_handler(void);
 
 /**
  * @brief Toggles LED state

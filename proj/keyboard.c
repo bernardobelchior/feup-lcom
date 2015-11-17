@@ -8,7 +8,13 @@ int hook_id;
 int kb_subscribe_int(void) {
 
 	hook_id = 4;
-	int temp = hook_id;
+	int temp;
+
+	if(hook_id >= 0)
+		temp = BIT(hook_id);
+	else
+		temp = 0;
+
 	if (sys_irqsetpolicy(KB_IRQ, IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_id) != 0)
 		return -1;
 
@@ -29,8 +35,7 @@ int kb_unsubscribe_int(void) {
 	return 0;
 }
 
-long kb_int_handler(void) {
-
+unsigned long kb_int_handler(void) {
 	unsigned long stat, word;
 	static unsigned long last = 0x00;
 	int attempts = 5;

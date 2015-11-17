@@ -34,7 +34,13 @@ int read_from_KBC(char origin, unsigned long* information){
 int mouse_subscribe_int(void) {
 
 	hook_id = 20;
-	int temp = hook_id;
+	int temp;
+
+	if(hook_id >= 0)
+			temp = BIT(hook_id);
+		else
+			temp = 0;
+
 	if (sys_irqsetpolicy(MOUSE_IRQ, IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_id) != 0)
 		return -1;
 

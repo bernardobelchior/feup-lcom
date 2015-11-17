@@ -1,16 +1,17 @@
 #ifndef __MOUSE_H
 #define __MOUSE_H
 #include "i8042.h"
-/** @name  Mouse Position Struct*/
+/** @name  Mouse Information Struct*/
 /**@{
  *
- * Struct that keeps info regarding the mouse position
+ * Struct that stores info regarding the mouse state
  */
 typedef struct{
-	unsigned long x, y;
-} mouse_pos;
+	unsigned short x, y;
+	unsigned char rmb_pressed, mmb_pressed, lmb_pressed;
+} mouse_info;
 
-/** @} end of Mouse Position Struct */
+/** @} end of Mouse Information Struct */
 
 
 /**
