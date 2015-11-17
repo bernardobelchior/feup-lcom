@@ -103,26 +103,38 @@ int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width, unsi
 
 int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsigned short yf, unsigned long color){
 	char* vmem = video_mem;
-	vmem += yi * h_res + xi;
-
 
 	if(xi == xf){
 		unsigned int i;
 		for(i = 0; i < yf-yi; i++){
-			*(vmem + i*h_res) = color;
+			*(vmem + (yi+i)*h_res + xi) = color;
 		}
 	}
 	else if(yi == yf){
 		unsigned int i;
 		for(i = 0; i < xf-xi; i++){
-			*(vmem + i) = color;
+			*(vmem + i+xi + yi*h_res) = color;
 		}
 	}
 	else{
-		float m = (xf-xi)/(yf-yi);
-
+		float m = ((double)(yf-yi))/(xf-xi);
+		if(m > 1){
+			float x;
+			unsigned int i;
+			for(i = 0; i <= yf-yi; i++){
+				*(vmem + (yi+i)*h_res + (int) ((i+yi)/m)) = color;
+			}
+		}
+		else{
+			float y;
+			unsigned int i;
+			for(i = xi; i <= xf; i++){
+				*(vmem + h_res*((int)(m*i)) + i) = color;
+			}
+		}
 	}
 
+	return 0;
 }
 
 int vg_exit() {

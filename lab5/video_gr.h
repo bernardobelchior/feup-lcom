@@ -40,6 +40,19 @@ int vg_exit(void);
 */
 int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width, unsigned short height, unsigned long color);
 
+/**
+ * @brief Draws a line starting at (xi,yi) and ending at (xf,yf)
+ *
+ * @param xi Initial x position
+ * @param yi Initial y position
+ * @param xf Final x position
+ * @param yf Final y position
+ * @param color Line color
+ *
+ * @return 0 upon success, non-zero upon failure
+ */
+int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsigned short yf, unsigned long color);
+
  /** @} end of video_gr */
  
 #endif /* __VIDEO_GR_H */
