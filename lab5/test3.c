@@ -12,6 +12,11 @@ int kbd_test_scan(unsigned short ass) {
 	int irq_set = kb_subscribe_int();
 	int r;
 
+	if (irq_set >= 0)
+		irq_set = BIT(irq_set);
+	else
+		irq_set = 0;
+
 	while (character != ESC_BREAKCODE) { /* You may want to use a different condition */
 		/* Get a request message. */
 		if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
@@ -41,6 +46,8 @@ int kbd_test_scan(unsigned short ass) {
 			/* no standard messages expected: do nothing */
 		}
 	}
+
+	kb_unsubscribe_int();
 }
 int kbd_test_leds(unsigned short n, unsigned short *leds) {
 

@@ -27,7 +27,18 @@ void *vg_init(unsigned short mode);
  */
 int vg_exit(void);
 
-int vg_draw_rectangle(unsigned short x, unsigned short y, unsigned short width, unsigned short height, unsigned long color);
+/**
+* @brief Draws a frame starting on (x,y) with specified width, height and color
+*
+* @param x x
+* @param y y
+* @param width Frame width
+* @param height Frame height
+* @param color Frame color
+*
+* @return 0 upon success, non-zero upon failure
+*/
+int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width, unsigned short height, unsigned long color);
 
  /** @} end of video_gr */
  

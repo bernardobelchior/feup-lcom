@@ -27,7 +27,7 @@ int test_square(unsigned short x, unsigned short y, unsigned short size,
 		unsigned long color) {
 	vg_init(VBE_VIDEO_MODE);
 
-	if (vg_draw_rectangle(x, y, size, size, color) != 0) {
+	if (vg_draw_frame(x, y, size, size, color) != 0) {
 		if (vg_exit() != 0)
 			return 1;
 		return 1;

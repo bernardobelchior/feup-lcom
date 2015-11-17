@@ -76,19 +76,36 @@ void *vg_init(unsigned short mode) {
 	return video_mem;
 }
 
-int vg_draw_rectangle(unsigned short x, unsigned short y, unsigned short width, unsigned short height, unsigned long color){
-	char* video_mem = vg_init(VBE_VIDEO_MODE);
+int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width, unsigned short height, unsigned long color){
+	char* vmem = video_mem;
+	vmem += y * h_res + x;
 
-	video_mem += y * h_res + x;
+	unsigned int i;
 
-	unsigned int i, j;
-	for(i = 0; i < height; i++){
-		for(j = 0; j < width; j++){
-			*(video_mem + i*h_res + j) = 2;
-		}
+	//Prints first line
+	for(i = 0; i < width; i++){
+		*(vmem + i) = color;
+	}
+
+	//Prints vertical lines
+	for(i = 1; i < height-1; i++){
+		*(vmem + i*h_res) = color;
+		*(vmem + i*h_res + width) = color;
+	}
+
+	//Prints last line
+	for(i = 0; i < width; i++){
+		*(vmem + h_res*(height-1) + i) = color;
 	}
 
 	return 0;
+}
+
+int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsigned short yf, unsigned long color){
+	char* vmem = video_mem;
+	vmem += yi * h_res + xi;
+
+
 }
 
 int vg_exit() {
