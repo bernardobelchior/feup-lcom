@@ -12,15 +12,20 @@
 
 int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p) {
 	struct reg86u reg86;
-	phys_bytes buf = vmi_p;
+	mmap_t map;
+
+	if (lm_alloc(sizeof(vbe_mode_info_t), &map) == NULL){
+		printf("\tvg_init(): lm_alloc() failed \n");
+		return 1;
+	}
 
 	reg86.u.b.intno = BIOS_VIDEO_INT;
 
 	reg86.u.w.ax = VBE_MODE_INFO;
 	reg86.u.w.cx = mode;
 
-	reg86.u.w.es = PB2BASE(buf);
-	reg86.u.w.di = PB2OFF(buf);
+	reg86.u.w.es = PB2BASE(map.phys);
+	reg86.u.w.di = PB2OFF(map.phys);
 
 	if (sys_int86(&reg86) != OK) {
 		printf("\tvbe_get_mode_info(): sys_int86() failed. \n");

@@ -32,34 +32,46 @@ static unsigned bits_per_pixel; /* Number of VRAM bits per pixel */
 void *vg_init(unsigned short mode) {
 	vbe_mode_info_t info;
 	struct reg86u reg86;
+	int r;
+	struct mem_range mr;
 
 	reg86.u.b.intno = BIOS_VIDEO_INT; /* BIOS video services */
 	reg86.u.w.ax = SET_VBE_MODE; /* Set Video Mode function */
 	reg86.u.w.bx = SET_LINEAR_MODE | mode; /* Mode */
-
-	if ((video_mem = lm_init()) == NULL) {
-		printf("\tvg_init(): lm_init() failed \n");
-		return NULL;
-	}
 
 	if (sys_int86(&reg86) != OK) { // Sets video mode
 		printf("\tvg_init(): sys_int86() failed \n");
 		return NULL;
 	}
 
-	/*if(vbe_get_mode_info(mode, &info) != 0 ){ // Gets info
+	if (lm_init() == NULL) {
+		printf("\tvg_init(): lm_init() failed \n");
+		return NULL;
+	}
+
+	if(vbe_get_mode_info(mode, &info) != OK ){ // Gets info
 		printf("\tvg_init(): vbe_get_mode_info() failed \n");
 		return NULL;
 	}
 
+	//Allow memory mapping
+
+	mr.mr_base = (phys_bytes)(info.PhysBasePtr);
+	mr.mr_limit = mr.mr_base + info.XResolution*info.YResolution*info.BitsPerPixel/8;
+
+	if( OK != (r = sys_privctl(SELF, SYS_PRIV_ADD_MEM, &mr)))
+		panic("video_txt: sys_privctl (ADD_MEM) failed: %d\n", r);
+
+	// Map memory
+
+	video_mem = vm_map_phys(SELF, (void *)mr.mr_base, info.XResolution*info.YResolution*info.BitsPerPixel/8);
+
+	/*if(video_mem == MAP_FAILED)
+		panic("video_txt couldn't map video memory");*/
+
 	h_res = info.XResolution;
 	v_res = info.YResolution; //Sets global variables
-	bits_per_pixel = info.BitsPerPixel;*/
-
-	h_res = H_RES;
-	v_res = V_RES; //temporary until the function get_mode_info is done
-	bits_per_pixel = BITS_PER_PIXEL;
-	video_mem = VRAM_PHYS_ADDR;
+	bits_per_pixel = info.BitsPerPixel;
 
 	return video_mem;
 }
@@ -89,4 +101,8 @@ int vg_exit() {
 		return 1;
 	} else
 		return 0;
+}
+
+int get_vres(){
+	return v_res;
 }

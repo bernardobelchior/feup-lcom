@@ -10,15 +10,15 @@ void *test_init(unsigned short mode, unsigned short delay) {
 
 	timer_test_int(delay);
 
-	//vbe_get_mode_info(mode, &vmi_p);
+	vbe_get_mode_info(mode, &vmi_p);
 
 	if (vg_exit() != 0)
 		return NULL;
 
 	//test to see if vbe_get_mode_info is working
-	/*printf("X res: %d\nY res: %d\nBits per pixel: %d\nPhysical Address: %x",
-			vmi_p.XResolution, vmi_p.YResolution, vmi_p.BitsPerPixel,
-			vmi_p.PhysBasePtr);*/
+	printf("X res: %d\nY res: %d\nBits per pixel: %d\nPhysical Address: %x",
+			vmi_p.XResolution, get_vres(), vmi_p.BitsPerPixel,
+			vmi_p.PhysBasePtr);
 
 	return ret;
 }

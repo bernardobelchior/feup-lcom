@@ -29,6 +29,8 @@ int vg_exit(void);
 
 int vg_draw_rectangle(unsigned short x, unsigned short y, unsigned short width, unsigned short height, unsigned long color);
 
+int get_vres();
+
  /** @} end of video_gr */
  
 #endif /* __VIDEO_GR_H */
