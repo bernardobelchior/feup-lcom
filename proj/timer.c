@@ -37,6 +37,9 @@ int timer_unsubscribe_int() {
 
 void timer_int_handler() {
 	counter++;
+	if(counter % (60/TICKS_PER_SECOND) == 0){
+		tick();
+	}
 }
 
 int wait(unsigned long time) {

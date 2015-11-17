@@ -4,20 +4,22 @@
 #include "mouse.h"
 #include "keyboard.h"
 
+#define ESC_BREAKCODE 0x81
+
 int start() {
-	unsigned long character = 0x00;
+	unsigned short character = 0x00;
 	int ipc_status;
 	message msg;
 	int irq_set_kb = kb_subscribe_int();
 	int irq_set_timer = timer_subscribe_int();
 	int irq_set_mouse = mouse_subscribe_int();
 	int r;
-	unsigned char packets[3];
+	unsigned char packet[3];
 	unsigned short counter = 0;
 
-	mouse_init();
+	game_init();
 
-	while (character != ESC_BREAKCODE) { /* You may want to use a different condition */
+	while (character != ESC_BREAKCODE) { //TODO change condition
 		/* Get a request message. */
 		if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
 			printf("driver_receive failed with: %d", r);
@@ -29,10 +31,10 @@ int start() {
 				if (msg.NOTIFY_ARG & irq_set_kb) { /* keyboard interrupt */
 					character = kb_int_handler();
 					if (character != KB_2BYTE_SCODE)
-						kb_event_handler(word);
+						kb_event_handler(character);
 				}
 				if (msg.NOTIFY_ARG & irq_set_mouse){ /* mouse interrupt */
-					mouse_int_handler(j, packet);
+					mouse_int_handler(counter, packet);
 					if(packet[0] != MOUSE_ACK && (packet[0] & BIT(3)))
 						counter++;
 					if(counter == 3){
@@ -42,7 +44,7 @@ int start() {
 
 				}
 				if (msg.NOTIFY_ARG & irq_set_timer){ /* timer interrupt */
-
+					timer_int_handler();
 				}
 				break;
 			default:
@@ -54,7 +56,7 @@ int start() {
 		}
 	}
 	mouse_unsubscribe_int();
-	timer_unsuscribe_int();
+	timer_unsubscribe_int();
 	kb_unsubscribe_int();
 	empty_out_buf();
 	return 0;

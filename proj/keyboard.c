@@ -45,7 +45,7 @@ unsigned long kb_int_handler(void) {
 		i++;
 		sys_inb(KB_STATUS, &stat);
 		if ((stat & KB_OUTBUF_FULL)
-				&& !(stat & (KB_STAT_PARITY | KB_STAT_TIMEOUT))) { //checks if the output buffer is full and there are no errors
+				&& !(stat & (KB_STAT_PARITY | KB_STAT_TIMEOUT))) { //checks if the oultput buffer is full and there are no errors
 			sys_inb(KB_OUT_BUF, &word); //loads word var with the content of the buffer
 			if (word == KB_2BYTE_SCODE) {
 				last = word;
@@ -53,7 +53,7 @@ unsigned long kb_int_handler(void) {
 			}
 
 			if (last == KB_2BYTE_SCODE) {
-				word = (last << 4 | word); // completes the 2 byte scancode
+				word = (last << 8 | word); // completes the 2 byte scancode
 				last = 0x00;
 				return word;
 			}

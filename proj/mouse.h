@@ -7,7 +7,7 @@
  * Struct that stores info regarding the mouse state
  */
 typedef struct{
-	unsigned short x, y;
+	short x, y;
 	unsigned char rmb_pressed, mmb_pressed, lmb_pressed;
 } mouse_info;
 
