@@ -77,11 +77,14 @@ void *vg_init(unsigned short mode) {
 }
 
 int vg_draw_rectangle(unsigned short x, unsigned short y, unsigned short width, unsigned short height, unsigned long color){
-	unsigned int i;
-	unsigned int j;
+	char* video_mem = vg_init(VBE_VIDEO_MODE);
+
+	video_mem += y * h_res + x;
+
+	unsigned int i, j;
 	for(i = 0; i < height; i++){
 		for(j = 0; j < width; j++){
-			*(video_mem + i*h_res + j) = 0x15;
+			*(video_mem + i*h_res + j) = 2;
 		}
 	}
 
@@ -101,8 +104,4 @@ int vg_exit() {
 		return 1;
 	} else
 		return 0;
-}
-
-int get_vres(){
-	return v_res;
 }

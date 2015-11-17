@@ -32,6 +32,10 @@ int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p) {
 		return 1;
 	}
 
+	*vmi_p = *((vbe_mode_info_t *) map.virtual);
+
+	lm_free(&map);
+
 	return 0;
 }
 

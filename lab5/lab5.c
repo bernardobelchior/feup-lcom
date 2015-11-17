@@ -100,7 +100,7 @@ static int proc_args(int argc, char *argv[]) {
 		if ((yf = parse_ushort(argv[5], 10)) == USHRT_MAX)
 			return 1;
 
-		if ((color = parse_ulong(argv[6], 16)) == ULONG_MAX)
+		if ((color = parse_ulong(argv[6], 10)) == ULONG_MAX)
 			return 1;
 
 		printf("VBE::test_line(%d, %d, %d, %d, %d)\n", x, y, xf, yf, color);

@@ -17,7 +17,7 @@ void *test_init(unsigned short mode, unsigned short delay) {
 
 	//test to see if vbe_get_mode_info is working
 	printf("X res: %d\nY res: %d\nBits per pixel: %d\nPhysical Address: %x",
-			vmi_p.XResolution, get_vres(), vmi_p.BitsPerPixel,
+			vmi_p.XResolution, vmi_p.YResolution, vmi_p.BitsPerPixel,
 			vmi_p.PhysBasePtr);
 
 	return ret;
@@ -33,7 +33,7 @@ int test_square(unsigned short x, unsigned short y, unsigned short size,
 		return 1;
 	}
 
-	//kbd_test_scan(0);
+	kbd_test_scan(0);
 
 	vg_exit();
 	return 0;
