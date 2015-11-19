@@ -44,6 +44,21 @@ void *vg_init(unsigned short mode) {
 		return NULL;
 	}
 
+	switch(reg86.u.w.ax){
+	case VBE_FUNC_CALL_FAILED:
+		printf("\tvg_init(): sys_int86() function call failed.\n");
+		return NULL;
+		break;
+	case VBE_FUNC_NOT_SUPPORTED:
+		printf("\tvg_init(): sys_int86() function not supported.\n");
+		return NULL;
+		break;
+	case VBE_FUNC_INVALID_CUR_MODE:
+		printf("\tvg_init(): sys_int86() function invalid in current video mode.\n");
+		return NULL;
+		break;
+	}
+
 	if (lm_init() == NULL) {
 		printf("\tvg_init(): lm_init() failed \n");
 		return NULL;

@@ -32,6 +32,21 @@ int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p) {
 		return 1;
 	}
 
+	switch(reg86.u.w.ax){
+	case VBE_FUNC_CALL_FAILED:
+		printf("\tvg_init(): sys_int86() function call failed.\n");
+		return 1;
+		break;
+	case VBE_FUNC_NOT_SUPPORTED:
+		printf("\tvg_init(): sys_int86() function not supported.\n");
+		return 2;
+		break;
+	case VBE_FUNC_INVALID_CUR_MODE:
+		printf("\tvg_init(): sys_int86() function invalid in current video mode.\n");
+		return 3;
+		break;
+	}
+
 	*vmi_p = *((vbe_mode_info_t *) map.virtual);
 
 	lm_free(&map);
