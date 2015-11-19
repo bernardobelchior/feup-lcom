@@ -1,9 +1,11 @@
 #include "menu.h"
+#include <stdlib.h>
 
 menu* create_menu(){
 	menu* m = (menu*) malloc(sizeof(menu));
 	m->buttons_size = 0;
 	m->buttons = 0;
+	return m;
 }
 
 void menu_add_button(menu* m, button* b){
@@ -22,11 +24,18 @@ void menu_delete_button(menu* m, unsigned char index){
 	m->buttons = (button**) realloc(m->buttons, m->buttons_size*sizeof(button*));
 }
 
+void menu_draw(menu* m){
+	unsigned char i;
+	for(i = 0; i < m->buttons_size; i++){
+		button_draw(m->buttons[i]);
+	}
+}
+
 unsigned char click_button(menu* m, unsigned short x, unsigned short y){
 	unsigned char i;
 	for(i = 0; i < m->buttons_size; i++){
 		if(collides_with_button(m->buttons[i], x, y)){
-			if(m->buttons[i]->function != 0)
+			//if(m->buttons[i]->function != NULL)
 				(*(m->buttons[i]->function))();
 			return 1;
 		}

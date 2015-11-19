@@ -28,6 +28,13 @@ typedef struct { //TODO still have to add text or image
 button* create_button(unsigned short x, unsigned short y, unsigned short width, unsigned short height, void (*function)(), unsigned char color);
 
 /**
+ * @brief Draws button
+ *
+ * @param b Button to be drawn
+ */
+void button_draw(button* b);
+
+/**
  * @brief Checks if the position (x,y) is inside the button
  *
  * @param b Button to check

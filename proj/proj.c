@@ -1,10 +1,25 @@
 #include <minix/drivers.h>
+#include "proj.h"
 #include "events.h"
 #include "timer.h"
 #include "mouse.h"
 #include "keyboard.h"
+#include "vbe.h"
+#include "video_gr.h"
+#include <stdlib.h>
+#include "test3.h"
 
 #define ESC_BREAKCODE 0x81
+
+//extern enum game_state state;
+//extern menu* start_menu;
+
+int main(int argc, char **argv) {
+	sef_startup();
+	start();
+	leave();
+	return 0;
+}
 
 int start() {
 	unsigned short character = 0x00;
@@ -55,16 +70,41 @@ int start() {
 			/* no standard messages expected: do nothing */
 		}
 	}
-	mouse_unsubscribe_int();
+
+	return 0;
+}
+
+void test_function(){//TODO delete this funcion
+	vg_draw_frame(0, 0, 50, 50, 2);
+}
+
+void game_init(){
+	state = main_menu;
+	mouse_init();
+	start_menu = create_menu();
+
+	button* singleplayer = create_button(400, 110, 200, 90, &test_function, 2);
+	menu_add_button(start_menu, singleplayer);
+	button* multiplayer = create_button(400, 210, 200, 90, &test_function, 2);
+	menu_add_button(start_menu, multiplayer);
+	button* highscore = create_button(400, 310, 200, 90, &test_function, 2);
+	menu_add_button(start_menu, highscore);
+	button* options = create_button(400, 410, 200, 90, &test_function, 2);
+	menu_add_button(start_menu, options);
+	button* exit = create_button(400, 510, 200, 90, &leave, 2);
+	menu_add_button(start_menu, exit);
+
+	vg_init(VBE_VIDEO_MODE);
+	menu_draw(start_menu);
+	draw_mouse();
+}
+
+void leave(){
 	timer_unsubscribe_int();
 	kb_unsubscribe_int();
+	mouse_unsubscribe_int();
 	empty_out_buf();
-	return 0;
+	delete_menu(start_menu);
+	vg_exit();
+	exit(0);
 }
-
-int main(int argc, char **argv) {
-	sef_startup();
-	start();
-	return 0;
-}
-

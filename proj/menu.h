@@ -38,6 +38,13 @@ void menu_add_button(menu* m, button* b);
 void menu_delete_button(menu* m, unsigned char index);
 
 /**
+ * @brief Draws every button in the menu
+ *
+ * @param m Menu to draw
+ */
+void menu_draw(menu* m);
+
+/**
  * @brief Checks if a button contained in menu is clicked and calls its function.
  *
  * @param m Menu in which to check

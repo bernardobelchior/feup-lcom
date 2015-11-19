@@ -14,6 +14,7 @@ typedef struct{
 } mouse_info;
 /** @} end of Mouse Information Struct */
 
+mouse_info mouse;
 
 /**
  * @brief Write to KBC
@@ -60,5 +61,19 @@ void mouse_int_handler(int counter, char packets[]);
  * @brief Empties output buffer
  */
 void empty_out_buf(void);
+
+/**
+ * @brief Initializes mouse information
+ *
+ * @param mouse Struct to initialize
+ */
+void mouse_init();
+
+/**
+ * @brief Draws a mouse using vg_draw_frame
+ *
+ * @param mouse Information about the mouse position and state
+ */
+void draw_mouse();
 
 #endif

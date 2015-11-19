@@ -1,20 +1,6 @@
 #ifndef EVENTS_H
 #define EVENTS_H
 
-enum game_state { main_menu, singleplayer, multiplayer, highscore, options };
-
-//Initialization
-
-/**
- * @brief Initializes game information
- */
-void game_init();
-
-/**
- * @brief Initializes mouse struct
- */
-void mouse_init();
-
 //Event Handlers
 
 /**

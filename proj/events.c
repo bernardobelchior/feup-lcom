@@ -3,10 +3,14 @@
 #include "mouse.h"
 #include "menu.h"
 #include "button.h"
+#include "video_gr.h"
+#include "vbe.h"
+#include "test3.h"
+#include "proj.h"
 
-static mouse_info mouse;
-static enum game_state state;
-static menu* start_menu;
+extern mouse_info mouse;
+extern enum game_state state;
+extern menu* start_menu;
 
 unsigned short get_h_res(){ //temporary
 	return 1024;
@@ -16,22 +20,12 @@ unsigned short get_v_res(){ //temporary
 	return 768;
 }
 
-void game_init(){
-	state = main_menu;
-	mouse_init();
-	/* How to use menus and buttons:
-	start_menu = create_menu();
-	button* test = create_button(100, 100, 200, 200, &test_function, 2);
-	menu_add_button(start_menu, test);
-	delete_menu(start_menu);*/
-}
-
-void mouse_init(){
-	mouse.x = get_h_res()/2; //H_RES/2
-	mouse.y = get_v_res()/2; //Y_RES/2
-	mouse.rmb_pressed = 0;
-	mouse.mmb_pressed = 0;
-	mouse.lmb_pressed = 0;
+void refresh_screen(){
+	vg_clear_screen();
+	if(state == main_menu){
+		menu_draw(start_menu);
+		draw_mouse();
+	}
 }
 
 void kb_event_handler(unsigned short key){
@@ -141,6 +135,7 @@ void lmb_pressed(){
 }
 
 void tick(){
+	refresh_screen();
 	//printf("Tick.\n");
 }
 
