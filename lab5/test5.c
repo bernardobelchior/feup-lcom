@@ -4,13 +4,13 @@ void *test_init(unsigned short mode, unsigned short delay) {
 	void *ret;
 	vbe_mode_info_t vmi_p;
 
-	ret = vg_init(mode);
-	/*if ((ret = vg_init(mode)) == NULL)
-	 return NULL;*/
+	if ((ret = vg_init(mode)) == NULL)
+		return NULL;
 
 	timer_test_int(delay);
 
-	vbe_get_mode_info(mode, &vmi_p);
+	if(vbe_get_mode_info(mode, &vmi_p) != 0)
+		return NULL;
 
 	if (vg_exit() != 0)
 		return NULL;
@@ -25,7 +25,8 @@ void *test_init(unsigned short mode, unsigned short delay) {
 
 int test_square(unsigned short x, unsigned short y, unsigned short size,
 		unsigned long color) {
-	vg_init(VBE_VIDEO_MODE);
+	if(vg_init(VBE_VIDEO_MODE) == NULL)
+		return 1;
 
 	if (vg_draw_frame(x, y, size, size, color) != 0) {
 		if (vg_exit() != 0)
@@ -35,20 +36,19 @@ int test_square(unsigned short x, unsigned short y, unsigned short size,
 
 	kbd_test_scan(0);
 
-	vg_exit();
-	return 0;
+	return vg_exit();
 }
 
 int test_line(unsigned short xi, unsigned short yi, unsigned short xf,
 		unsigned short yf, unsigned long color) {
-	vg_init(VBE_VIDEO_MODE);
+	if(vg_init(VBE_VIDEO_MODE) == NULL)
+		return 1;
 
 	vg_draw_line(xi, yi, xf, yf, color);
 
 	kbd_test_scan(0);
 
-	vg_exit();
-	return 0;
+	return vg_exit();
 }
 
 int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
