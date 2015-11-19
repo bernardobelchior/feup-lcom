@@ -8,7 +8,7 @@
  */
 typedef struct { //TODO still have to add text or image
 	unsigned short x, y, width, height;
-	void (*function)();
+	void *function();
 	unsigned char color;
 } button;
 /** @} end of Button Information Struct */
