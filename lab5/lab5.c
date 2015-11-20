@@ -2,6 +2,8 @@
 #include "pixmap.h"
 #include <minix/drivers.h>
 
+#define H_RES             1024
+#define V_RES		  768
 
 static int proc_args(int argc, char *argv[]);
 static unsigned short parse_ushort(char *str, int base);
@@ -12,7 +14,6 @@ static long parse_short(char *str, int base);
 
 int main(int argc, char **argv) {
 	sef_startup();
-	//vg_exit();
 	proc_args(argc, argv);
 	return 0;
 }
@@ -66,13 +67,13 @@ static int proc_args(int argc, char *argv[]) {
 			return 1;
 		}
 
-		if ((x = parse_ushort(argv[2], 10)) == USHRT_MAX)
+		if ((x = parse_ushort(argv[2], 10)) > H_RES)
 			return 1;
 
-		if ((y = parse_ushort(argv[3], 10)) == USHRT_MAX)
+		if ((y = parse_ushort(argv[3], 10)) > V_RES)
 			return 1;
 
-		if ((size = parse_ushort(argv[4], 10)) == USHRT_MAX)
+		if (x + (size = parse_ushort(argv[4], 10)) > H_RES || y + size > V_RES)
 			return 1;
 
 		if ((color = parse_ulong(argv[5], 16)) == ULONG_MAX)
@@ -88,16 +89,16 @@ static int proc_args(int argc, char *argv[]) {
 			return 1;
 		}
 
-		if ((x = parse_ushort(argv[2], 10)) == USHRT_MAX)
+		if ((x = parse_ushort(argv[2], 10)) > H_RES)
 			return 1;
 
-		if ((y = parse_ushort(argv[3], 10)) == USHRT_MAX)
+		if ((y = parse_ushort(argv[3], 10)) > V_RES)
 			return 1;
 
-		if ((xf = parse_ushort(argv[4], 10)) == USHRT_MAX)
+		if ((xf = parse_ushort(argv[4], 10)) > H_RES)
 			return 1;
 
-		if ((yf = parse_ushort(argv[5], 10)) == USHRT_MAX)
+		if ((yf = parse_ushort(argv[5], 10)) > V_RES)
 			return 1;
 
 		if ((color = parse_ulong(argv[6], 10)) == ULONG_MAX)
@@ -113,10 +114,10 @@ static int proc_args(int argc, char *argv[]) {
 			return 1;
 		}
 
-		if ((x = parse_ushort(argv[2], 10)) == USHRT_MAX)
+		if ((x = parse_ushort(argv[2], 10)) > H_RES)
 			return 1;
 
-		if ((y = parse_ushort(argv[3], 10)) == USHRT_MAX)
+		if ((y = parse_ushort(argv[3], 10)) > V_RES)
 			return 1;
 
 		printf("VBE::test_xpm(%d,%d)\n", x, y, xpm);
@@ -129,10 +130,10 @@ static int proc_args(int argc, char *argv[]) {
 			return 1;
 		}
 
-		if ((x = parse_ushort(argv[2], 10)) == USHRT_MAX)
+		if ((x = parse_ushort(argv[2], 10)) > H_RES)
 			return 1;
 
-		if ((y = parse_ushort(argv[3], 10)) == USHRT_MAX)
+		if ((y = parse_ushort(argv[3], 10)) > V_RES)
 			return 1;
 
 		if ((hor = parse_ushort(argv[5], 10)) == USHRT_MAX)
