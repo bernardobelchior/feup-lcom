@@ -6,6 +6,7 @@
 
 #include "vbe.h"
 #include "timer.h"
+#include "read_xpm.h"
 
 /* Constants for VBE 0x105 mode */
 
@@ -151,6 +152,25 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsign
 		}
 	}
 
+	return 0;
+}
+
+char vg_draw_pixmap(unsigned short xi, unsigned short yi,  char *xpm[]){
+	int width, height;
+	char *pixmap;
+
+	if((pixmap = read_xpm(xpm, &width, &height)) == NULL)
+		return 1;
+
+	if(xi + width > h_res || yi + height > v_res)
+		return 1;
+
+	unsigned short i, j;
+	for(i = 0; i < height; i++){
+		for(j = 0; j < width; j++){
+			*(video_mem + (yi+i)*h_res + (xi+j)) = *(pixmap + i*height + j);
+		}
+	}
 	return 0;
 }
 

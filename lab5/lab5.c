@@ -35,7 +35,7 @@ static int proc_args(int argc, char *argv[]) {
 	unsigned short mode, delay, x, y, size, xf, yf, hor, time;
 	short delta;
 	unsigned long color;
-	//char[] *xpm;
+	//char *xpm;
 
 	/* check the function to test: if the first characters match, accept it */
 	if (argc == 1) {
@@ -108,7 +108,7 @@ static int proc_args(int argc, char *argv[]) {
 		return test_line(x, y, xf, yf, color);
 	}
 
-	/*else if (strncmp(argv[1], "test_xpm", strlen("test_xpm")) == 0) {
+	else if (strncmp(argv[1], "test_xpm", strlen("test_xpm")) == 0) {
 		if (argc != 4) {
 			printf("VBE: wrong no of arguments for test of test_xpm() \n");
 			return 1;
@@ -120,11 +120,12 @@ static int proc_args(int argc, char *argv[]) {
 		if ((y = parse_ushort(argv[3], 10)) > V_RES)
 			return 1;
 
-		printf("VBE::test_xpm(%d,%d)\n", x, y, xpm);
-		return test_xpm(x, y, xpm);
+		extern char *penguin[];
+		printf("VBE::test_xpm(%d,%d)\n", x, y);
+		return test_xpm(x, y, penguin);
 
 	}
-	else if (strncmp(argv[1], "test_move", strlen("test_move")) == 0) {
+	/*else if (strncmp(argv[1], "test_move", strlen("test_move")) == 0) {
 		if (argc != 8) {
 			printf("VBE: wrong no of arguments for test of test_move() \n");
 			return 1;

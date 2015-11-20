@@ -53,6 +53,15 @@ int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width, unsi
  */
 int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsigned short yf, unsigned long color);
 
+/**
+ * @brief Draws a pixmap on position (xi,yi)
+ *
+ * @param xi Pixmap x position
+ * @param yi Pixmap y position
+ * @param xpm xpm to draw
+ */
+char vg_draw_pixmap(unsigned short xi, unsigned short yi,  char *xpm[]);
+
  /** @} end of video_gr */
  
 #endif /* __VIDEO_GR_H */

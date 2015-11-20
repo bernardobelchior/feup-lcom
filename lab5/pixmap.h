@@ -37,7 +37,7 @@
  * 
  */
 
-static char *pic1[] = {
+char *pic1[] = {
   "32 13 4",
   ". 0",
   "x 2",
@@ -59,7 +59,7 @@ static char *pic1[] = {
 };
 
 
-static char *pic2[] = {
+char *pic2[] = {
   "32 15 3",
   ". 0",
   "x 4",
@@ -81,7 +81,7 @@ static char *pic2[] = {
   "................................",
 };
 
-static char *cross[] = {
+char *cross[] = {
   "32 32 2",
   ". 0",
   "+ 13", 
@@ -120,7 +120,7 @@ static char *cross[] = {
 };
 
 
-static char *pic3[] = {
+char *pic3[] = {
   "64 32 3",
   ". 0",
   "+ 1",
@@ -161,7 +161,7 @@ static char *pic3[] = {
 
 /* this one was converted from a 32 bits colors png! */
  
-static char * penguin[] = {
+char * penguin[] = {
 "64 64 9",
 "  0",
 ". 15",

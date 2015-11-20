@@ -29,8 +29,7 @@ int test_square(unsigned short x, unsigned short y, unsigned short size,
 		return 1;
 
 	if (vg_draw_frame(x, y, size, size, color) != 0) {
-		if (vg_exit() != 0)
-			return 1;
+		vg_exit();
 		return 1;
 	}
 
@@ -44,7 +43,10 @@ int test_line(unsigned short xi, unsigned short yi, unsigned short xf,
 	if(vg_init(VBE_VIDEO_MODE) == NULL)
 		return 1;
 
-	vg_draw_line(xi, yi, xf, yf, color);
+	if(vg_draw_line(xi, yi, xf, yf, color) != 0){
+		vg_exit();
+		return 1;
+	}
 
 	kbd_test_scan(0);
 
@@ -52,9 +54,17 @@ int test_line(unsigned short xi, unsigned short yi, unsigned short xf,
 }
 
 int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
+	if(vg_init(VBE_VIDEO_MODE) == NULL)
+		return 1;
 
-	/* To be completed */
+	if(vg_draw_pixmap(xi, yi, xpm) != 0){
+		vg_exit();
+		return 1;
+	}
 
+	kbd_test_scan(0);
+
+	return vg_exit();
 }
 
 int test_move(unsigned short xi, unsigned short yi, char *xpm[],
