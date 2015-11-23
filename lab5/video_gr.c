@@ -189,32 +189,11 @@ char vg_draw_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
 	return ret;
 }
 
-/*int vg_destroy_pixmap(unsigned short xi, unsigned short yi, char *xpm[]) {
-	char *pixmap;
-	int width, height;
-
-	if ((pixmap = read_xpm(xpm, &width, &height)) == NULL)
-		return 1;
-
-	if (xi + width > h_res || yi + height > v_res)
-		return 1;
-
-	unsigned short i, j;
-	for (i = 0; i < height; i++) {
-		for (j = 0; j < width; j++) {
- *(video_mem + (yi + i) * h_res + (xi + j)) = 0; //TODO arranjar isto, isto é batota e eu sou má pessoa
-		}
-	}
-
-	return 0;
-
-}*/
-
 int vg_move_pixmap(unsigned short xi, unsigned short yi, unsigned short width, unsigned short height, char *pixmap,
 		unsigned short hor, float next_position) {
 
 	if (!hor) {
-		if (yi + height + (short) next_position >= v_res){
+		if (yi + height + (short) next_position >= (short) v_res){
 			vg_draw_pixmap(xi, v_res - height - 1, width, height, pixmap);
 			return 1;
 		}
@@ -226,7 +205,7 @@ int vg_move_pixmap(unsigned short xi, unsigned short yi, unsigned short width, u
 
 		vg_draw_pixmap(xi, yi + (short) next_position, width, height, pixmap);
 	} else {
-		if (xi + width + (short) next_position >= h_res){
+		if (xi + width + (short) next_position >= (short) h_res){
 			vg_draw_pixmap(h_res - width - 1, width, height, yi, pixmap);
 			return 1;
 		}

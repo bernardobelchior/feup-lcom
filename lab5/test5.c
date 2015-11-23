@@ -89,14 +89,7 @@ int test_move(unsigned short xi, unsigned short yi, char *xpm[],
 	if ((pixmap = (char*) read_xpm(xpm, &width, &height)) == NULL)
 		return 1;
 
-	if (vg_draw_pixmap(xi, yi, width, height, pixmap) != 0) {
-		vg_exit();
-		return 1;
-	}
-
 	pixmap_speed = (float) (delta) / (time * 60); //TODO encontrar TICKS_PER_SEC; nao existe
-	//if (pixmap_speed == 0 && delta != 0)
-		//pixmap_speed = 1;
 
 	if (irq_set_timer >= 0)
 		irq_set_timer = BIT(irq_set_timer);

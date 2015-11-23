@@ -72,11 +72,6 @@ char vg_draw_pixmap(unsigned short xi, unsigned short yi, unsigned short width, 
 char vg_draw_xpm(unsigned short xi, unsigned short yi, char *xpm[]);
 
 /**
- * @brief clears section of the screen where the xpm is located
- */
-//int vg_destroy_pixmap(unsigned short xi, unsigned short yi,char *xpm[]);
-
-/**
  * @brief Moves a pixmap vertically or horizontally
  *
  * @parax xi initial x position
