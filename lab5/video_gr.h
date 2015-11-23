@@ -58,14 +58,24 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsign
  *
  * @param xi Pixmap x position
  * @param yi Pixmap y position
+ * @param pixmap Pixmap to draw
+ */
+char vg_draw_pixmap(unsigned short xi, unsigned short yi, unsigned short width, unsigned short height, char *pixmap);
+
+/**
+ * @brief Draws xpm on position (xi,yi). Converts xpm to pixmap and calls draw_pixmap.
+ *
+ * @param xi xpm x position
+ * @param yi xpm y position
  * @param xpm xpm to draw
  */
-char vg_draw_pixmap(unsigned short xi, unsigned short yi,  char *xpm[]);
+char vg_draw_xpm(unsigned short xi, unsigned short yi, char *xpm[]);
 
 /**
  * @brief clears section of the screen where the xpm is located
  */
-int vg_destroy_pixmap(unsigned short xi, unsigned short yi,char *xpm[]);
+//int vg_destroy_pixmap(unsigned short xi, unsigned short yi,char *xpm[]);
+
 /**
  * @brief Moves a pixmap vertically or horizontally
  *
@@ -76,8 +86,20 @@ int vg_destroy_pixmap(unsigned short xi, unsigned short yi,char *xpm[]);
  * @param delta distance in pixels to move
  * @param time time for the movement to be completed
  */
-int vg_move_pixmap(unsigned short xi, unsigned short yi, char *xpm[],
-		unsigned short hor, short delta, unsigned short time);
+int vg_move_pixmap(unsigned short xi, unsigned short yi, unsigned short width, unsigned short height, char *pixmap,
+		unsigned short hor, float next_position);
+
+/**
+ * @brief Clear screen by setting all pixels to black
+ */
+void vg_clear_screen();
+
+/**
+ * @brief Updates screen by bringing double buffer to the screen, and clear the double buffer.
+ *
+ * @return Returns 0 on success and non-zero otherwise.
+ */
+int vg_update_screen();
 
  /** @} end of video_gr */
  

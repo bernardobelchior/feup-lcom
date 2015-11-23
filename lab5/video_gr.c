@@ -25,6 +25,7 @@
 /* Private global variables */
 
 static char *video_mem; /* Process address to which VRAM is mapped */
+char* double_buffer;
 
 static unsigned h_res; /* Horizontal screen resolution in pixels */
 static unsigned v_res; /* Vertical screen resolution in pixels */
@@ -71,6 +72,10 @@ void *vg_init(unsigned short mode) {
 		return NULL;
 	}
 
+	h_res = info.XResolution;
+	v_res = info.YResolution; //Sets global variables
+	bits_per_pixel = info.BitsPerPixel;
+
 	//Allow memory mapping
 
 	mr.mr_base = (phys_bytes)(info.PhysBasePtr);
@@ -85,19 +90,19 @@ void *vg_init(unsigned short mode) {
 	video_mem = vm_map_phys(SELF, (void *) mr.mr_base,
 			info.XResolution * info.YResolution * info.BitsPerPixel / 8);
 
+	double_buffer = malloc(h_res*v_res*sizeof(char));
+
 	/*if(video_mem == MAP_FAILED)
 	 panic("video_txt couldn't map video memory");*/
 
-	h_res = info.XResolution;
-	v_res = info.YResolution; //Sets global variables
-	bits_per_pixel = info.BitsPerPixel;
+
 
 	return video_mem;
 }
 
 int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width,
 		unsigned short height, unsigned long color) {
-	char* vmem = video_mem;
+	char* vmem = double_buffer;
 	vmem += y * h_res + x;
 
 	unsigned int i;
@@ -123,7 +128,7 @@ int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width,
 
 int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
 		unsigned short yf, unsigned long color) {
-	char* vmem = video_mem;
+	char* vmem = double_buffer;
 
 	if (xi == xf) {
 		unsigned int i;
@@ -158,9 +163,35 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
 	return 0;
 }
 
-char vg_draw_pixmap(unsigned short xi, unsigned short yi, char *xpm[]) {
+char vg_draw_pixmap(unsigned short xi, unsigned short yi, unsigned short width, unsigned short height, char *pixmap) {
+
+	if (xi + width >= h_res || yi + height >= v_res || xi < 0 || yi < 0)
+		return 1;
+
+	unsigned short i, j;
+	for (i = 0; i < height; i++) {
+		for (j = 0; j < width; j++) {
+			*(double_buffer + (yi + i) * h_res + (xi + j)) = *(pixmap + i * height + j);
+		}
+	}
+	return 0;
+}
+
+char vg_draw_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
 	int width, height;
 	char *pixmap;
+
+	if ((pixmap = read_xpm(xpm, &width, &height)) == NULL)
+		return 1;
+
+	char ret = vg_draw_pixmap(xi, yi, (unsigned short) width, (unsigned short) height, pixmap);
+	free(pixmap);
+	return ret;
+}
+
+/*int vg_destroy_pixmap(unsigned short xi, unsigned short yi, char *xpm[]) {
+	char *pixmap;
+	int width, height;
 
 	if ((pixmap = read_xpm(xpm, &width, &height)) == NULL)
 		return 1;
@@ -171,118 +202,70 @@ char vg_draw_pixmap(unsigned short xi, unsigned short yi, char *xpm[]) {
 	unsigned short i, j;
 	for (i = 0; i < height; i++) {
 		for (j = 0; j < width; j++) {
-			*(video_mem + (yi + i) * h_res + (xi + j)) = *(pixmap + i * height
-					+ j);
+ *(video_mem + (yi + i) * h_res + (xi + j)) = 0; //TODO arranjar isto, isto é batota e eu sou má pessoa
 		}
 	}
+
+	return 0;
+
+}*/
+
+int vg_move_pixmap(unsigned short xi, unsigned short yi, unsigned short width, unsigned short height, char *pixmap,
+		unsigned short hor, float next_position) {
+
+	if (!hor) {
+		if (yi + height + (short) next_position >= v_res){
+			vg_draw_pixmap(xi, v_res - height - 1, width, height, pixmap);
+			return 1;
+		}
+
+		if(yi + (short) next_position < 0){
+			vg_draw_pixmap(xi, 0, width, height, pixmap);
+			return 1;
+		}
+
+		vg_draw_pixmap(xi, yi + (short) next_position, width, height, pixmap);
+	} else {
+		if (xi + width + (short) next_position >= h_res){
+			vg_draw_pixmap(h_res - width - 1, width, height, yi, pixmap);
+			return 1;
+		}
+
+		if(xi + (short) next_position < 0){
+			vg_draw_pixmap(0, yi, width, height, pixmap);
+			return 1;
+		}
+
+		vg_draw_pixmap(xi + (short) next_position, yi, width, height, pixmap);
+	}
+
 	return 0;
 }
 
-int vg_destroy_pixmap(unsigned short xi, unsigned short yi, char *xpm[]) {
-	char *pixmap;
-	int width, height;
-
-	if ((pixmap = read_xpm(xpm, &width, &height)) == NULL)
-		return 1;
-
-	if (xi + width > h_res || yi + height > v_res)
-		return 1;
-
+void vg_clear_screen(){
 	unsigned short i, j;
-	for (i = 0; i < height; i++) {
-		for (j = 0; j < width; j++) {
-			*(video_mem + (yi + i) * h_res + (xi + j)) = 0; //TODO arranjar isto, isto é batota e eu sou má pessoa
+	for(i = 0; i < v_res; i++){
+		for(j = 0; j < h_res; j++){
+			*(double_buffer+i*h_res+j) = 0;
 		}
 	}
-
-	return 0;
-
 }
 
-int vg_move_pixmap(unsigned short xi, unsigned short yi, char *xpm[],
-		unsigned short hor, short delta, unsigned short time) {
-
-	int pixels_per_frame = delta / (time * 60); //TODO encontrar TICKS_PER_SEC
-	if (pixels_per_frame == 0 && delta != 0)
-		pixels_per_frame = 1;
-
-	int width, height;
-	char *pixmap;
-
-	if ((pixmap = read_xpm(xpm, &width, &height)) == NULL)
+int vg_update_screen(){
+	if(double_buffer == NULL)
 		return 1;
 
-	int ipc_status;
-	message msg;
-	int irq_set = timer_subscribe_int();
-	int r;
-	unsigned short counter = 0;
+	memcpy(video_mem, double_buffer, h_res*v_res);
 
-	if (irq_set >= 0)
-		irq_set = BIT(irq_set);
-	else
-		irq_set = 0;
-
-	while (counter < time) { /* You may want to use a different condition */
-		/* Get a request message. */
-		if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
-			printf("driver_receive failed with: %d", r);
-			continue;
-		}
-		if (is_ipc_notify(ipc_status)) { /* received notification */
-			switch (_ENDPOINT_P(msg.m_source)) {
-			case HARDWARE: /* hardware interrupt notification */
-				if (msg.NOTIFY_ARG & irq_set) { /* subscribed interrupt */
-					timed_scan_int_handler(&counter);
-
-					if (!hor) {
-						vg_destroy_pixmap(xi, yi, xpm);
-						if (delta > 0) {
-							if (yi + height + pixels_per_frame > v_res)
-								pixels_per_frame = 0;
-						}
-
-						else {
-							if (yi - pixels_per_frame <= 0)
-								pixels_per_frame = 0;
-						}
-
-						vg_draw_pixmap(xi, yi + pixels_per_frame, xpm);
-						yi += pixels_per_frame;
-					}
-
-					else {
-						vg_destroy_pixmap(xi, yi, xpm);
-
-						if (delta > 0) {
-							if (xi + width + pixels_per_frame > v_res)
-								pixels_per_frame = 0;
-						}
-
-						else {
-							if (xi + pixels_per_frame <=	 0)
-								pixels_per_frame = 0;
-						}
-
-						vg_draw_pixmap(xi + pixels_per_frame, yi, xpm);
-						xi += pixels_per_frame;
-					}
-
-				}
-				break;
-			default:
-				break; /* no other notifications expected: do nothing */
-			}
-		} else { /* received a standard message, not a notification */
-			/* no standard messages expected: do nothing */
-		}
-	}
+	vg_clear_screen();
 
 	return 0;
 }
 
 int vg_exit() {
 	struct reg86u reg86;
+
+	free(double_buffer);
 
 	reg86.u.b.intno = 0x10; /* BIOS video services */
 

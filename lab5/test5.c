@@ -29,6 +29,7 @@ int test_square(unsigned short x, unsigned short y, unsigned short size,
 		return 1;
 
 	if (vg_draw_frame(x, y, size, size, color) != 0) {
+		vg_update_screen();
 		vg_exit();
 		return 1;
 	}
@@ -44,6 +45,7 @@ int test_line(unsigned short xi, unsigned short yi, unsigned short xf,
 		return 1;
 
 	if (vg_draw_line(xi, yi, xf, yf, color) != 0) {
+		vg_update_screen();
 		vg_exit();
 		return 1;
 	}
@@ -57,7 +59,8 @@ int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
 	if (vg_init(VBE_VIDEO_MODE) == NULL)
 		return 1;
 
-	if (vg_draw_pixmap(xi, yi, xpm) != 0) {
+	if (vg_draw_xpm(xi, yi, xpm) != 0) {
+		vg_update_screen();
 		vg_exit();
 		return 1;
 	}
@@ -69,22 +72,73 @@ int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
 
 int test_move(unsigned short xi, unsigned short yi, char *xpm[],
 		unsigned short hor, short delta, unsigned short time) {
+	int width, height;
+	char* pixmap;
+	int ipc_status;
+	message msg;
+	int irq_set_timer = timer_subscribe_int();
+	int irq_set_keyboard = kb_subscribe_int();
+	int r;
+	unsigned short counter = 0;
+	long character;
+	float pixmap_speed, next_position;
 
 	if (vg_init(VBE_VIDEO_MODE) == NULL)
 		return 1;
 
-	if (vg_draw_pixmap(xi, yi, xpm) != 0) {
+	if ((pixmap = (char*) read_xpm(xpm, &width, &height)) == NULL)
+		return 1;
+
+	if (vg_draw_pixmap(xi, yi, width, height, pixmap) != 0) {
 		vg_exit();
 		return 1;
 	}
 
-	if(vg_move_pixmap(xi,yi,xpm,hor,delta,time) != 0){
-		vg_exit();
-		return 1;
+	pixmap_speed = (float) (delta) / (time * 60); //TODO encontrar TICKS_PER_SEC; nao existe
+	//if (pixmap_speed == 0 && delta != 0)
+		//pixmap_speed = 1;
+
+	if (irq_set_timer >= 0)
+		irq_set_timer = BIT(irq_set_timer);
+	else
+		irq_set_timer = 0;
+
+	if (irq_set_keyboard >= 0)
+		irq_set_keyboard = BIT(irq_set_keyboard);
+	else
+		irq_set_keyboard = 0;
+
+	next_position = 0;
+
+	while (counter < time && character != ESC_BREAKCODE) { /* You may want to use a different condition */
+		/* Get a request message. */
+		if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
+			printf("driver_receive failed with: %d", r);
+			continue;
+		}
+		if (is_ipc_notify(ipc_status)) { /* received notification */
+			switch (_ENDPOINT_P(msg.m_source)) {
+			case HARDWARE: /* hardware interrupt notification */
+				if (msg.NOTIFY_ARG & irq_set_timer) { /* subscribed interrupt */
+					timed_scan_int_handler(&counter);
+					vg_move_pixmap(xi, yi, width, height, pixmap, hor, next_position);
+					vg_update_screen();
+					next_position += pixmap_speed;
+				}
+				if (msg.NOTIFY_ARG & irq_set_keyboard) { /* subscribed interrupt */
+					character = kb_int_handler();
+				}
+				break;
+			default:
+				break; /* no other notifications expected: do nothing */
+			}
+		} else { /* received a standard message, not a notification */
+			/* no standard messages expected: do nothing */
+		}
 	}
 
+	free(pixmap);
 	return vg_exit();
-
 }
 
 int test_controller() {

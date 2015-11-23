@@ -14,7 +14,7 @@ static long parse_short(char *str, int base);
 
 int main(int argc, char **argv) {
 	sef_startup();
-	vg_exit();
+	//vg_exit();
 	proc_args(argc, argv);
 	return 0;
 }
@@ -148,8 +148,8 @@ static int proc_args(int argc, char *argv[]) {
 					return 1;
 		//TODO ESCOLHER XPM
 		extern char *penguin[];
-		printf("VBE::test_move(%d,%d,%d,%d)\n", x, y, hor, delta,time);
-		return test_move(x, y,penguin, hor,delta,time);
+		printf("VBE::test_move(%d, %d, penguin, %d, %d, %d)\n", x, y, hor, delta,time);
+		return test_move(x, y, penguin, hor,delta,time);
 
 	}
 	/*else if (strncmp(argv[1], "test_controller", strlen("test_controller")) == 0) {
