@@ -9,7 +9,7 @@ void *test_init(unsigned short mode, unsigned short delay) {
 
 	timer_test_int(delay);
 
-	if(vbe_get_mode_info(mode, &vmi_p) != 0)
+	if (vbe_get_mode_info(mode, &vmi_p) != 0)
 		return NULL;
 
 	if (vg_exit() != 0)
@@ -25,7 +25,7 @@ void *test_init(unsigned short mode, unsigned short delay) {
 
 int test_square(unsigned short x, unsigned short y, unsigned short size,
 		unsigned long color) {
-	if(vg_init(VBE_VIDEO_MODE) == NULL)
+	if (vg_init(VBE_VIDEO_MODE) == NULL)
 		return 1;
 
 	if (vg_draw_frame(x, y, size, size, color) != 0) {
@@ -40,10 +40,10 @@ int test_square(unsigned short x, unsigned short y, unsigned short size,
 
 int test_line(unsigned short xi, unsigned short yi, unsigned short xf,
 		unsigned short yf, unsigned long color) {
-	if(vg_init(VBE_VIDEO_MODE) == NULL)
+	if (vg_init(VBE_VIDEO_MODE) == NULL)
 		return 1;
 
-	if(vg_draw_line(xi, yi, xf, yf, color) != 0){
+	if (vg_draw_line(xi, yi, xf, yf, color) != 0) {
 		vg_exit();
 		return 1;
 	}
@@ -54,10 +54,10 @@ int test_line(unsigned short xi, unsigned short yi, unsigned short xf,
 }
 
 int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
-	if(vg_init(VBE_VIDEO_MODE) == NULL)
+	if (vg_init(VBE_VIDEO_MODE) == NULL)
 		return 1;
 
-	if(vg_draw_pixmap(xi, yi, xpm) != 0){
+	if (vg_draw_pixmap(xi, yi, xpm) != 0) {
 		vg_exit();
 		return 1;
 	}
@@ -70,7 +70,20 @@ int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
 int test_move(unsigned short xi, unsigned short yi, char *xpm[],
 		unsigned short hor, short delta, unsigned short time) {
 
-	/* To be completed */
+	if (vg_init(VBE_VIDEO_MODE) == NULL)
+		return 1;
+
+	if (vg_draw_pixmap(xi, yi, xpm) != 0) {
+		vg_exit();
+		return 1;
+	}
+
+	if(vg_move_pixmap(xi,yi,xpm,hor,delta,time) != 0){
+		vg_exit();
+		return 1;
+	}
+
+	return vg_exit();
 
 }
 

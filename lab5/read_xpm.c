@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "read_xpm.h"
+//#include "read_xpm.h"
 
 #define HRES             1024
 #define VRES		  768

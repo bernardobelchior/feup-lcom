@@ -156,7 +156,7 @@ int timer_test_int(unsigned long time) {
 	 }
 
 
-	return 1;
+	return 0;
 }
 
 int timer_test_config(unsigned long timer) {
@@ -165,4 +165,12 @@ int timer_test_config(unsigned long timer) {
 	timer_display_conf(st);
 	
 	return 1;
+}
+
+void timed_scan_int_handler(unsigned short *time) {
+
+	counter++;
+	if(counter % 60 == 0){
+		(*time)++;
+	}
 }

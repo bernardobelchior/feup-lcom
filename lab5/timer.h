@@ -97,4 +97,13 @@ int timer_test_int(unsigned long time);
  */
 int timer_test_config(unsigned long timer);
 
+/**
+ * @brief Timer 0 interrupt handler that increments a counter
+ *
+ * if a second passes (counter % 60 = 0) it increments the value pointed by time
+ *
+ * @param time, the value (passed by reference) of the seconds since timed_test_scan was called
+ */
+void timed_scan_int_handler(unsigned short *time);
+
 #endif /* __TIMER_H */

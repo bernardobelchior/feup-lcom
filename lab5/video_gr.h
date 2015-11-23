@@ -62,6 +62,23 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsign
  */
 char vg_draw_pixmap(unsigned short xi, unsigned short yi,  char *xpm[]);
 
+/**
+ * @brief clears section of the screen where the xpm is located
+ */
+int vg_destroy_pixmap(unsigned short xi, unsigned short yi,char *xpm[]);
+/**
+ * @brief Moves a pixmap vertically or horizontally
+ *
+ * @parax xi initial x position
+ * @param yi initial y position
+ * @param xpm xpm to move
+ * @param hor 0 if vertical movement, 1 if horizontal movement
+ * @param delta distance in pixels to move
+ * @param time time for the movement to be completed
+ */
+int vg_move_pixmap(unsigned short xi, unsigned short yi, char *xpm[],
+		unsigned short hor, short delta, unsigned short time);
+
  /** @} end of video_gr */
  
 #endif /* __VIDEO_GR_H */

@@ -14,6 +14,7 @@ static long parse_short(char *str, int base);
 
 int main(int argc, char **argv) {
 	sef_startup();
+	vg_exit();
 	proc_args(argc, argv);
 	return 0;
 }
@@ -125,8 +126,8 @@ static int proc_args(int argc, char *argv[]) {
 		return test_xpm(x, y, penguin);
 
 	}
-	/*else if (strncmp(argv[1], "test_move", strlen("test_move")) == 0) {
-		if (argc != 8) {
+	else if (strncmp(argv[1], "test_move", strlen("test_move")) == 0) {
+		if (argc != 7) {
 			printf("VBE: wrong no of arguments for test of test_move() \n");
 			return 1;
 		}
@@ -137,21 +138,21 @@ static int proc_args(int argc, char *argv[]) {
 		if ((y = parse_ushort(argv[3], 10)) > V_RES)
 			return 1;
 
-		if ((hor = parse_ushort(argv[5], 10)) == USHRT_MAX)
+		if ((hor = parse_ushort(argv[4], 10)) == USHRT_MAX || (hor != 1 &&hor != 0))
 					return 1;
 
-		if ((delta = parse_short(argv[6], 10)) == SHRT_MAX)
+		if ((delta = parse_short(argv[5], 10)) == SHRT_MAX)
 					return 1;
 
-		if ((time = parse_ushort(argv[7], 10)) == USHRT_MAX)
+		if ((time = parse_ushort(argv[6], 10)) == USHRT_MAX)
 					return 1;
-
-
-		printf("VBE::test_move(%d,%d)\n", length, tolerance);
-		return test_move(length, tolerance);
+		//TODO ESCOLHER XPM
+		extern char *penguin[];
+		printf("VBE::test_move(%d,%d,%d,%d)\n", x, y, hor, delta,time);
+		return test_move(x, y,penguin, hor,delta,time);
 
 	}
-	else if (strncmp(argv[1], "test_controller", strlen("test_controller")) == 0) {
+	/*else if (strncmp(argv[1], "test_controller", strlen("test_controller")) == 0) {
 		if (argc != 2) {
 			printf("VBE: wrong no of arguments for test of test_controller() \n");
 			return 1;
