@@ -100,6 +100,30 @@ void *vg_init(unsigned short mode) {
 	return video_mem;
 }
 
+int vg_set_pixel(unsigned short x, unsigned short y, unsigned long color){
+	int ret = 0;
+
+	if(x < 0){
+		x = 0;
+		ret = 1;
+	} else if(x >= h_res){
+		x = h_res-1;
+		ret = 2;
+	}
+
+	if(y < 0){
+		y = 0;
+		ret = 3;
+	} else if(y >= v_res){
+		y = v_res-1;
+		ret = 4;
+	}
+
+	*(double_buffer + y*h_res + x) = color;
+
+	return ret;
+}
+
 int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width,
 		unsigned short height, unsigned long color) {
 	char* vmem = double_buffer;
@@ -109,18 +133,18 @@ int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width,
 
 	//Prints first line
 	for (i = 0; i < width; i++) {
-		*(vmem + i) = color;
+		vg_set_pixel(x + i, y, color);
 	}
 
 	//Prints vertical lines
 	for (i = 1; i < height - 1; i++) {
-		*(vmem + i * h_res) = color;
-		*(vmem + i * h_res + width) = color;
+		vg_set_pixel(x, y + i, color);
+		vg_set_pixel(x + width, y + i, color);
 	}
 
 	//Prints last line
 	for (i = 0; i < width; i++) {
-		*(vmem + h_res * (height - 1) + i) = color;
+		vg_set_pixel(x + i, y + height - 1, color);
 	}
 
 	return 0;
@@ -133,12 +157,12 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
 	if (xi == xf) {
 		unsigned int i;
 		for (i = 0; i < yf - yi; i++) {
-			*(vmem + (yi + i) * h_res + xi) = color;
+			vg_set_pixel(xi, yi + i, color);
 		}
 	} else if (yi == yf) {
 		unsigned int i;
 		for (i = 0; i < xf - xi; i++) {
-			*(vmem + i + xi + yi * h_res) = color;
+			vg_set_pixel(xi + i, yi, color);
 		}
 	} else {
 		unsigned int offset = 0;
@@ -149,13 +173,12 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
 		if (m > -1 && m < 1) {
 			int i;
 			for (i = xi; i <= xf; i++) {
-				*(vmem + i + offset * yi * h_res + h_res * ((int) (m * i))) =
-						color;
+				vg_set_pixel(i, offset*yi + (int) (m*i), color);
 			}
 		} else {
 			int i;
 			for (i = yi; i <= yf; i++) {
-				*(vmem + i * h_res + offset * xi + (int) (i / m)) = color;
+				vg_set_pixel(offset*xi + (int) (i/m), i, color);
 			}
 		}
 	}
@@ -164,16 +187,16 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
 }
 
 char vg_draw_pixmap(unsigned short xi, unsigned short yi, unsigned short width, unsigned short height, char *pixmap) {
-
 	if (xi + width >= h_res || yi + height >= v_res || xi < 0 || yi < 0)
 		return 1;
 
 	unsigned short i, j;
 	for (i = 0; i < height; i++) {
 		for (j = 0; j < width; j++) {
-			*(double_buffer + (yi + i) * h_res + (xi + j)) = *(pixmap + i * height + j);
+			vg_set_pixel(xi + j, yi + i, *(pixmap + i * height + j));
 		}
 	}
+
 	return 0;
 }
 

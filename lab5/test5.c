@@ -29,10 +29,11 @@ int test_square(unsigned short x, unsigned short y, unsigned short size,
 		return 1;
 
 	if (vg_draw_frame(x, y, size, size, color) != 0) {
-		vg_update_screen();
 		vg_exit();
 		return 1;
 	}
+
+	vg_update_screen();
 
 	kbd_test_scan(0);
 
@@ -44,11 +45,22 @@ int test_line(unsigned short xi, unsigned short yi, unsigned short xf,
 	if (vg_init(VBE_VIDEO_MODE) == NULL)
 		return 1;
 
+	if(xi > xf && yi > yf){
+		unsigned short tmp = xf;
+		xf = xi;
+		xi = tmp;
+
+		tmp = yf;
+		yf = yi;
+		yi = tmp;
+	}
+
 	if (vg_draw_line(xi, yi, xf, yf, color) != 0) {
-		vg_update_screen();
 		vg_exit();
 		return 1;
 	}
+
+	vg_update_screen();
 
 	kbd_test_scan(0);
 
@@ -60,10 +72,11 @@ int test_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
 		return 1;
 
 	if (vg_draw_xpm(xi, yi, xpm) != 0) {
-		vg_update_screen();
 		vg_exit();
 		return 1;
 	}
+
+	vg_update_screen();
 
 	kbd_test_scan(0);
 

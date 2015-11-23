@@ -28,6 +28,17 @@ void *vg_init(unsigned short mode);
 int vg_exit(void);
 
 /**
+ * @brief Sets the pixel in the (x,y) to the color passed as argument
+ *
+ * @param x Position of the pixel in the x axis
+ * @param y Position of the pixel in the y axis
+ * @param color Color to color the pixel with
+ *
+ * @return Returns 0 on sucess. Returns 1 if x < 0; 2 if x >= h_res; 3 if y < 0; 4 if y >= v_res.
+ */
+int vg_set_pixel(unsigned short x, unsigned short y, unsigned long color);
+
+/**
 * @brief Draws a frame starting on (x,y) with specified width, height and color
 *
 * @param x x
