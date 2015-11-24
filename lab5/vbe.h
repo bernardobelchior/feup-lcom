@@ -141,7 +141,7 @@ int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p);
  *
  * @return pointer to vbe_controller_info_t
  */
-vbe_controller_info_t* vbe_get_controller_info();
+int vbe_get_controller_info();
 
  /** @} end of vbe */
 

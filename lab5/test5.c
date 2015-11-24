@@ -1,4 +1,5 @@
 #include "test5.h"
+#include "vbe.h"
 
 void *test_init(unsigned short mode, unsigned short delay) {
 	void *ret;
@@ -148,8 +149,11 @@ int test_move(unsigned short xi, unsigned short yi, char *xpm[],
 }
 
 int test_controller() {
+	if (lm_init() == NULL) {
+			printf("\tvg_get_controller_info(): lm_init() failed \n");
+			return 1;
+		}
 
-	return vg_get_controller_info();
-
+	return vbe_get_controller_info();
 }
 
