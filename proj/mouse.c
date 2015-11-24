@@ -3,7 +3,7 @@
 #include "mouse.h"
 #include "video_gr.h"
 
-extern mouse_info mouse;
+extern mouse_info_t mouse_info;
 unsigned int time = 0;
 int hook_id;
 
@@ -88,13 +88,13 @@ void empty_out_buf(void){
 }
 
 void mouse_init(){
-	mouse.x = get_h_res()/2;
-	mouse.y = get_v_res()/2;
-	mouse.rmb_pressed = 0;
-	mouse.mmb_pressed = 0;
-	mouse.lmb_pressed = 0;
+	mouse_info.x = get_h_res()/2;
+	mouse_info.y = get_v_res()/2;
+	mouse_info.rmb_pressed = 0;
+	mouse_info.mmb_pressed = 0;
+	mouse_info.lmb_pressed = 0;
 }
 
 void draw_mouse(){
-	vg_draw_frame(mouse.x, mouse.y, 5, 5, 3);
+	vg_draw_frame(mouse_info.x, mouse_info.y, 5, 5, 3);
 }

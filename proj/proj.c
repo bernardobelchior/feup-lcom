@@ -6,13 +6,12 @@
 #include "keyboard.h"
 #include "vbe.h"
 #include "video_gr.h"
+#include "singleplayer.h"
+#include "i8042.h"
 #include <stdlib.h>
-#include "test3.h"
 
-#define ESC_BREAKCODE 0x81
-
-//extern enum game_state state;
-//extern menu* start_menu;
+extern enum game_state state;
+extern menu* start_menu;
 
 int main(int argc, char **argv) {
 	sef_startup();
@@ -32,9 +31,13 @@ int start() {
 	unsigned char packet[3];
 	unsigned short counter = 0;
 
-	game_init();
+	state = main_menu;
+	controller = keyboard;
+	mouse_init();
+	start_menu_init();
+	vg_init(VBE_VIDEO_MODE);
 
-	while (character != ESC_BREAKCODE) { //TODO change condition
+	while (1) { //TODO change condition
 		/* Get a request message. */
 		if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
 			printf("driver_receive failed with: %d", r);
@@ -78,12 +81,10 @@ void test_function(){//TODO delete this funcion
 	vg_draw_frame(0, 0, 50, 50, 2);
 }
 
-void game_init(){
-	state = main_menu;
-	mouse_init();
+void start_menu_init(){
 	start_menu = create_menu();
 
-	button* singleplayer = create_button(400, 110, 200, 90, &test_function, 2);
+	button* singleplayer = create_button(400, 110, 200, 90, &singleplayer_init, 2);
 	menu_add_button(start_menu, singleplayer);
 	button* multiplayer = create_button(400, 210, 200, 90, &test_function, 2);
 	menu_add_button(start_menu, multiplayer);
@@ -93,10 +94,6 @@ void game_init(){
 	menu_add_button(start_menu, options);
 	button* exit = create_button(400, 510, 200, 90, &leave, 2);
 	menu_add_button(start_menu, exit);
-
-	vg_init(VBE_VIDEO_MODE);
-	menu_draw(start_menu);
-	draw_mouse();
 }
 
 void leave(){

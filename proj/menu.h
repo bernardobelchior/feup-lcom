@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include "button.h"
+#include "video_gr.h"
 
 /** @name Menu Information Struct*/
 /**@{
@@ -11,6 +12,7 @@
 typedef struct{
 	button* (*buttons);
 	unsigned char buttons_size;
+	char selected_button;
 } menu;
 /** @} end of Menu Information Struct */
 
@@ -54,6 +56,34 @@ void menu_draw(menu* m);
  * @return Returns 1 if a button was clicked. Returns 0 otherwise.
  */
 unsigned char click_button(menu* m, unsigned short x, unsigned short y);
+
+/**
+ * @brief Select previous button on screen
+ *
+ * @param m Menu info
+ */
+unsigned char previous_button(menu* m);
+
+/**
+ * @brief Select next button on screen
+ *
+ * @param m Menu info
+ */
+unsigned char next_button(menu* m);
+
+/**
+ * @brief Resets button selection
+ *
+ * @param m Menu info
+ */
+void cancel_button(menu* m);
+
+/**
+ * @brief Pressed the selected button by calling its function
+ *
+ * @param m Menu info
+ */
+unsigned char press_selected_button(menu* m);
 
 /**
  * @brief Deletes and frees menu and its buttons.

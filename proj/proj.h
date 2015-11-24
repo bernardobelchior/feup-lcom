@@ -5,7 +5,9 @@
 #include "menu.h"
 
 enum game_state { main_menu, singleplayer, multiplayer, highscore, options };
+enum singleplayer_controller { mouse, keyboard };
 
+enum singleplayer_controller controller;
 enum game_state state;
 menu* start_menu;
 
@@ -20,16 +22,16 @@ menu* start_menu;
 int main(int argc, char **argv);
 
 /**
- * @brief Starts the game and handles interrupts.
+ * @brief Initializes mouse, interrupts, creates main menu and handles interrupts.
  *
  * @return Returns 0 on success and non-zero otherwise.
  */
 int start();
 
 /**
- * @brief Initializes game and start menu.
+ * @brief Initializes start menu.
  */
-void game_init();
+void start_menu_init();
 
 /**
  * @brief Unsubscribes the used interrupts. Deletes menus and leaves program.

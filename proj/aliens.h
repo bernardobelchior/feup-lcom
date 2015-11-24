@@ -9,7 +9,7 @@ typedef struct{
 	char *mem_pos;
 	int width, height;
 	enum alien_type type;
-} Alien;
+} alien;
 
 int alien_init(int xpos, int ypos, enum alien_type type);
 int draw_alien();

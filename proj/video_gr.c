@@ -7,6 +7,7 @@
 #include "vbe.h"
 #include "timer.h"
 #include "read_xpm.h"
+#include "video_gr.h"
 
 /* Constants for VBE 0x105 mode */
 
@@ -137,7 +138,7 @@ int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width,
 	//Prints vertical lines
 	for (i = 1; i < height - 1; i++) {
 		vg_set_pixel(x, y + i, color);
-		vg_set_pixel(x + width, y + i, color);
+		vg_set_pixel(x + width - 1, y + i, color);
 	}
 
 	//Prints last line

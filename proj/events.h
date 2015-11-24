@@ -68,7 +68,7 @@ void lmb_pressed();
 //Timer Events
 
 /**
- * @brief Event thrown on every tick defined in timer.h
+ * @brief Event thrown on every tick defined in timer.h. Updates screen.
  */
 void tick();
 

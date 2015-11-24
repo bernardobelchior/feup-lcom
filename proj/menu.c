@@ -5,6 +5,7 @@ menu* create_menu(){
 	menu* m = (menu*) malloc(sizeof(menu));
 	m->buttons_size = 0;
 	m->buttons = 0;
+	m->selected_button = -1;
 	return m;
 }
 
@@ -29,6 +30,10 @@ void menu_draw(menu* m){
 	for(i = 0; i < m->buttons_size; i++){
 		button_draw(m->buttons[i]);
 	}
+	if(m->selected_button != -1){
+		button* selected = m->buttons[m->selected_button];
+		vg_draw_frame(selected->x - 5, selected->y - 5, selected->width + 10, selected->height + 10, selected->color);
+	}
 }
 
 unsigned char click_button(menu* m, unsigned short x, unsigned short y){
@@ -41,6 +46,35 @@ unsigned char click_button(menu* m, unsigned short x, unsigned short y){
 		}
 	}
 	return 0;
+}
+
+unsigned char previous_button(menu* m){
+	if(m->selected_button > 0){
+		m->selected_button--;
+		return 0;
+	}
+
+	return 1;
+}
+
+unsigned char next_button(menu* m){
+	if(m->selected_button < m->buttons_size - 1){
+		m->selected_button++;
+		return 0;
+	}
+
+	return 1;
+}
+
+void cancel_button(menu* m){
+	m->selected_button = -1;
+}
+
+unsigned char press_selected_button(menu* m){
+	if(m->selected_button == -1)
+		return 1;
+
+	(*(m->buttons[m->selected_button]->function))();
 }
 
 void delete_menu(menu* m){

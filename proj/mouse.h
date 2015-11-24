@@ -11,10 +11,10 @@
 typedef struct{
 	short x, y;
 	unsigned char rmb_pressed, mmb_pressed, lmb_pressed;
-} mouse_info;
+} mouse_info_t;
 /** @} end of Mouse Information Struct */
 
-mouse_info mouse;
+mouse_info_t mouse_info;
 
 /**
  * @brief Write to KBC
