@@ -149,7 +149,7 @@ int test_move(unsigned short xi, unsigned short yi, char *xpm[],
 
 int test_controller() {
 
-	/* To be completed */
+	return vg_get_controller_info();
 
 }
 

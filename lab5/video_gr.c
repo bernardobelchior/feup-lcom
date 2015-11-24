@@ -90,36 +90,34 @@ void *vg_init(unsigned short mode) {
 	video_mem = vm_map_phys(SELF, (void *) mr.mr_base,
 			info.XResolution * info.YResolution * info.BitsPerPixel / 8);
 
-	double_buffer = malloc(h_res*v_res*sizeof(char));
+	double_buffer = malloc(h_res * v_res * sizeof(char));
 
 	/*if(video_mem == MAP_FAILED)
 	 panic("video_txt couldn't map video memory");*/
 
-
-
 	return video_mem;
 }
 
-int vg_set_pixel(unsigned short x, unsigned short y, unsigned long color){
+int vg_set_pixel(unsigned short x, unsigned short y, unsigned long color) {
 	int ret = 0;
 
-	if(x < 0){
+	if (x < 0) {
 		x = 0;
 		ret = 1;
-	} else if(x >= h_res){
-		x = h_res-1;
+	} else if (x >= h_res) {
+		x = h_res - 1;
 		ret = 2;
 	}
 
-	if(y < 0){
+	if (y < 0) {
 		y = 0;
 		ret = 3;
-	} else if(y >= v_res){
-		y = v_res-1;
+	} else if (y >= v_res) {
+		y = v_res - 1;
 		ret = 4;
 	}
 
-	*(double_buffer + y*h_res + x) = color;
+	*(double_buffer + y * h_res + x) = color;
 
 	return ret;
 }
@@ -173,12 +171,12 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
 		if (m > -1 && m < 1) {
 			int i;
 			for (i = xi; i <= xf; i++) {
-				vg_set_pixel(i, offset*yi + (int) (m*i), color);
+				vg_set_pixel(i, offset * yi + (int) (m * i), color);
 			}
 		} else {
 			int i;
 			for (i = yi; i <= yf; i++) {
-				vg_set_pixel(offset*xi + (int) (i/m), i, color);
+				vg_set_pixel(offset * xi + (int) (i / m), i, color);
 			}
 		}
 	}
@@ -186,7 +184,8 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
 	return 0;
 }
 
-char vg_draw_pixmap(unsigned short xi, unsigned short yi, unsigned short width, unsigned short height, char *pixmap) {
+char vg_draw_pixmap(unsigned short xi, unsigned short yi, unsigned short width,
+		unsigned short height, char *pixmap) {
 	if (xi + width >= h_res || yi + height >= v_res || xi < 0 || yi < 0)
 		return 1;
 
@@ -207,33 +206,35 @@ char vg_draw_xpm(unsigned short xi, unsigned short yi, char *xpm[]) {
 	if ((pixmap = read_xpm(xpm, &width, &height)) == NULL)
 		return 1;
 
-	char ret = vg_draw_pixmap(xi, yi, (unsigned short) width, (unsigned short) height, pixmap);
+	char ret = vg_draw_pixmap(xi, yi, (unsigned short) width,
+			(unsigned short) height, pixmap);
 	free(pixmap);
 	return ret;
 }
 
-int vg_move_pixmap(unsigned short xi, unsigned short yi, unsigned short width, unsigned short height, char *pixmap,
-		unsigned short hor, float next_position) {
+int vg_move_pixmap(unsigned short xi, unsigned short yi, unsigned short width,
+		unsigned short height, char *pixmap, unsigned short hor,
+		float next_position) {
 
 	if (!hor) {
-		if (yi + height + (short) next_position >= (short) v_res){
+		if (yi + height + (short) next_position >= (short) v_res) {
 			vg_draw_pixmap(xi, v_res - height - 1, width, height, pixmap);
 			return 1;
 		}
 
-		if(yi + (short) next_position < 0){
+		if (yi + (short) next_position < 0) {
 			vg_draw_pixmap(xi, 0, width, height, pixmap);
 			return 1;
 		}
 
 		vg_draw_pixmap(xi, yi + (short) next_position, width, height, pixmap);
 	} else {
-		if (xi + width + (short) next_position >= (short) h_res){
+		if (xi + width + (short) next_position >= (short) h_res) {
 			vg_draw_pixmap(h_res - width - 1, width, height, yi, pixmap);
 			return 1;
 		}
 
-		if(xi + (short) next_position < 0){
+		if (xi + (short) next_position < 0) {
 			vg_draw_pixmap(0, yi, width, height, pixmap);
 			return 1;
 		}
@@ -244,24 +245,70 @@ int vg_move_pixmap(unsigned short xi, unsigned short yi, unsigned short width, u
 	return 0;
 }
 
-void vg_clear_screen(){
+void vg_clear_screen() {
 	unsigned short i, j;
-	for(i = 0; i < v_res; i++){
-		for(j = 0; j < h_res; j++){
-			*(double_buffer+i*h_res+j) = 0;
+	for (i = 0; i < v_res; i++) {
+		for (j = 0; j < h_res; j++) {
+			*(double_buffer + i * h_res + j) = 0;
 		}
 	}
 }
 
-int vg_update_screen(){
-	if(double_buffer == NULL)
+int vg_update_screen() {
+	if (double_buffer == NULL)
 		return 1;
 
-	memcpy(video_mem, double_buffer, h_res*v_res);
+	memcpy(video_mem, double_buffer, h_res * v_res);
 
 	vg_clear_screen();
 
 	return 0;
+}
+
+int vg_get_controller_info() {
+	vbe_controller_info_t info;
+	struct reg86u reg86;
+
+	if (lm_init() == NULL) {
+		printf("\tvg_get_controller_info(): lm_init() failed \n");
+		return NULL;
+	}
+
+	if (vbe_get_controller_info(mode, &info) != OK) { // Gets info
+		printf("\tvg_get_controller_info(): vbe_get_controller_info() failed \n");
+		return NULL;
+	}
+
+	printf("\tCapabilites:\n");
+
+	if(info.Capabilities[0] & BIT(0))
+		printf("\t\tDAC width is switchable to 8 bits per primary color.\n");
+
+	else
+		printf("\t\tDAC is fixed width, with 6 bits per primary color.\n");
+
+
+	if(info.Capabilities[0] & BIT(1))
+		printf("\t\tController is not VGA compatible.\n");
+
+	else
+		printf("\t\tController is VGA compatible.\n");
+
+
+	if(info.Capabilities[0] & BIT(2))
+		printf("\t\tWhen programming large blocks of information to the RAMDAC, use the blank bit in Function 09h.\n");
+
+	else
+		printf("\t\tNormal RAMDAC operation.\n");
+
+
+	printf('\n');
+
+	unsigned char i = 0;
+	while(*(info.VideoModePtr + i) != -1){
+		printf("0x%x\n", *(info.VideoModePtr + i));
+	}
+
 }
 
 int vg_exit() {
