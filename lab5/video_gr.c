@@ -265,17 +265,6 @@ int vg_update_screen() {
 	return 0;
 }
 
-int vg_get_controller_info() {
-	struct reg86u reg86;
-
-
-	/*if (vbe_get_controller_info(info) != OK) { // Gets info
-		printf("\tvg_get_controller_info(): vbe_get_controller_info() failed \n");
-		return 1;
-	}*/
-
-	return 0;
-}
 
 int vg_exit() {
 	struct reg86u reg86;
