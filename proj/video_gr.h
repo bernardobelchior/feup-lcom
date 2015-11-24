@@ -28,6 +28,17 @@ void *vg_init(unsigned short mode);
 int vg_exit(void);
 
 /**
+ * @brief Sets the pixel in the (x,y) to the color passed as argument
+ *
+ * @param x Position of the pixel in the x axis
+ * @param y Position of the pixel in the y axis
+ * @param color Color to color the pixel with
+ *
+ * @return Returns 0 on sucess. Returns 1 if x < 0; 2 if x >= h_res; 3 if y < 0; 4 if y >= v_res.
+ */
+int vg_set_pixel(unsigned short x, unsigned short y, unsigned long color);
+
+/**
 * @brief Draws a frame starting on (x,y) with specified width, height and color
 *
 * @param x x
@@ -54,9 +65,47 @@ int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width, unsi
 int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsigned short yf, unsigned long color);
 
 /**
+ * @brief Draws a pixmap on position (xi,yi)
+ *
+ * @param xi Pixmap x position
+ * @param yi Pixmap y position
+ * @param pixmap Pixmap to draw
+ */
+char vg_draw_pixmap(unsigned short xi, unsigned short yi, unsigned short width, unsigned short height, char *pixmap);
+
+/**
+ * @brief Draws xpm on position (xi,yi). Converts xpm to pixmap and calls draw_pixmap.
+ *
+ * @param xi xpm x position
+ * @param yi xpm y position
+ * @param xpm xpm to draw
+ */
+char vg_draw_xpm(unsigned short xi, unsigned short yi, char *xpm[]);
+
+/**
+ * @brief Moves a pixmap vertically or horizontally
+ *
+ * @parax xi initial x position
+ * @param yi initial y position
+ * @param xpm xpm to move
+ * @param hor 0 if vertical movement, 1 if horizontal movement
+ * @param delta distance in pixels to move
+ * @param time time for the movement to be completed
+ */
+int vg_move_pixmap(unsigned short xi, unsigned short yi, unsigned short width, unsigned short height, char *pixmap,
+		unsigned short hor, float next_position);
+
+/**
  * @brief Clear screen by setting all pixels to black
  */
 void vg_clear_screen();
+
+/**
+ * @brief Updates screen by bringing double buffer to the screen, and clear the double buffer.
+ *
+ * @return Returns 0 on success and non-zero otherwise.
+ */
+int vg_update_screen();
 
  /** @} end of video_gr */
  
