@@ -20,7 +20,6 @@ int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p) {
 	}
 
 	reg86.u.b.intno = BIOS_VIDEO_INT;
-	-
 
 	reg86.u.w.ax = VBE_MODE_INFO;
 	reg86.u.w.cx = mode;
@@ -56,14 +55,20 @@ int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p) {
 	return 0;
 }
 
-int vbe_get_controller_info(vbe_controller_info_t *vci_p) {
+vbe_controller_info_t* vbe_get_controller_info() {
+	vbe_controller_info_t * info = (vbe_controller_info_t *) malloc(sizeof(vbe_controller_info_t ));
 	struct reg86u reg86;
 	mmap_t map;
 
-	if (lm_alloc(sizeof(vbe_controller_info_t), &map) == NULL) {
+	if ((info = (vbe_controller_info_t *) lm_alloc(sizeof(vbe_controller_info_t), &map)) == NULL) {
 		printf("\tvbe_get_controller_info(): lm_alloc() failed \n");
-		return 1;
+		return NULL;
 	}
+
+	info->VbeSignature[0] = 'V';
+	info->VbeSignature[1] = 'B';
+	info->VbeSignature[2] = 'E';
+	info->VbeSignature[3] = '2';
 
 	reg86.u.b.intno = BIOS_VIDEO_INT;
 
@@ -74,32 +79,31 @@ int vbe_get_controller_info(vbe_controller_info_t *vci_p) {
 
 	if (sys_int86(&reg86) != OK) {
 		printf("\tvbe_get_controller_info(): sys_int86() failed. \n");
-		return 1;
+		return NULL;
 	}
 
 	switch (reg86.u.w.ax) {
 	case VBE_FUNC_CALL_FAILED:
 		printf(
 				"\tvbe_get_controller_info(): sys_int86() function call failed.\n");
-		return 1;
+		return NULL;
 		break;
 	case VBE_FUNC_NOT_SUPPORTED:
 		printf(
 				"\tvbe_get_controller_info(): sys_int86()  function not supported.\n");
-		return 2;
+		return NULL;
 		break;
 	case VBE_FUNC_INVALID_CUR_MODE:
 		printf(
 				"\tvbe_get_controller_info():  sys_int86() function invalid in current video mode.\n");
-		return 3;
+		return NULL;
 		break;
 	}
 
-	*vci_p = *((vbe_controller_info_t *) map.virtual);
+	info = map.virtual;
 
 	lm_free(&map);
 
-	return 0;
-
+	return info;
 }
 

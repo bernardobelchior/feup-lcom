@@ -102,7 +102,7 @@ typedef struct {
 
 
 typedef struct{
-	uint8_t VbeSignature[4]="VBE2"; /* VBE Signature */
+	uint8_t VbeSignature[4]; /* VBE Signature */
 	uint16_t VbeVersion;/* VBE Version */
 	phys_bytes OemStringPtr;/* Pointer to OEM String */
 	uint8_t Capabilities[4];/* Capabilities of graphics controller */
@@ -135,6 +135,13 @@ typedef struct{
  * @return 0 on success, non-zero otherwise
  */
 int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p);
+
+/**
+ * @brief Returns controller info
+ *
+ * @return pointer to vbe_controller_info_t
+ */
+vbe_controller_info_t* vbe_get_controller_info();
 
  /** @} end of vbe */
 

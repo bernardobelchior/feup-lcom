@@ -266,49 +266,56 @@ int vg_update_screen() {
 }
 
 int vg_get_controller_info() {
-	vbe_controller_info_t info;
 	struct reg86u reg86;
 
 	if (lm_init() == NULL) {
 		printf("\tvg_get_controller_info(): lm_init() failed \n");
-		return NULL;
+		return 1;
 	}
 
-	if (vbe_get_controller_info(mode, &info) != OK) { // Gets info
+	vbe_controller_info_t *info = vbe_get_controller_info();
+	/*if (vbe_get_controller_info(info) != OK) { // Gets info
 		printf("\tvg_get_controller_info(): vbe_get_controller_info() failed \n");
-		return NULL;
-	}
+		return 1;
+	}*/
 
-	printf("\tCapabilites:\n");
+	printf("\tCapabilities:\n");
 
-	if(info.Capabilities[0] & BIT(0))
+	if(info->Capabilities[0] & BIT(0))
 		printf("\t\tDAC width is switchable to 8 bits per primary color.\n");
 
 	else
 		printf("\t\tDAC is fixed width, with 6 bits per primary color.\n");
 
 
-	if(info.Capabilities[0] & BIT(1))
+	if(info->Capabilities[0] & BIT(1))
 		printf("\t\tController is not VGA compatible.\n");
 
 	else
 		printf("\t\tController is VGA compatible.\n");
 
 
-	if(info.Capabilities[0] & BIT(2))
+	if(info->Capabilities[0] & BIT(2))
 		printf("\t\tWhen programming large blocks of information to the RAMDAC, use the blank bit in Function 09h.\n");
 
 	else
 		printf("\t\tNormal RAMDAC operation.\n");
 
 
-	printf('\n');
+	printf("\n");
 
-	unsigned char i = 0;
-	while(*(info.VideoModePtr + i) != -1){
-		printf("0x%x\n", *(info.VideoModePtr + i));
-	}
+	/*unsigned long *p =  << 16;
+	unsigned short i = 0;
+	while(*((short *)info.VideoModePtr + i) != -1){
+		printf("0x%x\n", *((short *)info.VideoModePtr + i));
+		i++;
+	}*/
 
+	printf("\t\tTotal memory: %dKB\n", info->TotalMemory*64);
+
+	free(info);
+
+	return 0;
 }
 
 int vg_exit() {

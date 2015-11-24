@@ -152,16 +152,16 @@ static int proc_args(int argc, char *argv[]) {
 		return test_move(x, y, penguin, hor,delta,time);
 
 	}
-	/*else if (strncmp(argv[1], "test_controller", strlen("test_controller")) == 0) {
+	else if (strncmp(argv[1], "test_controller", strlen("test_controller")) == 0) {
 		if (argc != 2) {
 			printf("VBE: wrong no of arguments for test of test_controller() \n");
 			return 1;
 		}
 
-		printf("VBE::test_xpm()\n");
+		printf("VBE::test_controller()\n");
 		return test_controller();
 
-	}*/
+	}
 	else {
 		printf("VBE: non valid function \"%s\" to test\n", argv[1]);
 		return 1;
