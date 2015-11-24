@@ -56,7 +56,7 @@ int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p) {
 }
 
 int vbe_get_controller_info() {
-	vbe_controller_info_t * info;// = (vbe_controller_info_t *) malloc(sizeof(vbe_controller_info_t ));
+	vbe_controller_info_t * info;
 	struct reg86u reg86;
 	mmap_t map;
 
@@ -126,10 +126,10 @@ int vbe_get_controller_info() {
 
 	printf("\n");
 
-	/*unsigned long *p =  << 16;
+	/*unsigned long *p = (unsigned long *) ((unsigned int)(info) * 0x10 + (unsigned int) (info->VideoModePtr));
 	unsigned short i = 0;
-	while(*((short *)info.VideoModePtr + i) != -1){
-		printf("0x%x\n", *((short *)info.VideoModePtr + i));
+	while((short) *(p + i) != -1){
+		printf("0x%x\n", (short) *(p + i));
 		i++;
 	}*/
 
