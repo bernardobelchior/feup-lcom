@@ -59,8 +59,8 @@ int player_move(player *p1, short x){
 }
 
 int player_set_x_pos(player *p1, unsigned short x){
-	if(x >= 1024){
-		p1->cannonxpos = 1024;
+	if(x + SHIP_WIDTH >= 1024){
+		p1->cannonxpos = 1024 - SHIP_WIDTH;
 		return 1;
 	}
 
