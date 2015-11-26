@@ -266,8 +266,8 @@ int vg_update_screen() {
 	return 0;
 }
 
-void* vg_get_video_mem(){
-	return video_mem;
+void* vg_get_double_buffer(){
+	return double_buffer;
 }
 
 int vg_exit() {

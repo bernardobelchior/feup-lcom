@@ -74,6 +74,6 @@ void mouse_init();
  *
  * @param mouse Information about the mouse position and state
  */
-void draw_mouse();
+void mouse_draw();
 
 #endif

@@ -33,7 +33,7 @@ int start() {
 	unsigned short counter = 0;
 
 	state = main_menu;
-	controller = keyboard;
+	controller = mouse;
 	mouse_init();
 	start_menu_init();
 	vg_init(VBE_VIDEO_MODE);
@@ -97,12 +97,16 @@ void start_menu_init(){
 	menu_add_button(start_menu, exit);
 }
 
+void start_menu_destruct(){
+	delete_menu(start_menu);
+}
+
 void leave(){
 	timer_unsubscribe_int();
 	kb_unsubscribe_int();
 	mouse_unsubscribe_int();
 	empty_out_buf();
-	delete_menu(start_menu);
+	start_menu_destruct();
 	vg_exit();
 	exit(0);
 }

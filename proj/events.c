@@ -109,13 +109,17 @@ void key_pressed(unsigned long key) {
 		switch (key) {
 		case ESC_MAKECODE: //TODO add a pause menu
 			singleplayer_destruct();
+			start_menu_init();
 			state = main_menu;
 			break;
 		case RIGHT_ARROW_MAKECODE:
-			singleplayer_move(20);
+			singleplayer_move(40);
 			break;
 		case LEFT_ARROW_MAKECODE:
-			singleplayer_move(-20);
+			singleplayer_move(-40);
+			break;
+		case SPACE_MAKECODE:
+			singleplayer_fire();
 			break;
 		}
 		break;
@@ -175,6 +179,8 @@ void lmb_released() {
 }
 
 void lmb_pressed() {
+	if(state == singleplayer && controller == mouse)
+		singleplayer_fire(); //TODO if the player is still pressing the lmb, the ship must fire at a fixed rate
 	//printf("Left mouse button pressed.\n");
 }
 
@@ -182,7 +188,7 @@ void tick() {
 	switch (state) {
 	case main_menu:
 		menu_draw(start_menu);
-		draw_mouse();
+		mouse_draw();
 		break;
 	case singleplayer:
 		singleplayer_tick();

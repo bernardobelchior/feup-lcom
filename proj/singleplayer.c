@@ -5,6 +5,9 @@ extern enum singleplayer_controller controller;
 extern enum game_state state;
 
 void singleplayer_init() {
+	if(state == main_menu)
+		start_menu_destruct();
+
 	if((singleplayer_game.aliens = (alien*) malloc(ALIENS_PER_ROW * ALIEN_ROWS * sizeof(alien))) == NULL)
 		return;
 
@@ -20,11 +23,17 @@ void singleplayer_init() {
 }
 
 void singleplayer_tick(){
-	draw_player(singleplayer_game.play);
+	if(controller == mouse)
+		player_set_x_pos(singleplayer_game.play, mouse_info.x);
+	player_draw(singleplayer_game.play);
 }
 
 int singleplayer_move(short x){
-	return move_player(singleplayer_game.play, x);
+	return player_move(singleplayer_game.play, x);
+}
+
+int singleplayer_fire(){
+	return player_fire(singleplayer_game.play);
 }
 
 void singleplayer_destruct() {

@@ -34,6 +34,11 @@ int start();
 void start_menu_init();
 
 /**
+ * @brief Destructs start menu.
+ */
+void start_menu_destruct();
+
+/**
  * @brief Unsubscribes the used interrupts. Deletes menus and leaves program.
  */
 void leave();

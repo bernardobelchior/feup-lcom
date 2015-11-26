@@ -96,6 +96,6 @@ void mouse_init(){
 	mouse_info.lmb_pressed = 0;
 }
 
-void draw_mouse(){
+void mouse_draw(){
 	vg_draw_frame(mouse_info.x, mouse_info.y, 5, 5, 3);
 }

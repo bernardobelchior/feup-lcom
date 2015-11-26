@@ -9,18 +9,19 @@ player* player_init() {
 		return NULL;
 	}
 
-	//unsigned char *vmem = vg_get_video_mem();
+	//unsigned char *vmem = vg_get_double_buffer();
 
 	p1->num_lives = NUM_LIVES; //TODO implementar dificuldade??
-	p1->cannonxpos = INITIAL_CANNON_POS;// metade do ecra TODO consts simbolicas?
-	p1->ypos = INITIAL_SHIP_POS; // 9/10 do ecra
-	//p1->velocity =  TODO ver numlifes
+	p1->cannonxpos = PLAYER_INITIAL_X_POS;
+	p1->ypos = PLAYER_INITIAL_Y_POS;
+	//p1->velocity =
+	//TODO ver numlifes
 	//p1->mem_pos = vmem+ p1->ypos*768 + p1->cannonxpos;
 
 	return p1;
 }
 
-int draw_player(player *p1){
+int player_draw(player *p1){
 	vg_draw_frame(p1->cannonxpos, p1->ypos, SHIP_WIDTH, SHIP_HEIGHT, 3);
 }
 
@@ -42,7 +43,7 @@ void player_hit(player *p1) {	//TODO
 	}
 }
 
-int move_player(player *p1, short x){
+int player_move(player *p1, short x){
 	if(p1->cannonxpos + x < 0){
 		p1->cannonxpos = 0;
 		return 1;
@@ -54,6 +55,21 @@ int move_player(player *p1, short x){
 	}
 
 	p1->cannonxpos += x;
+	return 0;
+}
+
+int player_set_x_pos(player *p1, unsigned short x){
+	if(x >= 1024){
+		p1->cannonxpos = 1024;
+		return 1;
+	}
+
+	if(x < 0){
+		p1->cannonxpos = 0;
+		return 1;
+	}
+
+	p1->cannonxpos = x;
 	return 0;
 }
 
