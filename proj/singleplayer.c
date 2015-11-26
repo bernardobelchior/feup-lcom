@@ -12,10 +12,10 @@ void singleplayer_init() {
 
 	singleplayer_game.score = 0;
 
-	if( (singleplayer_game.play = player_init) == NULL)
+	if( (singleplayer_game.play = player_init()) == NULL)
 		return;
 
-	draw_player(&singleplayer_game.play);
+	draw_player(singleplayer_game.play);
 
 	wait(3);
 }
@@ -27,5 +27,4 @@ void singleplayer_tick(){
 void singleplayer_destruct() {
 	free(singleplayer_game.aliens);
 	free(singleplayer_game.shields);
-	free(singleplayer_game);
 }

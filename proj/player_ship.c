@@ -1,8 +1,8 @@
 #include "player_ship.h"
 
-Player *player_init(unsigned short y, unsigned short x) {
+player* player_init() {
 
-	Player *p1 = (Player *) malloc(sizeof(Player));
+	player *p1 = (player *) malloc(sizeof(player));
 
 	if (p1 == NULL) {
 		printf("\tplayer_init(): malloc failed!\n");
@@ -11,30 +11,32 @@ Player *player_init(unsigned short y, unsigned short x) {
 
 	unsigned char *vmem = vg_get_video_mem();
 
-	p1->numlifes = 3; //TODO implementar dificuldade??
-	p1->cannonxpos = 512// metade do ecrã TODO consts simbolicas?
-	p1->ypos = 77; // 1/10 do ecra
+	p1->num_lives = NUM_LIVES; //TODO implementar dificuldade??
+	p1->cannonxpos = 512;// metade do ecrã TODO consts simbolicas?
+	p1->ypos = 700; // 9/10 do ecra
 	//p1->velocity =  TODO ver numlifes
-	p1->mempos = vmem+ ypos*768 + cannonxpos;
+	p1->mem_pos = vmem+ p1->ypos*768 + p1->cannonxpos;
+
 	return p1;
 }
 
 int draw_player(player *p1){
 	vg_draw_frame(p1->cannonxpos, p1->ypos, 10, 10, 3);
+	vg_update_screen();
 }
 
 //int move_player; TODO
 
-int player_fire(Player *p1) {
+int player_fire(player *p1) {
 	//CRIAR PROJECTILE TODO
 }
 
-void player_hit(Player *p1) {	//TODO
+void player_hit(player *p1) {	//TODO
 
 	//faz animacao do jogador atingido
 
-	if (p1->numlifes > 1) {
-		p1->numlifes--;
+	if (p1->num_lives > 1) {
+		p1->num_lives--;
 		//volta a desenhar o jogador //TODO
 	}
 
@@ -43,7 +45,7 @@ void player_hit(Player *p1) {	//TODO
 	}
 }
 
-int player_game_over (Player *p1){
+int player_game_over (player *p1){
 
 	free(p1);
 	//vai para ecra de gameover; TODO

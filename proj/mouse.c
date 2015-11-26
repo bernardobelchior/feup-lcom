@@ -2,6 +2,7 @@
 #include <minix/drivers.h>
 #include "mouse.h"
 #include "video_gr.h"
+#include "timer.h"
 
 extern mouse_info_t mouse_info;
 unsigned int time = 0;

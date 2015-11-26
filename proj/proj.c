@@ -15,6 +15,7 @@ extern menu* start_menu;
 
 int main(int argc, char **argv) {
 	sef_startup();
+	vg_exit();//TODO ELIMINAR
 	start();
 	leave();
 	return 0;

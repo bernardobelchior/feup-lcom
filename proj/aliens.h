@@ -11,9 +11,9 @@ typedef struct{
 	enum alien_type type;
 } alien;
 
-Alien* alien_init(int xpos, int ypos, enum alien_type type);
-int draw_alien(Alien* a1);
-int move_alien(Alien* a1);
-int alien_hit(Alien* a1);
+alien* alien_init(int xpos, int ypos, enum alien_type type);
+int draw_alien(alien* a1);
+int move_alien(alien* a1);
+int alien_hit(alien* a1);
 
 #endif
