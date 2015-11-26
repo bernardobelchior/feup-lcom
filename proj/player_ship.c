@@ -12,8 +12,8 @@ player* player_init() {
 	//unsigned char *vmem = vg_get_double_buffer();
 
 	p1->num_lives = NUM_LIVES; //TODO implementar dificuldade??
-	p1->cannonxpos = PLAYER_INITIAL_X_POS;
-	p1->ypos = PLAYER_INITIAL_Y_POS;
+	p1->x = PLAYER_INITIAL_X_POS;
+	p1->y = PLAYER_INITIAL_Y_POS;
 	//p1->velocity =
 	//TODO ver numlifes
 	//p1->mem_pos = vmem+ p1->ypos*768 + p1->cannonxpos;
@@ -22,11 +22,11 @@ player* player_init() {
 }
 
 int player_draw(player *p1){
-	vg_draw_frame(p1->cannonxpos, p1->ypos, SHIP_WIDTH, SHIP_HEIGHT, 3);
+	vg_draw_frame(p1->x, p1->y, SHIP_WIDTH, SHIP_HEIGHT, 3);
 }
 
-int player_fire(player *p1) {
-	//CRIAR PROJECTILE TODO
+projectile *player_fire(player *p1) {
+	return projectile_init((int) (p1->x+SHIP_WIDTH/2), p1->y-1, -5);
 }
 
 void player_hit(player *p1) {	//TODO
@@ -35,42 +35,44 @@ void player_hit(player *p1) {	//TODO
 
 	if (p1->num_lives > 1) {
 		p1->num_lives--;
-		//volta a desenhar o jogador //TODO
-	}
-
-	else {
+		p1->x = PLAYER_INITIAL_X_POS;
+		p1->y = PLAYER_INITIAL_Y_POS;
+	} else
 		player_game_over(p1);
-	}
 }
 
 int player_move(player *p1, short x){
-	if(p1->cannonxpos + x < 0){
-		p1->cannonxpos = 0;
+	if(p1->x + x < 0){
+		p1->x = 0;
 		return 1;
 	}
 
-	if(p1->cannonxpos + x + SHIP_WIDTH >= 1024){
-		p1->cannonxpos = 1024 - SHIP_WIDTH;
+	if(p1->x + x + SHIP_WIDTH >= 1024){
+		p1->x = 1024 - SHIP_WIDTH;
 		return 1;
 	}
 
-	p1->cannonxpos += x;
+	p1->x += x;
 	return 0;
 }
 
 int player_set_x_pos(player *p1, unsigned short x){
 	if(x + SHIP_WIDTH >= 1024){
-		p1->cannonxpos = 1024 - SHIP_WIDTH;
+		p1->x = 1024 - SHIP_WIDTH;
 		return 1;
 	}
 
 	if(x < 0){
-		p1->cannonxpos = 0;
+		p1->x = 0;
 		return 1;
 	}
 
-	p1->cannonxpos = x;
+	p1->x = x;
 	return 0;
+}
+
+int player_check_collision(player* p1, unsigned short x, unsigned short y){//TODO make a better check because an object can collide with another, even thought his x,y position doesnt
+	return ((x > p1->x && x < p1->x + SHIP_WIDTH) && (y > p1->y && y < p1->y + SHIP_HEIGHT));
 }
 
 int player_game_over (player *p1){

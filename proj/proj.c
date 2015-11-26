@@ -32,8 +32,7 @@ int start() {
 	unsigned char packet[3];
 	unsigned short counter = 0;
 
-	state = main_menu;
-	controller = mouse;
+	controller = keyboard;
 	mouse_init();
 	start_menu_init();
 	vg_init(VBE_VIDEO_MODE);
@@ -83,6 +82,7 @@ void test_function(){//TODO delete this funcion
 }
 
 void start_menu_init(){
+	state = main_menu;
 	start_menu = create_menu();
 
 	button* singleplayer = create_button(400, 210, 200, 90, &singleplayer_init, 2);

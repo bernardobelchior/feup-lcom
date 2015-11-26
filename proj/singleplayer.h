@@ -6,9 +6,11 @@
 #include "player_ship.h"
 
 typedef struct {
-	alien* aliens;
-	shield* shields;
+	alien* (*aliens);
+	shield* (*shields);
 	player* play;
+	projectile* (*projectiles);
+	unsigned char num_projectiles;
 	unsigned int score;
 } game_t;
 
@@ -45,6 +47,27 @@ int singleplayer_move(short x);
  * @return Returns 0 if the position is valid, non-zero otherwise.
  */
 int singleplayer_set_x_pos(unsigned short x);
+
+/**
+ * @brief Checks whether each one of the projectiles collide with any object or has reached the end of screen. If it did, deletes it.
+ */
+void singleplayer_check_projectiles_state();
+
+/**
+ * @brief Check if the projectile collides with any object and handles its consequences.
+ *
+ * @param proj Projectile to check collisions
+ *
+ * @return Returns 0 if the projectile does not collide with anything, returning non-zero otherwise.
+ */
+int singleplayer_projectile_collision(projectile* proj);
+
+/**
+ * @brief Deletes projectile at proj_index and rearranges the array.
+ *
+ * @return Returns 0 if the deletion was successful, returning non-zero otherwise.
+ */
+int singleplayer_delete_projectile(unsigned int proj_index);
 
 /**
  * @brief Deletes singleplayer game information

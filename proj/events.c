@@ -110,28 +110,29 @@ void key_pressed(unsigned long key) {
 		case ESC_MAKECODE: //TODO add a pause menu
 			singleplayer_destruct();
 			start_menu_init();
-			state = main_menu;
-			break;
 		case RIGHT_ARROW_MAKECODE:
-			singleplayer_move(40);
+			if(controller == keyboard)
+				singleplayer_move(40);
 			break;
 		case LEFT_ARROW_MAKECODE:
-			singleplayer_move(-40);
+			if(controller == keyboard)
+				singleplayer_move(-40);
 			break;
 		case SPACE_MAKECODE:
-			singleplayer_fire();
+			if(controller == keyboard)
+				singleplayer_fire();
 			break;
 		}
 		break;
-	case multiplayer:
+		case multiplayer:
 
-		break;
-	case highscore:
+			break;
+		case highscore:
 
-		break;
-	case options:
+			break;
+		case options:
 
-		break;
+			break;
 	}
 }
 

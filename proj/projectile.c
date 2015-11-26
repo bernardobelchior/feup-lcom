@@ -1,27 +1,28 @@
 #include "projectile.h"
 
-Projectile *projectile_init() {
+projectile *projectile_init(unsigned short x, unsigned short y, int velocity) {
+	projectile *proj = (projectile *) malloc(sizeof(projectile));
 
-	Projectile *proj1 = (Projectile *) malloc(sizeof(Projectile));
-
-	proj1->xpos = x;
-	proj1->ypos = y;
-	//proj1->velocity = TODO
+	proj->x = x;
+	proj->y = y;
+	proj->velocity = velocity;
 	//inicializar mem pos
+
+	return proj;
 }
 
-int projectile_draw(Projectile *proj) {
-	//desenha projetil
+int projectile_draw(projectile *proj) {
+	vg_draw_frame(proj->x, proj->y, 5, 5, 5);
 
 	return 1;
 }
 
-int delete_projectile(Projectile *proj){
+int projectile_delete(projectile *proj){
 	free(proj);
 }
 
-int move_projectile(Projectile *proj) {
-
+int projectile_move(projectile *proj) {
+	proj->y += proj->velocity;
 	//if (cor do proximo pixel != cor do alien ou jogador ou escudo
 	//faz projectile_draw na posicao x+velocity;
 
@@ -30,10 +31,10 @@ int move_projectile(Projectile *proj) {
 	return 1;
 }
 
-int collision(Projectile* proj, unsigned char color, unsigned short x, unsigned short y) {
+int collision(projectile* proj, unsigned char color, unsigned short x, unsigned short y) {
 	//verifica qual a cor do objeto atingido, e lanca a funcao apropriada
 
-	delete_projectile(proj);
+	projectile_delete(proj);
 	return 1;
 }
 
@@ -51,4 +52,7 @@ int shield_collision(unsigned short x, unsigned short y){
 	return 1;
 }
 
+int projectile_reached_end(projectile *proj){
+	return (proj->y < END_AT_TOP || proj->y > END_AT_BOTTOM);
+}
 
