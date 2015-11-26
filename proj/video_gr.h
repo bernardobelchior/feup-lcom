@@ -107,6 +107,10 @@ void vg_clear_screen();
  */
 int vg_update_screen();
 
+/**
+ * @brief returns video memory pointer.
+ */
+void *vg_get_video_mem();
  /** @} end of video_gr */
  
 #endif /* __VIDEO_GR_H */

@@ -266,6 +266,9 @@ int vg_update_screen() {
 	return 0;
 }
 
+void* vg_get_video_mem(){
+	return video_mem;
+}
 
 int vg_exit() {
 	struct reg86u reg86;

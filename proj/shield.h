@@ -12,7 +12,10 @@ typedef struct{
 } shield;
 
 typedef struct{
-
+	//TODO
+	unsigned short xpos, ypos;
+	unsigned char durability;
+	char *mem_pos;
 } shield_sprite;
 
 //int shield_init

@@ -8,7 +8,8 @@
 typedef struct {
 	alien* aliens;
 	shield* shields;
-	player play;
+	player* play;
+	unsigned int score;
 } game_t;
 
 game_t singleplayer_game;

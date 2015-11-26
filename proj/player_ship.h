@@ -3,6 +3,9 @@
 
 #include "keyboard.h"
 #include "timer.h"
+#include "video_gr.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 #define NUM_LIVES 3
 
@@ -10,14 +13,15 @@ typedef struct{
 	int num_lives;
 	int ypos, cannonxpos;
 	int velocity;
-	char *mem_pos;
+	unsigned char *mem_pos;
 } player;
 
-int player_init(); //allocates the struct and set num_lives
-int move_player(); //Keyboard interrupt handler for left and right arrow keys
-int player_fire(); //Keyboard handler for Spacebar (in singleplayer)
-int draw_player(); //Places the ship on the screen
-int player_hit(); //Animation for the player destruction
+player* player_init(); //allocates the struct and set num_lives
+int move_player(player *p1); //Keyboard interrupt handler for left and right arrow keys
+int draw_player(player *p1); //Places the cannon on the screen
+int player_fire(player *p1); //Keyboard handler for Spacebar (in singleplayer)
+void player_hit(player *p1); //Animation for the player destruction
+int player_game_over(player *p1); //Frees the player struct
 
 
 #endif /*__PLAYER_SHIP_H*/
