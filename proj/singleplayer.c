@@ -70,26 +70,28 @@ int singleplayer_projectile_collision(projectile* proj){
 		return 1;
 	}
 
-
 	unsigned char i;
+	//for(i = 0; i < NUMBER_OF_SHIELDS; i++){
+		for(i = 0; i < 0; i++){
+			//TODO check shield collision
+		}
+
+	//TODO add a bigger if to check if the projectile is in the "alien zone" in order to avoid checking 55 alines.
 	//for(i = 0; i < ALIENS_PER_ROW*ALIEN_ROWS; i++){
 	for(i = 0; i < 0; i++){
 		//TODO check alien collision
 	}
 
-	//for(i = 0; i < NUMBER_OF_SHIELDS; i++){
-	for(i = 0; i < 0; i++){
-		//TODO check shield collision
-	}
+
 }
 
 int singleplayer_move(short x){
 	return player_move(singleplayer_game.play, x);
 }
 
-int singleplayer_fire(){//TODO crashes when projectiles are more than 4 or 9, depending on the code
+int singleplayer_fire(){//TODO no longer crashes, commented reallocs.
 	singleplayer_game.num_projectiles++;
-	singleplayer_game.projectiles = (projectile**) realloc(singleplayer_game.projectiles, singleplayer_game.num_projectiles);
+	//singleplayer_game.projectiles = (projectile**) realloc(singleplayer_game.projectiles, singleplayer_game.num_projectiles);
 	if((*(singleplayer_game.projectiles + singleplayer_game.num_projectiles - 1) = player_fire(singleplayer_game.play)) == NULL){
 		singleplayer_game.num_projectiles--;
 		singleplayer_game.projectiles = (projectile**) realloc(singleplayer_game.projectiles, singleplayer_game.num_projectiles);
