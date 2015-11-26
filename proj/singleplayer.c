@@ -109,7 +109,7 @@ void singleplayer_destruct() {//TODO proper free
 	//for...
 	free(singleplayer_game.shields);
 
-	for(i = 0; i < singleplayer_game.num_projectiles; i++)
+	for(i = 0; i < 20; i++)
 		free(singleplayer_game.projectiles[i]);
 	free(singleplayer_game.projectiles);
 
