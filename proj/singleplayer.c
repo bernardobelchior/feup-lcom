@@ -2,6 +2,7 @@
 #include "proj.h"
 
 extern enum singleplayer_controller controller;
+extern enum game_state state;
 
 void singleplayer_init() {
 	if((singleplayer_game.aliens = (alien*) malloc(ALIENS_PER_ROW * ALIEN_ROWS * sizeof(alien))) == NULL)
@@ -15,13 +16,15 @@ void singleplayer_init() {
 	if( (singleplayer_game.play = player_init()) == NULL)
 		return;
 
-	draw_player(singleplayer_game.play);
-
-	wait(3);
+	state = singleplayer;
 }
 
 void singleplayer_tick(){
+	draw_player(singleplayer_game.play);
+}
 
+int singleplayer_move(short x){
+	return move_player(singleplayer_game.play, x);
 }
 
 void singleplayer_destruct() {

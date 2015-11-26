@@ -29,6 +29,13 @@ void singleplayer_init();
 void singleplayer_tick();
 
 /**
+ * @brief Moves the player in the x axis
+ *
+ * @param Differente on position
+ */
+int singleplayer_move(short x);
+
+/**
  * @brief Deletes singleplayer game information
  */
 void singleplayer_destruct();

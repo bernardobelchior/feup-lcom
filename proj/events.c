@@ -106,7 +106,17 @@ void key_pressed(unsigned long key) {
 		break;
 	}
 	case singleplayer:
-
+		switch (key) {
+		case ESC_MAKECODE:
+			leave();
+			break;
+		case RIGHT_ARROW_MAKECODE:
+			singleplayer_move(10);
+			break;
+		case LEFT_ARROW_MAKECODE:
+			singleplayer_move(-10);
+			break;
+		}
 		break;
 	case multiplayer:
 
@@ -186,7 +196,6 @@ void tick() {
 
 		break;
 	}
-
 	vg_update_screen();
 	//printf("Tick.\n");
 }
