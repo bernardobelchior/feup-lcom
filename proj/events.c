@@ -107,14 +107,15 @@ void key_pressed(unsigned long key) {
 	}
 	case singleplayer:
 		switch (key) {
-		case ESC_MAKECODE:
-			leave();
+		case ESC_MAKECODE: //TODO add a pause menu
+			singleplayer_destruct();
+			state = main_menu;
 			break;
 		case RIGHT_ARROW_MAKECODE:
-			singleplayer_move(10);
+			singleplayer_move(20);
 			break;
 		case LEFT_ARROW_MAKECODE:
-			singleplayer_move(-10);
+			singleplayer_move(-20);
 			break;
 		}
 		break;

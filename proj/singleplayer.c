@@ -30,4 +30,5 @@ int singleplayer_move(short x){
 void singleplayer_destruct() {
 	free(singleplayer_game.aliens);
 	free(singleplayer_game.shields);
+	player_destruct(singleplayer_game.play);
 }

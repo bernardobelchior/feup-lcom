@@ -21,7 +21,7 @@ player* player_init() {
 }
 
 int draw_player(player *p1){
-	vg_draw_frame(p1->cannonxpos, p1->ypos, 10, 10, 3);
+	vg_draw_frame(p1->cannonxpos, p1->ypos, SHIP_WIDTH, SHIP_HEIGHT, 3);
 }
 
 int player_fire(player *p1) {
@@ -48,8 +48,8 @@ int move_player(player *p1, short x){
 		return 1;
 	}
 
-	if(p1->cannonxpos + x >= 1024){ //TODO cannonxpos + x + width
-		p1->cannonxpos = 1023;
+	if(p1->cannonxpos + x + SHIP_WIDTH >= 1024){
+		p1->cannonxpos = 1024 - SHIP_WIDTH;
 		return 1;
 	}
 
@@ -58,7 +58,11 @@ int move_player(player *p1, short x){
 }
 
 int player_game_over (player *p1){
-
-	free(p1);
 	//vai para ecra de gameover; TODO
+	player_destruct(p1);
+	return 0;
+}
+
+void player_destruct(player *p1){
+	free(p1);
 }

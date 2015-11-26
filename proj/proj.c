@@ -85,15 +85,15 @@ void test_function(){//TODO delete this funcion
 void start_menu_init(){
 	start_menu = create_menu();
 
-	button* singleplayer = create_button(400, 110, 200, 90, &singleplayer_init, 2);
+	button* singleplayer = create_button(400, 210, 200, 90, &singleplayer_init, 2);
 	menu_add_button(start_menu, singleplayer);
-	button* multiplayer = create_button(400, 210, 200, 90, &test_function, 2);
+	button* multiplayer = create_button(400, 310, 200, 90, &test_function, 2);
 	menu_add_button(start_menu, multiplayer);
-	button* highscore = create_button(400, 310, 200, 90, &test_function, 2);
+	button* highscore = create_button(400, 410, 200, 90, &test_function, 2);
 	menu_add_button(start_menu, highscore);
-	button* options = create_button(400, 410, 200, 90, &test_function, 2);
+	button* options = create_button(400, 510, 200, 90, &test_function, 2);
 	menu_add_button(start_menu, options);
-	button* exit = create_button(400, 510, 200, 90, &leave, 2);
+	button* exit = create_button(400, 610, 200, 90, &leave, 2);
 	menu_add_button(start_menu, exit);
 }
 
