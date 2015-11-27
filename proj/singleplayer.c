@@ -10,9 +10,6 @@ void singleplayer_init() {
 
 	singleplayer_game.num_projectiles = 0;
 
-	if((singleplayer_game.aliens = (alien**) malloc(ALIENS_PER_ROW * ALIEN_ROWS * sizeof(alien*))) == NULL)
-		return;
-
 	if((singleplayer_game.shields = (shield**) malloc(NUMBER_OF_SHIELDS * sizeof(shield*))) == NULL)
 		return;
 
@@ -24,12 +21,27 @@ void singleplayer_init() {
 	if( (singleplayer_game.play = player_init()) == NULL)
 		return;
 
+	alien_list_init();
+
+	draw_aliens();
+
 	state = singleplayer;
+}
+
+void draw_aliens(){
+
+	alien* iterator = invaders->head;
+
+	while(iterator->next != NULL){
+		draw_alien(iterator);
+		iterator=iterator->next;
+	}
 }
 
 void singleplayer_tick(){
 	if(controller == mouse)
 		player_set_x_pos(singleplayer_game.play, mouse_info.x);
+	draw_aliens();
 	player_draw(singleplayer_game.play);
 	singleplayer_check_projectiles_state();
 }
@@ -76,7 +88,7 @@ int singleplayer_projectile_collision(projectile* proj){
 			//TODO check shield collision
 		}
 
-	//TODO add a bigger if to check if the projectile is in the "alien zone" in order to avoid checking 55 alines.
+	//TODO add a bigger if to check if the projectile is in the "alien zone" in order to avoid checking 55 aliens.
 	//for(i = 0; i < ALIENS_PER_ROW*ALIEN_ROWS; i++){
 	for(i = 0; i < 0; i++){
 		//TODO check alien collision
@@ -103,16 +115,14 @@ int singleplayer_fire(){//TODO no longer crashes, commented reallocs.
 void singleplayer_destruct() {//TODO proper free
 	unsigned char i;
 
-	//for...
-	free(singleplayer_game.aliens);
 
 	//for...
 	free(singleplayer_game.shields);
 
-	for(i = 0; i < 20; i++)
+	/*for(i = 0; i < 20; i++)
 		free(singleplayer_game.projectiles[i]);
-	free(singleplayer_game.projectiles);
+	free(singleplayer_game.projectiles); todo
 
-	player_destruct(singleplayer_game.play);
+	player_destruct(singleplayer_game.play);*/
 }
 

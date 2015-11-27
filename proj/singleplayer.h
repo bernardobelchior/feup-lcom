@@ -4,9 +4,9 @@
 #include "aliens.h"
 #include "shield.h"
 #include "player_ship.h"
+#include <stdio.h>
 
 typedef struct {
-	alien* (*aliens);
 	shield* (*shields);
 	player* play;
 	projectile* (*projectiles);
@@ -16,8 +16,6 @@ typedef struct {
 
 game_t singleplayer_game;
 
-#define ALIENS_PER_ROW 10
-#define ALIEN_ROWS 4
 #define NUMBER_OF_SHIELDS 4
 
 /**
@@ -29,6 +27,12 @@ void singleplayer_init();
  * @brief Event called when a tick occurs and the game state is singleplayer.
  */
 void singleplayer_tick();
+
+/**
+ * @brief draws all the aliens
+ */
+
+void draw_aliens();
 
 /**
  * @brief Moves the player in the x axis
