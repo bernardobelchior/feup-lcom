@@ -5,10 +5,11 @@
 
 #define ALIENS_PER_ROW 11
 #define ALIEN_ROWS 5
-#define INITIAL_XPOS 250
-#define INITIAL_YPOS 100
-#define ALIEN_WIDTH 20
-#define ALIEN_HEIGTH 10
+#define INITIAL_XPOS 50
+#define INITIAL_YPOS 50
+#define ALIEN_WIDTH 45
+#define ALIEN_HEIGTH 30
+#define ALIEN_SPACEMENT 10
 
 enum alien_type { SMALL, MEDIUM, LARGE, UFO};
 

@@ -1,8 +1,8 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
 
-#define END_AT_TOP 100
-#define END_AT_BOTTOM 700
+#define END_AT_TOP 50
+#define END_AT_BOTTOM 550
 
 typedef struct{
 	unsigned short x ,y;

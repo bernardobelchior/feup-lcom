@@ -9,8 +9,8 @@
 #include <stdio.h>
 
 #define NUM_LIVES 3
-#define PLAYER_INITIAL_X_POS 512
-#define PLAYER_INITIAL_Y_POS 700
+#define PLAYER_INITIAL_X_POS 400
+#define PLAYER_INITIAL_Y_POS 550
 #define SHIP_WIDTH 50
 #define SHIP_HEIGHT 30
 

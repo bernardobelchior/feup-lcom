@@ -18,13 +18,13 @@ void alien_list_init(){
 	for(counter = 0; counter <= invaders->alien_num; counter++){
 
 		if(counter % ALIENS_PER_ROW == 	0 ){
-			y += ALIEN_HEIGTH+5;
+			y += ALIEN_HEIGTH+ALIEN_SPACEMENT;
 			x = INITIAL_XPOS;
 			line++;
 		}
 
 		else
-			x += ALIEN_WIDTH + 5;
+			x += ALIEN_WIDTH + ALIEN_SPACEMENT;
 
 		if(line == 1)
 			type=1;
