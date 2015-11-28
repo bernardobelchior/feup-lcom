@@ -41,24 +41,24 @@ void player_hit(player *p1) {	//TODO
 		player_game_over(p1);
 }
 
-int player_move(player *p1, short x){
-	if(p1->x + x < 0){
+int player_move(player *p1, char direction){
+	if(p1->x + direction*SHIP_X_DELTA < 0){
 		p1->x = 0;
 		return 1;
 	}
 
-	if(p1->x + x + SHIP_WIDTH >= 1024){
-		p1->x = 1024 - SHIP_WIDTH;
+	if(p1->x + direction*SHIP_X_DELTA + SHIP_WIDTH >= 800){
+		p1->x = 800 - SHIP_WIDTH;
 		return 1;
 	}
 
-	p1->x += x;
+	p1->x += direction*SHIP_X_DELTA;
 	return 0;
 }
 
 int player_set_x_pos(player *p1, unsigned short x){
-	if(x + SHIP_WIDTH >= 1024){
-		p1->x = 1024 - SHIP_WIDTH;
+	if(x + SHIP_WIDTH >= 800){
+		p1->x = 800 - SHIP_WIDTH;
 		return 1;
 	}
 

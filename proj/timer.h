@@ -1,7 +1,7 @@
 #ifndef __TIMER_H
 #define __TIMER_H
 
-#define TICKS_PER_SECOND 60 //many much times in a second the timer should thrown a tick event
+#define TICKS_PER_SECOND 60 //many much times in a second the timer should throw a tick event
 
 /** @defgroup timer timer
  * @{

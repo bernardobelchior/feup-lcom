@@ -81,8 +81,8 @@ int singleplayer_projectile_collision(projectile* proj){
 	return aliens_collision_handler(proj->x, proj->y);
 }
 
-int singleplayer_move(short x){
-	return player_move(singleplayer_game.play, x);
+int singleplayer_move(char direction){
+	return player_move(singleplayer_game.play, direction);
 }
 
 int singleplayer_fire(){//TODO no longer crashes, commented reallocs.

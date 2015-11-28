@@ -14,11 +14,11 @@ extern enum singleplayer_controller controller;
 extern menu* start_menu;
 
 unsigned short get_h_res() { //temporary
-	return 1024;
+	return 800;
 }
 
 unsigned short get_v_res() { //temporary
-	return 768;
+	return 600;
 }
 
 void kb_event_handler(unsigned short key) {
@@ -112,11 +112,11 @@ void key_pressed(unsigned long key) {
 			start_menu_init();
 		case RIGHT_ARROW_MAKECODE:
 			if(controller == keyboard)
-				singleplayer_move(40);
+				singleplayer_move(1);
 			break;
 		case LEFT_ARROW_MAKECODE:
 			if(controller == keyboard)
-				singleplayer_move(-40);
+				singleplayer_move(-1);
 			break;
 		case SPACE_MAKECODE:
 			if(controller == keyboard)

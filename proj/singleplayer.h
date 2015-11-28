@@ -31,11 +31,11 @@ void singleplayer_tick();
 /**
  * @brief Moves the player in the x axis
  *
- * @param Difference on x position
+ * @param direction -1 to move to the left, 1 to the right.
  *
  * @return Returns 0 if the new position is valid, non-zero otherwise.
  */
-int singleplayer_move(short x);
+int singleplayer_move(char direction);
 
 /**
  * @brief Sets the player position to x
