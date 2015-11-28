@@ -29,12 +29,6 @@ void singleplayer_init();
 void singleplayer_tick();
 
 /**
- * @brief draws all the aliens
- */
-
-void draw_aliens();
-
-/**
  * @brief Moves the player in the x axis
  *
  * @param Difference on x position

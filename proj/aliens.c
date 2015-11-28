@@ -1,4 +1,5 @@
 #include "aliens.h"
+#include "video_gr.h"
 
 void alien_list_init(){
 
@@ -36,12 +37,12 @@ void alien_list_init(){
 			type = 3;
 
 
-		add_alien((alien_init(x,y,type)));
+		alien_add((alien_init(x,y,type)));
 	}
 }
 
 
-void add_alien(alien *a1){
+void alien_add(alien *a1){
 
 	if(invaders->head == NULL){
 		invaders->head = a1;
@@ -57,14 +58,20 @@ void add_alien(alien *a1){
 
 }
 
-void remove_alien(alien *a1){
+void alien_remove(alien *a1){
+	if(invaders->head == a1){
+		invaders->head = invaders->head->next;
+		free(a1);
+		return;
+	}
+
 	alien* iterator = invaders->head;
 
 	while(iterator->next != NULL){
 		if(iterator->next == a1){
 			iterator->next = iterator->next->next;
 			free(a1);
-			break;
+			return;
 		}
 		iterator = iterator->next;
 	}
@@ -81,13 +88,13 @@ int aliens_move(){
 
 	if(moves % ALIEN_MOVES_PER_COLUMN == 0){ //if the aliens have moved enough for this row
 		while(iterator->next != NULL){
-			move_alien(iterator, 0, ALIEN_Y_DELTA);
+			alien_move(iterator, 0, ALIEN_Y_DELTA);
 			iterator=iterator->next;
 		}
 		direction = (-1)*direction;
 	} else
 		while(iterator->next != NULL){
-			move_alien(iterator, direction*ALIEN_X_DELTA, 0);
+			alien_move(iterator, direction*ALIEN_X_DELTA, 0);
 			iterator=iterator->next;
 		}
 
@@ -95,7 +102,11 @@ int aliens_move(){
 	return 0;
 }
 
-int move_alien(alien* a1, char x, char y){
+int alien_draw(alien *a1){
+	vg_draw_frame(a1->x,a1->y,a1->width,a1->height,9);
+}
+
+int alien_move(alien* a1, char x, char y){
 	a1->x += x;
 	a1->y += y;
 }
@@ -128,7 +139,7 @@ int aliens_collision_handler(unsigned short x, unsigned short y){
 		alien* iterator = invaders->head;
 		while(iterator->next != NULL){
 			if(x > iterator->x && x < iterator->x + ALIEN_WIDTH && y > iterator->y && y < iterator->y + ALIEN_HEIGTH){
-				remove_alien(iterator);
+				alien_remove(iterator);
 				return 1;
 			}
 			iterator=iterator->next;
@@ -138,6 +149,11 @@ int aliens_collision_handler(unsigned short x, unsigned short y){
 	return 0;
 }
 
-int draw_alien(alien *a1){
-	vg_draw_frame(a1->x,a1->y,a1->width,a1->height,9);
+void aliens_draw(){
+	alien* iterator = invaders->head;
+
+	while(iterator->next != NULL){
+		alien_draw(iterator);
+		iterator=iterator->next;
+	}
 }

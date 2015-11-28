@@ -42,12 +42,12 @@ void alien_list_init();
 /**
  * @brief adds alien to the list
  */
-void add_alien(alien *a1);
+void alien_add(alien *a1);
 
 /**
  * @brief removes alien from list
  */
-void remove_alien(alien *a1);
+void alien_remove(alien *a1);
 
 /**
  * @brief Initializes an alien struct
@@ -61,12 +61,12 @@ alien* alien_init(int xpos, int ypos, enum alien_type type);
 /**
  * @brief draws the alien
  */
-int draw_alien(alien* a1);
+int alien_draw(alien* a1);
 
 /**
  * @brief sets next x and y position of the alien
  */
-int move_alien(alien* a1, char x, char y);
+int alien_move(alien* a1, char x, char y);
 
 /**
  * @brief Moves all the aliens
@@ -77,6 +77,11 @@ int aliens_move();
  * @brief Checks if the projectile in x,y collides with an alien
  */
 int aliens_collision_handler(unsigned short x, unsigned short y);
+
+/**
+ * @brief draws all the aliens
+ */
+void aliens_draw();
 
 /**
  * @brief handles the collision of a projectile with the alien

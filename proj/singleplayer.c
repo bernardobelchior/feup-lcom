@@ -23,30 +23,18 @@ void singleplayer_init() {
 
 	alien_list_init();
 
-	draw_aliens();
-
 	state = singleplayer;
-}
-
-void draw_aliens(){
-
-	alien* iterator = invaders->head;
-
-	while(iterator->next != NULL){
-		draw_alien(iterator);
-		iterator=iterator->next;
-	}
 }
 
 void singleplayer_tick(){
 	static unsigned short ticks = 0;
 	if(controller == mouse)
 		player_set_x_pos(singleplayer_game.play, mouse_info.x);
-	if(ticks % 60 == 0){
+
+	if(ticks % 60 == 0)
 		aliens_move();
-	}
 	ticks++;
-	draw_aliens();
+	aliens_draw();
 	player_draw(singleplayer_game.play);
 	singleplayer_check_projectiles_state();
 }
@@ -54,10 +42,7 @@ void singleplayer_tick(){
 void singleplayer_check_projectiles_state(){
 	unsigned char i;
 	for(i = 0; i < singleplayer_game.num_projectiles; i++){
-		if(projectile_reached_end(singleplayer_game.projectiles[i])){
-			singleplayer_delete_projectile(i);
-		}
-		else if(singleplayer_projectile_collision(singleplayer_game.projectiles[i]))
+		if(projectile_reached_end(singleplayer_game.projectiles[i]) || singleplayer_projectile_collision(singleplayer_game.projectiles[i]))
 			singleplayer_delete_projectile(i);
 		else{
 			projectile_move(singleplayer_game.projectiles[i]);
