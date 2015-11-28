@@ -39,8 +39,13 @@ void draw_aliens(){
 }
 
 void singleplayer_tick(){
+	static unsigned short ticks = 0;
 	if(controller == mouse)
 		player_set_x_pos(singleplayer_game.play, mouse_info.x);
+	if(ticks % 60 == 0){
+		aliens_move();
+	}
+	ticks++;
 	draw_aliens();
 	player_draw(singleplayer_game.play);
 	singleplayer_check_projectiles_state();
@@ -52,8 +57,8 @@ void singleplayer_check_projectiles_state(){
 		if(projectile_reached_end(singleplayer_game.projectiles[i])){
 			singleplayer_delete_projectile(i);
 		}
-		//else if(singleplayer_projectile_collision(singleplayer_game.projectiles[i]))
-			//singleplayer_delete_projectile(i);
+		else if(singleplayer_projectile_collision(singleplayer_game.projectiles[i]))
+			singleplayer_delete_projectile(i);
 		else{
 			projectile_move(singleplayer_game.projectiles[i]);
 			projectile_draw(singleplayer_game.projectiles[i]);
@@ -88,13 +93,7 @@ int singleplayer_projectile_collision(projectile* proj){
 			//TODO check shield collision
 		}
 
-	//TODO add a bigger if to check if the projectile is in the "alien zone" in order to avoid checking 55 aliens.
-	//for(i = 0; i < ALIENS_PER_ROW*ALIEN_ROWS; i++){
-	for(i = 0; i < 0; i++){
-		//TODO check alien collision
-	}
-
-
+	return aliens_collision_handler(proj->x, proj->y);
 }
 
 int singleplayer_move(short x){
