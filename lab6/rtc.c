@@ -26,3 +26,17 @@ int write_to_RTC(unsigned char address, unsigned long write){
 
 	return 0;
 }
+
+void change_RTC_to_binary(){
+	unsigned long reading;
+
+	read_from_RTC(RTC_REGISTER_B, &reading);
+	write_to_RTC(RTC_REGISTER_B, reading | RTC_BINARY);
+}
+
+void change_RTC_to_bcd(){
+	unsigned long reading;
+
+	read_from_RTC(RTC_REGISTER_B, &reading);
+	write_to_RTC(RTC_REGISTER_B, reading & !RTC_BINARY);
+}

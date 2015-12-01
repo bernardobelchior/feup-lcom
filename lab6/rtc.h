@@ -4,8 +4,9 @@
 #define BIT(n) (0x01<<(n))
 #define RTC_ADDR_REG 0x70
 #define RTC_DATA_REG 0x71
-#define RTC_REGISTER_A 0x10
 #define RTC_UIP BIT(7)
+#define RTC_BINARY BIT(2)
+
 #define RTC_SECONDS_REG 0
 #define RTC_SECONDS_ALARM_REG 1
 #define RTC_MINUTES_REG 2
@@ -16,6 +17,8 @@
 #define RTC_DAY_REG 7
 #define RTC_MONTH_REG 8
 #define RTC_YEAR_REG 9
+#define RTC_REGISTER_A 10
+#define RTC_REGISTER_B 11
 
 
 /**
@@ -44,5 +47,15 @@ int read_from_RTC(unsigned char address, unsigned long *result);
  * @param Returns 0 on success, returning non-zero otherwise
  */
 int write_to_RTC(unsigned char address, unsigned long write);
+
+/**
+ * @brief Changes RTC registers to binary
+ */
+void change_RTC_to_binary();
+
+/**
+ * @brief Changes RTC registers to binary coded decimal
+ */
+void change_RTC_to_bcd();
 
 #endif
