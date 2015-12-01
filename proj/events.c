@@ -14,11 +14,11 @@ extern enum singleplayer_controller controller;
 extern menu* start_menu;
 
 unsigned short get_h_res() { //temporary
-	return 800;
+	return 1024;
 }
 
 unsigned short get_v_res() { //temporary
-	return 600;
+	return 768;
 }
 
 void kb_event_handler(unsigned short key) {
