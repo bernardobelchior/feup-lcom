@@ -48,7 +48,7 @@ int test_date(){
 	case 5:
 		printf("Friday");
 		break;
-	case 7:
+	case 6:
 		printf("Saturday");
 		break;
 	}
