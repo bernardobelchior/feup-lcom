@@ -7,7 +7,7 @@
 
 typedef struct{
 	char* name;
-	int points;
+	unsigned int points;
 } score;
 
 static char highscore_path[] = "/home/lcom/lcom1516-t6g12/proj/highscore.txt";
@@ -17,6 +17,10 @@ static unsigned char highscore_size;
 int highscore_init();
 
 score* highscore_read(FILE* file);
+
+int highscore_add(char* name, unsigned int points);
+
+int highscore_write(FILE* file, score* sc);
 
 int highscore_destruct();
 
