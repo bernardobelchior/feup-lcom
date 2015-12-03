@@ -3,13 +3,21 @@
 
 extern enum game_state state;
 
-int highscore_init(){
+void highscore_init(){
 	FILE* file;
-	if((file = fopen(highscore_path, "r")) == NULL)
-		return 1;
+	file = fopen(highscore_path, "r");
 
+	highscore_size = 0;
 	highscores = (score**) malloc(MAX_NUMBER_OF_SCORES*sizeof(score*));
 	score* sc;
+
+	highscore_menu = (menu*) malloc(sizeof(menu));
+	highscore_menu = create_menu();
+	menu_add_button(highscore_menu, create_button(400, 650, 200, 100, &highscore_destruct, 2));
+	state = highscore;
+
+	if(file == NULL)
+		return;
 
 	fscanf(file, "//MINIX INVADERS HIGHSCORES//\n");
 
@@ -22,13 +30,6 @@ int highscore_init(){
 
 	highscore_size = i;
 	fclose(file);
-
-	highscore_menu = (menu*) malloc(sizeof(menu));
-	highscore_menu = create_menu();
-	menu_add_button(highscore_menu, create_button(400, 650, 200, 100, &highscore_destruct, 2));
-	state = highscore;
-
-	return 0;
 }
 
 score* highscore_read(FILE* file){
@@ -83,6 +84,7 @@ int highscore_write(FILE* file, score* sc){
 }
 
 void highscore_tick(){
+	menu_draw(highscore_menu);
 	vg_draw_frame(100, 150, 800, 450, 2);
 
 	//Vertical lines
@@ -99,27 +101,29 @@ void highscore_tick(){
 	}
 }
 
-int highscore_destruct(){
+void highscore_destruct(){
 	FILE* file;
-	if((file = fopen(highscore_path, "w")) == NULL)
-		return 1;
+	file = fopen(highscore_path, "w");
 
 	printf("size: %d\n", highscore_size);
 
 	fprintf(file, "//MINIX INVADERS HIGHSCORES//");
 
 	unsigned char i;
-	for(i = 0; i < highscore_size && i < MAX_NUMBER_OF_SCORES; i++){
-		printf("Name: %s\tScore: %u\n", highscores[i]->name, highscores[i]->points);
-		highscore_write(file, highscores[i]);
-		free(highscores[i]);
+
+	if(file != NULL){
+		for(i = 0; i < highscore_size && i < MAX_NUMBER_OF_SCORES; i++){
+			printf("Name: %s\tScore: %u\n", highscores[i]->name, highscores[i]->points);
+			highscore_write(file, highscores[i]);
+		}
+		fclose(file);
 	}
 
+	for(i = 0; i < highscore_size && i < MAX_NUMBER_OF_SCORES; i++)
+		free(highscores[i]);
 	free(highscores);
-	fclose(file);
 	highscore_size = 0;
+	delete_menu(highscore_menu);
 
 	start_menu_init();
-
-	return 0;
 }

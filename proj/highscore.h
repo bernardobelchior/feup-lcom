@@ -16,7 +16,7 @@ static score** highscores;
 static unsigned char highscore_size;
 menu* highscore_menu;
 
-int highscore_init();
+void highscore_init();
 
 score* highscore_read(FILE* file);
 
@@ -26,7 +26,7 @@ int highscore_write(FILE* file, score* sc);
 
 void highscore_tick();
 
-int highscore_destruct();
+void highscore_destruct();
 
 
 
