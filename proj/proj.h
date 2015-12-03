@@ -5,7 +5,7 @@
 #include "menu.h"
 
 enum game_state { main_menu, singleplayer, multiplayer, highscore, options };
-enum singleplayer_controller { mouse, keyboard };
+enum singleplayer_controller { keyboard = 0, mouse = 1 };
 
 enum singleplayer_controller controller;
 enum game_state state;

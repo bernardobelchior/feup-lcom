@@ -65,37 +65,6 @@ int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width, unsi
 int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsigned short yf, unsigned long color);
 
 /**
- * @brief Draws a pixmap on position (xi,yi)
- *
- * @param xi Pixmap x position
- * @param yi Pixmap y position
- * @param pixmap Pixmap to draw
- */
-char vg_draw_pixmap(unsigned short xi, unsigned short yi, unsigned short width, unsigned short height, char *pixmap);
-
-/**
- * @brief Draws xpm on position (xi,yi). Converts xpm to pixmap and calls draw_pixmap.
- *
- * @param xi xpm x position
- * @param yi xpm y position
- * @param xpm xpm to draw
- */
-char vg_draw_xpm(unsigned short xi, unsigned short yi, char *xpm[]);
-
-/**
- * @brief Moves a pixmap vertically or horizontally
- *
- * @parax xi initial x position
- * @param yi initial y position
- * @param xpm xpm to move
- * @param hor 0 if vertical movement, 1 if horizontal movement
- * @param delta distance in pixels to move
- * @param time time for the movement to be completed
- */
-int vg_move_pixmap(unsigned short xi, unsigned short yi, unsigned short width, unsigned short height, char *pixmap,
-		unsigned short hor, float next_position);
-
-/**
  * @brief Clear screen by setting all pixels to black
  */
 void vg_clear_screen();

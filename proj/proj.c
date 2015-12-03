@@ -10,6 +10,7 @@
 #include "i8042.h"
 #include <stdlib.h>
 #include "highscore.h"
+#include "options.h"
 
 extern enum game_state state;
 extern menu* start_menu;
@@ -33,7 +34,7 @@ int start() {
 	unsigned char packet[3];
 	unsigned short counter = 0;
 
-	controller = keyboard;
+	options_load();
 	mouse_init();
 	start_menu_init();
 	vg_init(VBE_VIDEO_MODE);
@@ -92,7 +93,7 @@ void start_menu_init(){
 	menu_add_button(start_menu, multiplayer);
 	button* highscore = create_button(400, 400, 200, 90, &highscore_init, 2);
 	menu_add_button(start_menu, highscore);
-	button* options = create_button(400, 500, 200, 90, &test_function, 2);
+	button* options = create_button(400, 500, 200, 90, &options_init, 2);
 	menu_add_button(start_menu, options);
 	button* exit = create_button(400, 600, 200, 90, &leave, 2);
 	menu_add_button(start_menu, exit);
@@ -109,5 +110,6 @@ void leave(){
 	empty_out_buf();
 	start_menu_destruct();
 	vg_exit();
+	options_save();
 	exit(0);
 }

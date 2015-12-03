@@ -14,6 +14,7 @@ extern enum game_state state;
 extern enum singleplayer_controller controller;
 extern menu* start_menu;
 extern menu* highscore_menu;
+extern menu* options_menu;
 
 unsigned short get_h_res() { //temporary
 	return 1024;
@@ -183,6 +184,9 @@ void lmb_released() {
 	case highscore:
 		click_button(highscore_menu, mouse_info.x, mouse_info.y);
 		break;
+	case options:
+		click_button(options_menu, mouse_info.x, mouse_info.y);
+		break;
 	}
 }
 
@@ -205,12 +209,12 @@ void tick() {
 
 		break;
 	case highscore:
-		menu_draw(highscore_menu);
-		mouse_draw();
 		highscore_tick();
+		mouse_draw();
 		break;
 	case options:
-
+		options_tick();
+		mouse_draw();
 		break;
 	}
 	vg_update_screen();
