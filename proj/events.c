@@ -7,11 +7,13 @@
 #include "vbe.h"
 #include "proj.h"
 #include "i8042.h"
+#include "highscore.h"
 
 extern mouse_info_t mouse_info;
 extern enum game_state state;
 extern enum singleplayer_controller controller;
 extern menu* start_menu;
+extern menu* highscore_menu;
 
 unsigned short get_h_res() { //temporary
 	return 1024;
@@ -174,8 +176,13 @@ void rmb_pressed() {
 
 void lmb_released() {
 	//printf("Left mouse button released.\n");
-	if (state == main_menu) {
+	switch(state){
+	case main_menu:
 		click_button(start_menu, mouse_info.x, mouse_info.y);
+		break;
+	case highscore:
+		click_button(highscore_menu, mouse_info.x, mouse_info.y);
+		break;
 	}
 }
 
@@ -198,7 +205,9 @@ void tick() {
 
 		break;
 	case highscore:
-
+		menu_draw(highscore_menu);
+		mouse_draw();
+		highscore_tick();
 		break;
 	case options:
 

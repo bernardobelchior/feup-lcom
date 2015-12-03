@@ -1,4 +1,7 @@
 #include "highscore.h"
+#include "proj.h"
+
+extern enum game_state state;
 
 int highscore_init(){
 	FILE* file;
@@ -19,6 +22,12 @@ int highscore_init(){
 
 	highscore_size = i;
 	fclose(file);
+
+	highscore_menu = (menu*) malloc(sizeof(menu));
+	highscore_menu = create_menu();
+	menu_add_button(highscore_menu, create_button(400, 650, 200, 100, &highscore_destruct, 2));
+	state = highscore;
+
 	return 0;
 }
 
@@ -73,6 +82,23 @@ int highscore_write(FILE* file, score* sc){
 	return 0;
 }
 
+void highscore_tick(){
+	vg_draw_frame(100, 150, 800, 450, 2);
+
+	//Vertical lines
+	vg_draw_line(400, 150, 400, 600, 2);
+	vg_draw_line(700, 150, 700, 600, 2);
+
+	//Horizontal lines
+	vg_draw_line(100, 195, 900, 195, 2);
+	vg_draw_line(100, 200, 900, 200, 2);
+
+	unsigned char i;
+	for(i = 1; i < 10; i++){
+		vg_draw_line(100, 200+40*i, 900, 200+40*i, 2);
+	}
+}
+
 int highscore_destruct(){
 	FILE* file;
 	if((file = fopen(highscore_path, "w")) == NULL)
@@ -92,6 +118,8 @@ int highscore_destruct(){
 	free(highscores);
 	fclose(file);
 	highscore_size = 0;
+
+	start_menu_init();
 
 	return 0;
 }
