@@ -3,14 +3,14 @@
 
 #include "aliens.h"
 #include "shield.h"
+#include "projectile.h"
 #include "player_ship.h"
+#include "proj.h"
 #include <stdio.h>
 
 typedef struct {
 	shield* (*shields);
 	player* play;
-	projectile* (*projectiles);
-	unsigned char num_projectiles;
 	unsigned int score;
 } game_t;
 
@@ -59,13 +59,6 @@ void singleplayer_check_projectiles_state();
  * @return Returns 0 if the projectile does not collide with anything, returning non-zero otherwise.
  */
 int singleplayer_projectile_collision(projectile* proj);
-
-/**
- * @brief Deletes projectile at proj_index and rearranges the array.
- *
- * @return Returns 0 if the deletion was successful, returning non-zero otherwise.
- */
-int singleplayer_delete_projectile(unsigned int proj_index);
 
 /**
  * @brief Deletes singleplayer game information

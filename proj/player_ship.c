@@ -9,14 +9,9 @@ player* player_init() {
 		return NULL;
 	}
 
-	//unsigned char *vmem = vg_get_double_buffer();
-
 	p1->num_lives = NUM_LIVES; //TODO implementar dificuldade??
 	p1->x = PLAYER_INITIAL_X_POS;
 	p1->y = PLAYER_INITIAL_Y_POS;
-	//p1->velocity =
-	//TODO ver numlifes
-	//p1->mem_pos = vmem+ p1->ypos*768 + p1->cannonxpos;
 
 	return p1;
 }
@@ -25,7 +20,7 @@ int player_draw(player *p1){
 	vg_draw_frame(p1->x, p1->y, SHIP_WIDTH, SHIP_HEIGHT, 3);
 }
 
-projectile *player_fire(player *p1) {
+int player_fire(player *p1) {
 	return projectile_init((int) (p1->x+SHIP_WIDTH/2), p1->y-1, -5);
 }
 

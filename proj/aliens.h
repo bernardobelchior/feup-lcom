@@ -36,6 +36,7 @@ typedef struct {
 	alien *last;
 	alien *rightmost;
 	alien *leftmost;
+	//alien *player_controlled; TODO if we implement vs multiplayer
 	int velocity;
 	unsigned char alien_num;
 } alien_list;

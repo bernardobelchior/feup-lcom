@@ -1,14 +1,42 @@
 #include "projectile.h"
 
-projectile *projectile_init(unsigned short x, unsigned short y, int velocity) {
-	projectile *proj = (projectile *) malloc(sizeof(projectile));
+
+void projectile_list_init(){
+	if( (projectiles = (projectile_list *)malloc(sizeof(projectile_list))) == NULL)
+		return;
+
+	projectiles->head = NULL;
+	return;
+}
+
+
+int projectile_init(unsigned short x, unsigned short y, int velocity){
+
+	projectile *proj = NULL;
+
+	if((proj = (projectile *)malloc(sizeof(projectile))) == NULL)
+		return 1;
 
 	proj->x = x;
 	proj->y = y;
 	proj->velocity = velocity;
-	//inicializar mem pos
+	proj->next = NULL;
+	proj->prev = NULL;
 
-	return proj;
+	if(projectiles->head == NULL){
+		projectiles->head = proj;
+		return 0;
+	}
+
+	projectile *iterator = projectiles->head;
+
+	while(iterator->next != NULL)
+		iterator = iterator->next;
+
+	proj->prev = iterator;
+	iterator->next = proj;
+
+	return 0;
 }
 
 int projectile_draw(projectile *proj) {
@@ -18,7 +46,30 @@ int projectile_draw(projectile *proj) {
 }
 
 int projectile_delete(projectile *proj){
-	free(proj);
+
+	projectile *iterator = projectiles->head;
+
+	do{
+		if(iterator == proj){
+
+			if(proj->prev != NULL)
+				proj->prev->next = proj->next;
+
+			if(proj->next != NULL)
+				proj->next->prev = proj->prev;
+
+			if(projectiles->head == proj)
+				projectiles->head = proj->next;
+
+			free(proj);
+
+			return 0;
+		}
+
+		iterator=iterator->next;
+	}while(iterator != NULL);
+
+	return 1;
 }
 
 int projectile_move(projectile *proj) {
