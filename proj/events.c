@@ -8,6 +8,7 @@
 #include "proj.h"
 #include "i8042.h"
 #include "highscore.h"
+#include "options.h"
 
 extern mouse_info_t mouse_info;
 extern enum game_state state;
