@@ -75,7 +75,7 @@ int alien_draw(alien* a1);
 /**
  * @brief sets next x and y position of the alien
  */
-int alien_move(alien* a1, char x, char y);
+void alien_move(alien* a1, char x, char y);
 
 /**
  * @brief Moves all the aliens
@@ -84,6 +84,11 @@ int aliens_move();
 
 /**
  * @brief Checks if the projectile in x,y collides with an alien
+ *
+ * @param x Projectile's x position
+ * @param y Projectile's y position
+ *
+ * @return Returns zero if the projectile has not hit an alien, returning non-zero otherwise.
  */
 int aliens_collision_handler(unsigned short x, unsigned short y);
 
@@ -93,14 +98,10 @@ int aliens_collision_handler(unsigned short x, unsigned short y);
 void aliens_draw();
 
 /**
- * @brief handles the collision of a projectile with the alien
- */
-int alien_hit(alien* a1);
-
-
-/**
  * @brief searches new leftmost or rightmost alien and updates pointer on list
  * @param side 1 for rightmost, 2 for leftmost
+ *
+ * @return Returns 0 if a new extreme has been successfully found, returning non-zero otherwise.
  */
 int search_new_extreme(unsigned char side);
 

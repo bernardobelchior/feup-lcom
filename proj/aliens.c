@@ -174,7 +174,7 @@ int alien_draw(alien *a1) {
 #endif
 }
 
-int alien_move(alien* a1, char x, char y) {
+void alien_move(alien* a1, char x, char y) {
 	a1->x += x;
 	a1->y += y;
 }
