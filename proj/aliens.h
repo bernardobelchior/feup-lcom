@@ -79,7 +79,9 @@ void alien_move(alien* a1, char x, char y);
 
 /**
  * @brief Moves all the aliens
- */
+ *
+ *
+*/
 int aliens_move();
 
 /**
