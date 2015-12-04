@@ -1,6 +1,7 @@
 #include "highscore.h"
 #include "proj.h"
 #include "state.h"
+#include "video_gr.h"
 
 void highscore_init(){
 	FILE* file;
@@ -12,7 +13,7 @@ void highscore_init(){
 
 	highscore_menu = (menu*) malloc(sizeof(menu));
 	highscore_menu = create_menu();
-	menu_add_button(highscore_menu, create_button(400, 650, 200, 100, &highscore_back_on_click, 2));
+	menu_add_button(highscore_menu, create_button(400, 650, 200, 100, &highscore_back_on_click, rgb(0x00FFFFFF)));
 
 	if(file == NULL)
 		return;
@@ -83,20 +84,22 @@ int highscore_write(FILE* file, score* sc){
 
 void highscore_tick(){
 	menu_draw(highscore_menu);
-	vg_draw_frame(100, 150, 800, 450, 2);
+#ifdef DEBUG
+	vg_draw_frame(100, 150, 800, 450, rgb(0xFFFFFF));
 
 	//Vertical lines
-	vg_draw_line(400, 150, 400, 600, 2);
-	vg_draw_line(700, 150, 700, 600, 2);
+	vg_draw_line(400, 150, 400, 600, rgb(0xFFFFFF));
+	vg_draw_line(700, 150, 700, 600, rgb(0xFFFFFF));
 
 	//Horizontal lines
-	vg_draw_line(100, 195, 900, 195, 2);
-	vg_draw_line(100, 200, 900, 200, 2);
+	vg_draw_line(100, 195, 900, 195, rgb(0xFFFFFF));
+	vg_draw_line(100, 200, 900, 200, rgb(0xFFFFFF));
 
 	unsigned char i;
 	for(i = 1; i < 10; i++){
-		vg_draw_line(100, 200+40*i, 900, 200+40*i, 2);
+		vg_draw_line(100, 200+40*i, 900, 200+40*i, rgb(0xFFFFFF));
 	}
+#endif
 }
 
 void highscore_back_on_click(){

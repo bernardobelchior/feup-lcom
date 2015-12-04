@@ -20,8 +20,8 @@
 
 /* Private global variables */
 
-static char *video_mem; /* Process address to which VRAM is mapped */
-char* double_buffer;
+static short *video_mem; /* Process address to which VRAM is mapped */
+short* double_buffer;
 
 static unsigned h_res; /* Horizontal screen resolution in pixels */
 static unsigned v_res; /* Vertical screen resolution in pixels */
@@ -86,7 +86,7 @@ void *vg_init(unsigned short mode) {
 	video_mem = vm_map_phys(SELF, (void *) mr.mr_base,
 			info.XResolution * info.YResolution * info.BitsPerPixel / 8);
 
-	double_buffer = malloc(h_res * v_res * sizeof(char));
+	double_buffer = malloc(h_res * v_res * bits_per_pixel/8);
 
 	/*if(video_mem == MAP_FAILED)
 	 panic("video_txt couldn't map video memory");*/
@@ -94,7 +94,7 @@ void *vg_init(unsigned short mode) {
 	return video_mem;
 }
 
-int vg_set_pixel(unsigned short x, unsigned short y, unsigned long color) {
+int vg_set_pixel(unsigned short x, unsigned short y, unsigned short color) {
 	int ret = 0;
 
 	if (x < 0) {
@@ -119,10 +119,7 @@ int vg_set_pixel(unsigned short x, unsigned short y, unsigned long color) {
 }
 
 int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width,
-		unsigned short height, unsigned long color) {
-	char* vmem = double_buffer;
-	vmem += y * h_res + x;
-
+		unsigned short height, unsigned short color) {
 	unsigned int i;
 
 	//Prints first line
@@ -153,8 +150,8 @@ unsigned short get_h_res(){
 }
 
 int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
-		unsigned short yf, unsigned long color) {
-	char* vmem = double_buffer;
+		unsigned short yf, unsigned short color) {
+	short* vmem = double_buffer;
 
 	if (xi == xf) {
 		unsigned int i;
@@ -189,14 +186,14 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
 }
 
 void vg_clear_screen() {
-	memset(double_buffer, 0, v_res*h_res);
+	memset(double_buffer, 0, v_res*h_res*bits_per_pixel/8);
 }
 
 int vg_update_screen() {
 	if (double_buffer == NULL)
 		return 1;
 
-	memcpy(video_mem, double_buffer, h_res * v_res);
+	memcpy(video_mem, double_buffer, h_res * v_res * bits_per_pixel/8);
 
 	vg_clear_screen();
 
@@ -222,4 +219,17 @@ int vg_exit() {
 		return 1;
 	} else
 		return 0;
+}
+
+unsigned short rgb(unsigned long color){
+	unsigned short red, green, blue;
+	red = (color & 0x00FF0000) >> 16;
+	green = (color & 0x0000FF00) >> 8;
+	blue = color & 0x000000FF;
+
+	red = red * 31 / 255;
+	green = green * 63 / 255;
+	blue = blue * 31 / 255;
+
+	return (red << 11) | (green << 5) | blue;
 }

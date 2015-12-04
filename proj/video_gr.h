@@ -39,7 +39,7 @@ unsigned short get_h_res();
  *
  * @return Returns 0 on sucess. Returns 1 if x < 0; 2 if x >= h_res; 3 if y < 0; 4 if y >= v_res.
  */
-int vg_set_pixel(unsigned short x, unsigned short y, unsigned long color);
+int vg_set_pixel(unsigned short x, unsigned short y, unsigned short color);
 
 /**
 * @brief Draws a frame starting on (x,y) with specified width, height and color
@@ -52,7 +52,7 @@ int vg_set_pixel(unsigned short x, unsigned short y, unsigned long color);
 *
 * @return 0 upon success, non-zero upon failure
 */
-int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width, unsigned short height, unsigned long color);
+int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width, unsigned short height, unsigned short color);
 
 /**
  * @brief Draws a line starting at (xi,yi) and ending at (xf,yf)
@@ -65,7 +65,7 @@ int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width, unsi
  *
  * @return 0 upon success, non-zero upon failure
  */
-int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsigned short yf, unsigned long color);
+int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf, unsigned short yf, unsigned short color);
 
 /**
  * @brief Clear screen by setting all pixels to black
@@ -83,6 +83,8 @@ int vg_update_screen();
  * @brief Returns double buffer pointer.
  */
 void *vg_get_double_buffer();
+
+unsigned short rgb(unsigned long color);
  /** @} end of video_gr */
  
 #endif /* __VIDEO_GR_H */

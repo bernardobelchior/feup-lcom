@@ -18,7 +18,7 @@ player* player_init() {
 }
 
 int player_draw(player *p1){
-	vg_draw_frame(p1->x, p1->y, SHIP_WIDTH, SHIP_HEIGHT, 3);
+	vg_draw_frame(p1->x, p1->y, SHIP_WIDTH, SHIP_HEIGHT, rgb(0x00FF00));
 }
 
 int player_fire(player *p1) {

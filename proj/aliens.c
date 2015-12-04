@@ -161,16 +161,16 @@ int aliens_move() {
 }
 
 int alien_draw(alien *a1) {
-	vg_draw_frame(a1->x, a1->y, a1->width, a1->height, 9);
+	vg_draw_frame(a1->x, a1->y, a1->width, a1->height, rgb(0x00FFFFFF));
 #ifdef DEBUG
 	if (invaders->last == a1)
-	vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, 5);
+	vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, rgb(0xCC0000));
 	if (invaders->head == a1)
-	vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, 2);
+	vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, rgb(0x00FF00));
 	if (invaders->leftmost == a1)
-	vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, 3);
+	vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, rgb(0xCC0066));
 	if (invaders->rightmost == a1)
-	vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, 4);
+	vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, rgb(0xFFFF00));
 #endif
 }
 

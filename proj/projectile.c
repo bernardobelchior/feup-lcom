@@ -40,7 +40,7 @@ int projectile_init(unsigned short x, unsigned short y, int velocity){
 }
 
 int projectile_draw(projectile *proj) {
-	vg_draw_frame(proj->x, proj->y, 5, 5, 5);
+	vg_draw_frame(proj->x, proj->y, 5, 5, rgb(0xFF0000));
 
 	return 1;
 }

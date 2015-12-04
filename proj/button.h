@@ -11,7 +11,7 @@
 typedef struct { //TODO still have to add text or image
 	unsigned short x, y, width, height;
 	void (*function)();
-	unsigned char color;
+	unsigned short color;
 } button;
 /** @} end of Button Information Struct */
 
@@ -27,7 +27,7 @@ typedef struct { //TODO still have to add text or image
  *
  * @return Returns the button created
  */
-button* create_button(unsigned short x, unsigned short y, unsigned short width, unsigned short height, void (*function)(), unsigned char color);
+button* create_button(unsigned short x, unsigned short y, unsigned short width, unsigned short height, void (*function)(), unsigned short color);
 
 /**
  * @brief Draws button

@@ -2,6 +2,7 @@
 #include "proj.h"
 #include "button.h"
 #include "state.h"
+#include "video_gr.h"
 #include <stdio.h>
 
 extern enum singleplayer_controller controller;
@@ -10,17 +11,17 @@ enum singleplayer_controller temp;
 void options_init(){
 	options_menu = (menu*) malloc(sizeof(menu));
 	options_menu = create_menu();
-	menu_add_button(options_menu, create_button(200, 650, 200, 100, &options_accept_on_click, 2));
-	menu_add_button(options_menu, create_button(600, 650, 200, 100, &options_cancel_on_click, 2));
+	menu_add_button(options_menu, create_button(200, 650, 200, 100, &options_accept_on_click, rgb(0xFFFFFF)));
+	menu_add_button(options_menu, create_button(600, 650, 200, 100, &options_cancel_on_click, rgb(0xFFFFFF)));
 	temp = controller;
 }
 
 void options_tick(){
 	menu_draw(options_menu);
-	vg_draw_frame(100, 150, 800, 450, 2);
+	vg_draw_frame(100, 150, 800, 450, rgb(0xFFFFFF));
 
 	//Vertical lines
-	vg_draw_line(400, 150, 400, 600, 2);
+	vg_draw_line(400, 150, 400, 600, rgb(0xFFFFFF));
 }
 
 void options_save(){

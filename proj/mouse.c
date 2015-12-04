@@ -97,5 +97,5 @@ void mouse_init(){
 }
 
 void mouse_draw(){
-	vg_draw_frame(mouse_info.x, mouse_info.y, 5, 5, 3);
+	vg_draw_frame(mouse_info.x, mouse_info.y, 5, 5, rgb(0xFF66B2));
 }

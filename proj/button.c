@@ -1,7 +1,7 @@
 #include "button.h"
 #include "video_gr.h"
 
-button* create_button(unsigned short x, unsigned short y, unsigned short width, unsigned short height, void (*function)(), unsigned char color){
+button* create_button(unsigned short x, unsigned short y, unsigned short width, unsigned short height, void (*function)(), unsigned short color){
 	button* b = (button*) malloc(sizeof(button));
 	b->x = x;
 	b->y = y;
@@ -13,7 +13,7 @@ button* create_button(unsigned short x, unsigned short y, unsigned short width, 
 }
 
 void button_draw(button* b){
-	vg_draw_frame(b->x, b->y, b->width, b->height, 2); //TODO change color
+	vg_draw_frame(b->x, b->y, b->width, b->height, b->color);
 }
 
 char collides_with_button(button* b, unsigned short x, unsigned short y){
