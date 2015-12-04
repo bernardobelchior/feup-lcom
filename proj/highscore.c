@@ -1,7 +1,6 @@
 #include "highscore.h"
 #include "proj.h"
-
-extern enum game_state state;
+#include "state.h"
 
 void highscore_init(){
 	FILE* file;
@@ -13,8 +12,7 @@ void highscore_init(){
 
 	highscore_menu = (menu*) malloc(sizeof(menu));
 	highscore_menu = create_menu();
-	menu_add_button(highscore_menu, create_button(400, 650, 200, 100, &highscore_destruct, 2));
-	state = highscore;
+	menu_add_button(highscore_menu, create_button(400, 650, 200, 100, &highscore_back_on_click, 2));
 
 	if(file == NULL)
 		return;
@@ -99,6 +97,10 @@ void highscore_tick(){
 	for(i = 1; i < 10; i++){
 		vg_draw_line(100, 200+40*i, 900, 200+40*i, 2);
 	}
+}
+
+void highscore_back_on_click(){
+	change_state(main_menu);
 }
 
 void highscore_destruct(){

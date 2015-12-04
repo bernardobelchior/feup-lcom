@@ -104,4 +104,9 @@ int alien_hit(alien* a1);
  */
 int search_new_extreme(unsigned char side);
 
+/**
+ * @brief Frees memory when no longer in use
+ */
+void aliens_destruct();
+
 #endif

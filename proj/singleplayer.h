@@ -2,10 +2,10 @@
 #define SINGLEPLAYER_H
 
 #include "aliens.h"
+#include "proj.h"
 #include "shield.h"
 #include "projectile.h"
-#include "player_ship.h"
-#include "proj.h"
+#include "player.h"
 #include <stdio.h>
 
 typedef struct {

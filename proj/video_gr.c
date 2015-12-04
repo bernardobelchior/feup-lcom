@@ -6,7 +6,6 @@
 
 #include "vbe.h"
 #include "timer.h"
-#include "read_xpm.h"
 #include "video_gr.h"
 
 /* Constants for VBE 0x105 mode */
@@ -18,10 +17,6 @@
  * Better run my version of lab5 as follows:
  *     service run `pwd`/lab5 -args "mode 0x105"
  */
-#define VRAM_PHYS_ADDR	0xF0000000
-#define H_RES             800
-#define V_RES		  600
-#define BITS_PER_PIXEL	  8
 
 /* Private global variables */
 
@@ -149,6 +144,14 @@ int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width,
 	return 0;
 }
 
+unsigned short get_v_res(){
+	return v_res;
+}
+
+unsigned short get_h_res(){
+	return h_res;
+}
+
 int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
 		unsigned short yf, unsigned long color) {
 	char* vmem = double_buffer;
@@ -186,12 +189,7 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
 }
 
 void vg_clear_screen() {
-	unsigned short i, j;
-	for (i = 0; i < v_res; i++) {
-		for (j = 0; j < h_res; j++) {
-			*(double_buffer + i * h_res + j) = 0;
-		}
-	}
+	memset(double_buffer, 0, v_res*h_res);
 }
 
 int vg_update_screen() {

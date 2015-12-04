@@ -1,4 +1,5 @@
-#include "player_ship.h"
+#include "player.h"
+#include "state.h"
 
 player* player_init() {
 
@@ -52,8 +53,8 @@ int player_move(player *p1, char direction){
 }
 
 int player_set_x_pos(player *p1, unsigned short x){
-	if(x + SHIP_WIDTH >= 800){
-		p1->x = 800 - SHIP_WIDTH;
+	if(x + SHIP_WIDTH >= get_h_res()){
+		p1->x = get_h_res() - SHIP_WIDTH;
 		return 1;
 	}
 
@@ -66,14 +67,17 @@ int player_set_x_pos(player *p1, unsigned short x){
 	return 0;
 }
 
-int player_check_collision(player* p1, unsigned short x, unsigned short y){//TODO make a better check because an object can collide with another, even thought his x,y position doesnt
-	return ((x > p1->x && x < p1->x + SHIP_WIDTH) && (y > p1->y && y < p1->y + SHIP_HEIGHT));
+int player_collision_handler(player* p1, unsigned short x, unsigned short y){//TODO make a better check because an object can collide with another, even thought his x,y position doesnt
+	if((x > p1->x && x < p1->x + SHIP_WIDTH) && (y > p1->y && y < p1->y + SHIP_HEIGHT)){
+		player_hit(p1);
+		return 1;
+	}
+	return 0;
 }
 
-int player_game_over (player *p1){
+void player_game_over (player *p1){
 	//vai para ecra de gameover; TODO
-	player_destruct(p1);
-	return 0;
+	change_state(main_menu);
 }
 
 void player_destruct(player *p1){

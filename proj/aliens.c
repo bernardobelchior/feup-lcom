@@ -1,5 +1,7 @@
 #include "aliens.h"
 #include "video_gr.h"
+#include "state.h"
+#include "proj.h"
 
 static char direction;
 
@@ -75,13 +77,14 @@ void alien_remove(alien *a1) {
 	if (invaders->head == a1) {
 
 		if (invaders->last == a1) {
-			singleplayer_destruct();
-			start_menu_init();
+			invaders->head = NULL;
+			change_state(main_menu); //TODO game over screen
 			return;
 		}
 
 		invaders->head = invaders->head->next;
 		free(a1);
+		invaders->head->prev = NULL;
 		invaders->velocity += VELOCITY_INCREASE;
 		if (!flag)
 			return;
@@ -159,18 +162,16 @@ int aliens_move() {
 
 int alien_draw(alien *a1) {
 	vg_draw_frame(a1->x, a1->y, a1->width, a1->height, 9);
-	if (invaders->last == a1) {
-		vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, 5); //TODO ELIMINAR
-	}
-	if (invaders->head == a1) {
-		vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, 2);
-	}
-	if (invaders->leftmost == a1) {
-		vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, 3);
-	}
-	if (invaders->rightmost == a1) {
-		vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, 4);
-	}
+#ifdef DEBUG
+	if (invaders->last == a1)
+	vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, 5);
+	if (invaders->head == a1)
+	vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, 2);
+	if (invaders->leftmost == a1)
+	vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, 3);
+	if (invaders->rightmost == a1)
+	vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5, 4);
+#endif
 }
 
 int alien_move(alien* a1, char x, char y) {
@@ -209,8 +210,8 @@ int aliens_collision_handler(unsigned short x, unsigned short y) {
 		alien* iterator = invaders->head;
 
 		do {
-			if (x
-					> iterator->x&& x < iterator->x + ALIEN_WIDTH && y > iterator->y && y < iterator->y + ALIEN_HEIGHT) {
+			if (x > iterator->x && x < iterator->x + ALIEN_WIDTH &&
+				y > iterator->y && y < iterator->y + ALIEN_HEIGHT) {
 				alien_remove(iterator);
 				return 1;
 			}
@@ -275,4 +276,21 @@ void aliens_draw() {
 		alien_draw(iterator);
 		iterator = iterator->next;
 	} while (iterator != NULL);
+}
+
+void aliens_destruct() {
+	alien* it = invaders->head;
+	alien* end = invaders->last;
+
+	if (invaders->alien_num > 1) {
+		while (it != end) {
+			it = it->next;
+			free(it->prev);
+		}
+		free(invaders->last);
+	}
+	else if (invaders->alien_num == 1)
+		free(invaders->last);
+
+	free(invaders);
 }

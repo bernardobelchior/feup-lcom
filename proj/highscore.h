@@ -26,6 +26,8 @@ int highscore_write(FILE* file, score* sc);
 
 void highscore_tick();
 
+void highscore_back_on_click();
+
 void highscore_destruct();
 
 

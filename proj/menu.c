@@ -40,8 +40,7 @@ unsigned char click_button(menu* m, unsigned short x, unsigned short y){
 	unsigned char i;
 	for(i = 0; i < m->buttons_size; i++){
 		if(collides_with_button(m->buttons[i], x, y)){
-			//if(m->buttons[i]->function != NULL)
-				(*(m->buttons[i]->function))();
+			m->buttons[i]->function();
 			return 1;
 		}
 	}

@@ -9,6 +9,7 @@
 #include "i8042.h"
 #include "highscore.h"
 #include "options.h"
+#include "state.h"
 
 extern mouse_info_t mouse_info;
 extern enum game_state state;
@@ -16,14 +17,6 @@ extern enum singleplayer_controller controller;
 extern menu* start_menu;
 extern menu* highscore_menu;
 extern menu* options_menu;
-
-unsigned short get_h_res() { //temporary
-	return 1024;
-}
-
-unsigned short get_v_res() { //temporary
-	return 768;
-}
 
 void kb_event_handler(unsigned short key) {
 	if (key & KB_BREAKCODE)
@@ -112,8 +105,7 @@ void key_pressed(unsigned long key) {
 	case singleplayer:
 		switch (key) {
 		case ESC_MAKECODE: //TODO add a pause menu
-			singleplayer_destruct();
-			start_menu_init();
+			change_state(main_menu);
 		case RIGHT_ARROW_MAKECODE:
 			if(controller == keyboard)
 				singleplayer_move(1);

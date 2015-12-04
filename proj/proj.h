@@ -1,15 +1,12 @@
 #ifndef PROJ_H
 #define PROJ_H
 
+#define DEBUG
+
 #include "mouse.h"
 #include "menu.h"
 
-enum game_state { main_menu, singleplayer, multiplayer, highscore, options };
-enum singleplayer_controller { keyboard = 0, mouse = 1 };
-
-enum singleplayer_controller controller;
-enum game_state state;
-menu* start_menu;
+enum singleplayer_controller { keyboard = 0, mouse = 1 } controller;
 
 /**
  * @brief Main function

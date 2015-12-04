@@ -1,6 +1,8 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
+#include "state.h"
+
 /** @name Button Information Struct*/
 /**@{
  *
@@ -43,6 +45,6 @@ void button_draw(button* b);
  *
  * @return Returns 1 if the check is true. Returns 0 otherwise.
  */
-unsigned char collides_with_button(button* b, unsigned short x, unsigned short y);
+char collides_with_button(button* b, unsigned short x, unsigned short y);
 
 #endif

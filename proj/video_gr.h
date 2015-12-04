@@ -27,6 +27,9 @@ void *vg_init(unsigned short mode);
  */
 int vg_exit(void);
 
+unsigned short get_v_res();
+unsigned short get_h_res();
+
 /**
  * @brief Sets the pixel in the (x,y) to the color passed as argument
  *

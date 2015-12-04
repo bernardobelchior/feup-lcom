@@ -1,18 +1,17 @@
 #include "options.h"
 #include "proj.h"
 #include "button.h"
+#include "state.h"
 #include <stdio.h>
 
-extern enum game_state state;
 extern enum singleplayer_controller controller;
 enum singleplayer_controller temp;
 
 void options_init(){
 	options_menu = (menu*) malloc(sizeof(menu));
 	options_menu = create_menu();
-	menu_add_button(options_menu, create_button(200, 650, 200, 100, &options_accept, 2));
-	menu_add_button(options_menu, create_button(600, 650, 200, 100, &options_destruct, 2));
-	state = options;
+	menu_add_button(options_menu, create_button(200, 650, 200, 100, &options_accept_on_click, 2));
+	menu_add_button(options_menu, create_button(600, 650, 200, 100, &options_cancel_on_click, 2));
 	temp = controller;
 }
 
@@ -49,10 +48,13 @@ void options_load(){
 		controller = keyboard;
 }
 
-void options_accept(){
+void options_accept_on_click(){
 	controller = temp;
+	change_state(main_menu);
+}
 
-	options_destruct();
+void options_cancel_on_click(){
+	change_state(main_menu);
 }
 
 void options_destruct(){

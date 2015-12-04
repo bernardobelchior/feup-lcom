@@ -5,9 +5,11 @@ COMPILER_TYPE= gnu
 CC=gcc
 
 PROG=	proj
-SRCS=	aliens.c proj.c timer.c keyboard.c mouse.c events.c button.c menu.c video_gr.c vbe.c singleplayer.c player_ship.c shield.c projectile.c highscore.c options.c 
+SRCS=	proj.c
+SRCS+=	timer.c keyboard.c mouse.c video_gr.c vbe.c
+SRCS+=	aliens.c events.c button.c menu.c singleplayer.c player.c shield.c projectile.c highscore.c options.c state.c start_menu.c  
 
-CCFLAGS= -Wall
+CCFLAGS= -Wall -O3
 
 DPADD+=	${LIBDRIVER} ${LIBSYS}
 LDADD+= -llm -ldriver -lsys

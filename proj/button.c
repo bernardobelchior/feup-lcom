@@ -16,7 +16,7 @@ void button_draw(button* b){
 	vg_draw_frame(b->x, b->y, b->width, b->height, 2); //TODO change color
 }
 
-unsigned char collides_with_button(button* b, unsigned short x, unsigned short y){
+char collides_with_button(button* b, unsigned short x, unsigned short y){
 	if(x > b->x && x < (b->x + b->width) && y > b->y && y < (b->y + b->height))
 		return 1;
 	else

@@ -11,8 +11,8 @@
 #include <stdlib.h>
 #include "highscore.h"
 #include "options.h"
+#include "state.h"
 
-extern enum game_state state;
 extern menu* start_menu;
 
 int main(int argc, char **argv) {
@@ -36,7 +36,7 @@ int start() {
 
 	options_load();
 	mouse_init();
-	start_menu_init();
+	init_state();
 	vg_init(VBE_VIDEO_MODE);
 
 	while (1) { //TODO change condition
@@ -79,36 +79,11 @@ int start() {
 	return 0;
 }
 
-void test_function(){//TODO delete this funcion
-	vg_draw_frame(0, 0, 50, 50, 2);
-}
-
-void start_menu_init(){
-	state = main_menu;
-	start_menu = create_menu();
-
-	button* singleplayer = create_button(400, 200, 200, 90, &singleplayer_init, 2);
-	menu_add_button(start_menu, singleplayer);
-	button* multiplayer = create_button(400, 300, 200, 90, &test_function, 2);
-	menu_add_button(start_menu, multiplayer);
-	button* highscore = create_button(400, 400, 200, 90, &highscore_init, 2);
-	menu_add_button(start_menu, highscore);
-	button* options = create_button(400, 500, 200, 90, &options_init, 2);
-	menu_add_button(start_menu, options);
-	button* exit = create_button(400, 600, 200, 90, &leave, 2);
-	menu_add_button(start_menu, exit);
-}
-
-void start_menu_destruct(){
-	delete_menu(start_menu);
-}
-
 void leave(){
 	timer_unsubscribe_int();
 	kb_unsubscribe_int();
 	mouse_unsubscribe_int();
 	empty_out_buf();
-	start_menu_destruct();
 	vg_exit();
 	options_save();
 	exit(0);

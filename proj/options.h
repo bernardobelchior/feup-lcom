@@ -14,7 +14,9 @@ void options_save();
 
 void options_load();
 
-void options_accept();
+void options_accept_on_click();
+
+void options_cancel_on_click();
 
 void options_destruct();
 

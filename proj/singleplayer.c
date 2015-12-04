@@ -1,13 +1,9 @@
 #include "singleplayer.h"
-#include "proj.h"
 
 extern enum singleplayer_controller controller;
 extern enum game_state state;
 
 void singleplayer_init() {
-	if (state == main_menu)
-		start_menu_destruct();
-
 	/*if((singleplayer_game.shields = (shield**) malloc(NUMBER_OF_SHIELDS * sizeof(shield*))) == NULL)
 	 return;*/
 
@@ -18,8 +14,6 @@ void singleplayer_init() {
 
 	projectile_list_init();
 	alien_list_init();
-
-	state = singleplayer;
 }
 
 void singleplayer_tick() {
@@ -63,38 +57,23 @@ void singleplayer_check_projectiles_state() {
 }
 
 int singleplayer_projectile_collision(projectile* proj) {
-	if (player_check_collision(singleplayer_game.play, proj->x, proj->y)) {
-		player_hit(singleplayer_game.play);
-		return 1;
-	}
-
-	unsigned char i;
-	//for(i = 0; i < NUMBER_OF_SHIELDS; i++){
-	for (i = 0; i < 0; i++) {
-		//TODO check shield collision
-	}
-
-	return aliens_collision_handler(proj->x, proj->y);
+	//TODO Add shield collision
+	return aliens_collision_handler(proj->x, proj->y) | player_collision_handler(singleplayer_game.play, proj->x, proj->y);
 }
 
 int singleplayer_move(char direction) {
 	return player_move(singleplayer_game.play, direction);
 }
 
-int singleplayer_fire() { //TODO no longer crashes, commented reallocs.
+int singleplayer_fire() {
 	return player_fire(singleplayer_game.play);
 }
 
-void singleplayer_destruct() { //TODO proper free
-	unsigned char i;
+void singleplayer_destruct() { //TODO still need to free shield, after implementing
+	aliens_destruct();
+	player_destruct(singleplayer_game.play);
 
-	//for...
-	free(singleplayer_game.shields);
 
-	/*for(i = 0; i < 20; i++)
-	 free(singleplayer_game.projectiles[i]);
-	 free(singleplayer_game.projectiles); todo
-
-	 player_destruct(singleplayer_game.play);*/
+	free(singleplayer_game.shields); //temporary
 }
 
