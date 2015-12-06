@@ -11,7 +11,7 @@ typedef struct{
 	unsigned int points;
 } score;
 
-static char highscore_path[] = "/home/lcom/lcom1516-t6g12/proj/highscore.txt";
+static char highscore_path[] = "/home/proj/cfg/highscore.txt";
 static score** highscores;
 static unsigned char highscore_size;
 menu* highscore_menu;

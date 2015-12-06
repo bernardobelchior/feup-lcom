@@ -7,6 +7,7 @@
 #include "projectile.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "bitmap.h"
 
 #define NUM_LIVES 3
 #define PLAYER_INITIAL_X_POS 512
@@ -15,10 +16,13 @@
 #define SHIP_HEIGHT 30
 #define SHIP_X_DELTA 20
 
+static char SHIP_RES_NAME[] = "ufo.bmp";
+
 typedef struct{
 	int num_lives;
 	int x, y;
 	int velocity;
+	bitmap* player_ship;
 } player;
 
 player* player_init(); //allocates the struct and set num_lives

@@ -6,7 +6,7 @@ CC=gcc
 
 PROG=	proj
 SRCS=	proj.c
-SRCS+=	timer.c keyboard.c mouse.c video_gr.c vbe.c
+SRCS+=	timer.c keyboard.c mouse.c video_gr.c vbe.c bitmap.c
 SRCS+=	aliens.c events.c button.c menu.c singleplayer.c player.c shield.c projectile.c highscore.c options.c state.c start_menu.c  
 
 CCFLAGS= -Wall -O3

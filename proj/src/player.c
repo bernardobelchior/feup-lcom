@@ -1,5 +1,6 @@
 #include "player.h"
 #include "state.h"
+#include "bitmap.h"
 
 player* player_init() {
 
@@ -10,6 +11,8 @@ player* player_init() {
 		return NULL;
 	}
 
+	p1->player_ship = (bitmap*) bitmap_load(SHIP_RES_NAME);
+
 	p1->num_lives = NUM_LIVES; //TODO implementar dificuldade??
 	p1->x = PLAYER_INITIAL_X_POS;
 	p1->y = PLAYER_INITIAL_Y_POS;
@@ -18,7 +21,8 @@ player* player_init() {
 }
 
 int player_draw(player *p1){
-	vg_draw_frame(p1->x, p1->y, SHIP_WIDTH, SHIP_HEIGHT, rgb(0x00FF00));
+	bitmap_draw(p1->player_ship, p1->x, p1->y, ALIGN_LEFT);
+	//vg_draw_frame(p1->x, p1->y, SHIP_WIDTH, SHIP_HEIGHT, rgb(0x00FF00));
 }
 
 int player_fire(player *p1) {
@@ -81,5 +85,6 @@ void player_game_over (player *p1){
 }
 
 void player_destruct(player *p1){
+	bitmap_delete(p1->player_ship);
 	free(p1);
 }

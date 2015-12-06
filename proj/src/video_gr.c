@@ -20,8 +20,8 @@
 
 /* Private global variables */
 
-static short *video_mem; /* Process address to which VRAM is mapped */
-short* double_buffer;
+static unsigned short *video_mem; /* Process address to which VRAM is mapped */
+static unsigned short* double_buffer;
 
 static unsigned h_res; /* Horizontal screen resolution in pixels */
 static unsigned v_res; /* Vertical screen resolution in pixels */
@@ -113,6 +113,9 @@ int vg_set_pixel(unsigned short x, unsigned short y, unsigned short color) {
 		ret = 4;
 	}
 
+	if(color == TRANSPARENCY_COLOR)
+		return 5;
+
 	*(double_buffer + y * h_res + x) = color;
 
 	return ret;
@@ -147,6 +150,10 @@ unsigned short get_v_res(){
 
 unsigned short get_h_res(){
 	return h_res;
+}
+
+unsigned short get_bits_per_pixel(){
+	return bits_per_pixel;
 }
 
 int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
@@ -232,4 +239,8 @@ unsigned short rgb(unsigned long color){
 	blue = blue * 31 / 255;
 
 	return (red << 11) | (green << 5) | blue;
+}
+
+short* vg_set_line(unsigned short x, unsigned short y, unsigned short width, unsigned short* line){
+	return memcpy(double_buffer+y*h_res+x, line, width*sizeof(unsigned short));
 }

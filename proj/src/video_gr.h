@@ -1,6 +1,8 @@
 #ifndef __VIDEO_GR_H
 #define __VIDEO_GR_H
 
+#define TRANSPARENCY_COLOR (63 << 5)
+
 /** @defgroup video_gr video_gr
  * @{
  *
@@ -37,9 +39,19 @@ unsigned short get_h_res();
  * @param y Position of the pixel in the y axis
  * @param color Color to color the pixel with
  *
- * @return Returns 0 on sucess. Returns 1 if x < 0; 2 if x >= h_res; 3 if y < 0; 4 if y >= v_res.
+ * @return Returns 0 on sucess. Returns 1 if x < 0; 2 if x >= h_res; 3 if y < 0; 4 if y >= v_res. Returns 5 if the color is considered transparent.
  */
 int vg_set_pixel(unsigned short x, unsigned short y, unsigned short color);
+
+/**
+ * @brief Copies an entire line to double buffer
+ *
+ * @param y Position of the line in the y axis
+ * @param line Pointer to line to copy
+ *
+ * @return Returns pointer to line destination.
+ */
+short* vg_set_line(unsigned short x, unsigned short y, unsigned short width, unsigned short* line);
 
 /**
 * @brief Draws a frame starting on (x,y) with specified width, height and color
@@ -84,6 +96,32 @@ int vg_update_screen();
  */
 void *vg_get_double_buffer();
 
+/**
+ * @brief Gets vertical resolution
+ *
+ * @return Returns vertical resolution
+ */
+unsigned short get_v_res();
+
+/**
+ * @brief Gets horizontal resolution
+ *
+ * @return Returns horizontal resolution
+ */
+unsigned short get_h_res();
+
+/**
+ * @brief Gets bits per pixel
+ *
+ * @return Returns bits per pixel
+ */
+unsigned short get_bits_per_pixel();
+
+/**
+ * @brief Converts a 8:8:8 RGB color to a 5:6:5 one.
+ *
+ * @return Returns the converted color
+ */
 unsigned short rgb(unsigned long color);
  /** @} end of video_gr */
  
