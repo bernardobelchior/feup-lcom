@@ -41,7 +41,7 @@ static char res_path[] = "/home/proj/res/";
 
 bitmap* bitmap_load(const char* filename);
 
-void bitmap_draw(bitmap* bmp, unsigned short x, unsigned short y, Alignment alignment);
+void bitmap_draw(bitmap* bmp, short x, short y, Alignment alignment);
 
 void bitmap_delete(bitmap* bmp);
 

@@ -85,7 +85,7 @@ bitmap* bitmap_load(const char* filename) {
 	return bmp;
 }
 
-void bitmap_draw(bitmap* bmp, unsigned short x, unsigned short y,
+void bitmap_draw(bitmap* bmp, short x, short y,
 		Alignment alignment) {
 	if (bmp == NULL)
 		return;
@@ -98,7 +98,7 @@ void bitmap_draw(bitmap* bmp, unsigned short x, unsigned short y,
 	else if (alignment == ALIGN_RIGHT)
 		x -= width;
 
-	if (x < 0 || x + width > get_h_res() || y < 0 || y + height > get_v_res())
+	if (x + width < 0 || x > get_h_res() || y + height < 0 || y > get_v_res())
 		return;
 
 	unsigned short i, j;

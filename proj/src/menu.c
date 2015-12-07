@@ -1,11 +1,12 @@
 #include "menu.h"
 #include <stdlib.h>
 
-menu* create_menu(){
+menu* create_menu(const char* font_name){
 	menu* m = (menu*) malloc(sizeof(menu));
 	m->buttons_size = 0;
 	m->buttons = 0;
 	m->selected_button = -1;
+	m->f = font_init(font_name);
 	return m;
 }
 
@@ -28,7 +29,7 @@ void menu_delete_button(menu* m, unsigned char index){
 void menu_draw(menu* m){
 	unsigned char i;
 	for(i = 0; i < m->buttons_size; i++){
-		button_draw(m->buttons[i]);
+		button_draw(m->buttons[i], m->f);
 	}
 	if(m->selected_button != -1){
 		button* selected = m->buttons[m->selected_button];
@@ -79,7 +80,9 @@ unsigned char press_selected_button(menu* m){
 void delete_menu(menu* m){
 	unsigned int i;
 	for(i = 0; i < m->buttons_size; i++){
-		free(m->buttons[i]);
+		button_delete(m->buttons[i]);
 	}
 	free(m->buttons);
+	font_delete(m->f);
+	free(m);
 }

@@ -3,6 +3,7 @@
 
 #include "button.h"
 #include "video_gr.h"
+#include "font.h"
 
 /** @name Menu Information Struct*/
 /**@{
@@ -13,15 +14,18 @@ typedef struct{
 	button* (*buttons);
 	unsigned char buttons_size;
 	char selected_button;
+	font* f;
 } menu;
 /** @} end of Menu Information Struct */
 
 /**
  * @brief Initializes menu struct
  *
+ * @param font_name Name of the font to use with menu's buttons.
+ *
  * @return Returns pointer to initialized menu
  */
-menu* create_menu();
+menu* create_menu(const char* font_name);
 
 /**
  * @brief Adds button to menu

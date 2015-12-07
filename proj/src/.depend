@@ -80,8 +80,16 @@ bitmap.o:	proj.h
 bitmap.o:	state.h
 bitmap.o:	video_gr.h
 
+button.o:	/usr/include/minix/dir.h
+button.o:	/usr/include/minix/types.h
+button.o:	/usr/include/sys/null.h
+button.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/ansi.h
+button.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/stdio.h
+button.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
+button.o:	bitmap.h
 button.o:	button.c
 button.o:	button.h
+button.o:	font.h
 button.o:	state.h
 button.o:	video_gr.h
 
@@ -150,13 +158,25 @@ events.o:	state.h
 events.o:	vbe.h
 events.o:	video_gr.h
 
+font.o:	/usr/include/minix/dir.h
+font.o:	/usr/include/minix/types.h
+font.o:	/usr/include/sys/null.h
+font.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/ansi.h
+font.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/stdio.h
+font.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
+font.o:	bitmap.h
+font.o:	font.c
+font.o:	font.h
+
 highscore.o:	/usr/include/minix/dir.h
 highscore.o:	/usr/include/minix/types.h
 highscore.o:	/usr/include/sys/null.h
 highscore.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/ansi.h
 highscore.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/stdio.h
 highscore.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
+highscore.o:	bitmap.h
 highscore.o:	button.h
+highscore.o:	font.h
 highscore.o:	highscore.c
 highscore.o:	highscore.h
 highscore.o:	i8042.h
@@ -219,10 +239,16 @@ keyboard.o:	keyboard.c
 keyboard.o:	keyboard.h
 keyboard.o:	timer.h
 
+menu.o:	/usr/include/minix/dir.h
+menu.o:	/usr/include/minix/types.h
 menu.o:	/usr/include/sys/null.h
 menu.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/ansi.h
+menu.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/stdio.h
 menu.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/stdlib.h
+menu.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
+menu.o:	bitmap.h
 menu.o:	button.h
+menu.o:	font.h
 menu.o:	menu.c
 menu.o:	menu.h
 menu.o:	state.h
@@ -289,7 +315,9 @@ options.o:	/usr/include/sys/null.h
 options.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/ansi.h
 options.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/stdio.h
 options.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
+options.o:	bitmap.h
 options.o:	button.h
+options.o:	font.h
 options.o:	i8042.h
 options.o:	menu.h
 options.o:	mouse.h
@@ -507,7 +535,15 @@ singleplayer.o:	state.h
 singleplayer.o:	timer.h
 singleplayer.o:	video_gr.h
 
+start_menu.o:	/usr/include/minix/dir.h
+start_menu.o:	/usr/include/minix/types.h
+start_menu.o:	/usr/include/sys/null.h
+start_menu.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/ansi.h
+start_menu.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/stdio.h
+start_menu.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
+start_menu.o:	bitmap.h
 start_menu.o:	button.h
+start_menu.o:	font.h
 start_menu.o:	menu.h
 start_menu.o:	start_menu.c
 start_menu.o:	start_menu.h

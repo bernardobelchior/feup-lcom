@@ -94,31 +94,23 @@ void *vg_init(unsigned short mode) {
 	return video_mem;
 }
 
-int vg_set_pixel(unsigned short x, unsigned short y, unsigned short color) {
-	int ret = 0;
+char vg_set_pixel(unsigned short x, unsigned short y, unsigned short color) {
+	if (x < 0)
+		return 1;
+	else if (x >= h_res)
+		return 2;
 
-	if (x < 0) {
-		x = 0;
-		ret = 1;
-	} else if (x >= h_res) {
-		x = h_res - 1;
-		ret = 2;
-	}
-
-	if (y < 0) {
-		y = 0;
-		ret = 3;
-	} else if (y >= v_res) {
-		y = v_res - 1;
-		ret = 4;
-	}
+	if (y < 0)
+		return 3;
+	else if (y >= v_res)
+		return 4;
 
 	if(color == TRANSPARENCY_COLOR)
 		return 5;
 
 	*(double_buffer + y * h_res + x) = color;
 
-	return ret;
+	return 0;
 }
 
 int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width,
@@ -243,4 +235,16 @@ unsigned short rgb(unsigned long color){
 
 short* vg_set_line(unsigned short x, unsigned short y, unsigned short width, unsigned short* line){
 	return memcpy(double_buffer+y*h_res+x, line, width*sizeof(unsigned short));
+}
+
+char vg_draw_pixmap(unsigned short* pixmap, short x, short y, unsigned short width, unsigned short height) {
+	if (x + width < 0 || y + height < 0 || x > h_res || y > v_res)
+		return 1;
+
+	unsigned short i;
+	for (i = 0; i < height; i++) {
+		vg_set_line(x, y+i, width, pixmap+i*width);
+	}
+
+	return 0;
 }

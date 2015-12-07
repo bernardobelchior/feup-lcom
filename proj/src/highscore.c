@@ -12,8 +12,8 @@ void highscore_init(){
 	score* sc;
 
 	highscore_menu = (menu*) malloc(sizeof(menu));
-	highscore_menu = create_menu();
-	menu_add_button(highscore_menu, create_button(400, 650, 200, 100, &highscore_back_on_click, rgb(0x00FFFFFF)));
+	highscore_menu = create_menu("spaceinvader_font_transparent.bmp");
+	menu_add_button(highscore_menu, create_button(400, 650, 200, 100, &highscore_back_on_click, "Back" ,rgb(0x00FFFFFF)));
 
 	if(file == NULL)
 		return;

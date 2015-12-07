@@ -10,9 +10,9 @@ enum singleplayer_controller temp;
 
 void options_init(){
 	options_menu = (menu*) malloc(sizeof(menu));
-	options_menu = create_menu();
-	menu_add_button(options_menu, create_button(200, 650, 200, 100, &options_accept_on_click, rgb(0xFFFFFF)));
-	menu_add_button(options_menu, create_button(600, 650, 200, 100, &options_cancel_on_click, rgb(0xFFFFFF)));
+	options_menu = create_menu("spaceinvader_font_transparent.bmp");
+	menu_add_button(options_menu, create_button(200, 650, 200, 100, &options_accept_on_click, "Accept", rgb(0xFFFFFF)));
+	menu_add_button(options_menu, create_button(600, 650, 200, 100, &options_cancel_on_click, "Cancel", rgb(0xFFFFFF)));
 	temp = controller;
 }
 

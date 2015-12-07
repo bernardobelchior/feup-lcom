@@ -41,7 +41,7 @@ unsigned short get_h_res();
  *
  * @return Returns 0 on sucess. Returns 1 if x < 0; 2 if x >= h_res; 3 if y < 0; 4 if y >= v_res. Returns 5 if the color is considered transparent.
  */
-int vg_set_pixel(unsigned short x, unsigned short y, unsigned short color);
+char vg_set_pixel(unsigned short x, unsigned short y, unsigned short color);
 
 /**
  * @brief Copies an entire line to double buffer
@@ -123,6 +123,18 @@ unsigned short get_bits_per_pixel();
  * @return Returns the converted color
  */
 unsigned short rgb(unsigned long color);
+
+/**
+ * @brief Draws pixmap
+ *
+ * @param x Position in the x axis
+ * @param y Position in the y axis
+ * @param width Pixmap width
+ * @param height Pixmap height
+ * @param pixmap Pointer to pixmap
+ */
+char vg_draw_pixmap(unsigned short* pixmap, short x, short y, unsigned short width, unsigned short height);
+
  /** @} end of video_gr */
  
 #endif /* __VIDEO_GR_H */
