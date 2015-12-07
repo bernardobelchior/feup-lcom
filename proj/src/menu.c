@@ -37,7 +37,7 @@ void menu_draw(menu* m){
 	}
 }
 
-unsigned char click_button(menu* m, unsigned short x, unsigned short y){
+unsigned char click_button(menu* m, short x, short y){
 	unsigned char i;
 	for(i = 0; i < m->buttons_size; i++){
 		if(collides_with_button(m->buttons[i], x, y)){

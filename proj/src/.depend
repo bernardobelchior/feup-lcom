@@ -73,6 +73,7 @@ bitmap.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
 bitmap.o:	bitmap.c
 bitmap.o:	bitmap.h
 bitmap.o:	button.h
+bitmap.o:	font.h
 bitmap.o:	i8042.h
 bitmap.o:	menu.h
 bitmap.o:	mouse.h

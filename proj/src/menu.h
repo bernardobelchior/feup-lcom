@@ -59,7 +59,7 @@ void menu_draw(menu* m);
  *
  * @return Returns 1 if a button was clicked. Returns 0 otherwise.
  */
-unsigned char click_button(menu* m, unsigned short x, unsigned short y);
+unsigned char click_button(menu* m, short x, short y);
 
 /**
  * @brief Select previous button on screen

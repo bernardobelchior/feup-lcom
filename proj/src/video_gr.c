@@ -94,7 +94,7 @@ void *vg_init(unsigned short mode) {
 	return video_mem;
 }
 
-char vg_set_pixel(unsigned short x, unsigned short y, unsigned short color) {
+char vg_set_pixel(short x, short y, unsigned short color) {
 	if (x < 0)
 		return 1;
 	else if (x >= h_res)
@@ -241,10 +241,10 @@ char vg_draw_pixmap(unsigned short* pixmap, short x, short y, unsigned short wid
 	if (x + width < 0 || y + height < 0 || x > h_res || y > v_res)
 		return 1;
 
-	unsigned short i;
-	for (i = 0; i < height; i++) {
-		vg_set_line(x, y+i, width, pixmap+i*width);
-	}
+	unsigned short i, j;
+	for(i = 0; i < height; i++)
+		for(j = 0; j < width; j++)
+			vg_set_pixel(x+j, y+i, *(pixmap+i*width+j));
 
 	return 0;
 }

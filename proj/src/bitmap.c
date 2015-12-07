@@ -98,13 +98,7 @@ void bitmap_draw(bitmap* bmp, short x, short y,
 	else if (alignment == ALIGN_RIGHT)
 		x -= width;
 
-	if (x + width < 0 || x > get_h_res() || y + height < 0 || y > get_v_res())
-		return;
-
-	unsigned short i, j;
-	for(i = 0; i < height; i++)
-		for(j = 0; j < width; j++)
-			vg_set_pixel(x+j, y+i, *(bmp->bmp_data+i*bmp->bmp_info_header.width+j));
+	vg_draw_pixmap(bmp->bmp_data, x, y, width, height);
 }
 
 void bitmap_delete(bitmap* bmp) {

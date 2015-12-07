@@ -10,7 +10,8 @@
  * Struct that stores info regarding a button
  */
 typedef struct { //TODO still have to add text or image
-	unsigned short x, y, width, height;
+	short x, y;
+	unsigned short width, height;
 	void (*function)();
 	unsigned short color;
 	char* title;
@@ -29,7 +30,7 @@ typedef struct { //TODO still have to add text or image
  *
  * @return Returns the button created
  */
-button* create_button(unsigned short x, unsigned short y, unsigned short width, unsigned short height, void (*function)(), const char* title, unsigned short color);
+button* create_button(short x, short y, unsigned short width, unsigned short height, void (*function)(), const char* title, unsigned short color);
 
 /**
  * @brief Draws button
@@ -48,7 +49,7 @@ void button_draw(button* b, font* f);
  *
  * @return Returns 1 if the check is true. Returns 0 otherwise.
  */
-char collides_with_button(button* b, unsigned short x, unsigned short y);
+char collides_with_button(button* b, short x, short y);
 
 /**
  * @brief Deletes button

@@ -41,7 +41,7 @@ unsigned short get_h_res();
  *
  * @return Returns 0 on sucess. Returns 1 if x < 0; 2 if x >= h_res; 3 if y < 0; 4 if y >= v_res. Returns 5 if the color is considered transparent.
  */
-char vg_set_pixel(unsigned short x, unsigned short y, unsigned short color);
+char vg_set_pixel(short x, short y, unsigned short color);
 
 /**
  * @brief Copies an entire line to double buffer

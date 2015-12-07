@@ -9,9 +9,9 @@
 //44 pixels height
 
 #define LETTER_HEIGHT 44
-#define LETTER_WIDTH 16
+#define LETTER_WIDTH 32
 
-static char font_path[] = "font/";
+static char font_path[] = "";
 
 typedef struct{
 	unsigned char lower_limit, higher_limit, letters_per_line;
@@ -33,7 +33,7 @@ font* font_init(const char* filename);
 * @param str String to print
 */
 
-void font_draw_string(font* f, unsigned short x, unsigned short y, const char* str);
+void font_draw_string(font* f, short x, short y, const char* str);
 
 /**
  * @brief Delete font
