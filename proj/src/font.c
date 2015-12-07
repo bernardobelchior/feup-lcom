@@ -16,9 +16,21 @@ font* font_init(const char* font_name){
 		return NULL;
 	}
 
+	font_recolor(f, rgb(0x000000), rgb(0xFFFFFF));
+
 	return f;
 }
 
+void font_recolor(font* f, unsigned short initial_color, unsigned short final_color){
+	unsigned short i, j, width = f->letters->bmp_info_header.width, height = f->letters->bmp_info_header.height;
+
+	for(i = 0; i < height; i++){
+		for(j = 0; j < width; j++){
+			if(*(f->letters->bmp_data + j + i*width) == initial_color)
+				*(f->letters->bmp_data + j + i*width) = final_color;
+		}
+	}
+}
 
 void font_draw_string(font* f, short x, short y, const char* str){
 
@@ -41,10 +53,10 @@ void font_draw_string(font* f, short x, short y, const char* str){
 
 	while(str[i] != '\0'){
 		if(str[i] > f->lower_limit && str[i] < f->higher_limit){ //if the char is valid, print it, otherwise do nothing
+			letter_position = f->letters->bmp_data + ((str[i] - f->lower_limit) / f->letters_per_line)*width*LETTER_HEIGHT + ((str[i] - f->lower_limit) % f->letters_per_line)*LETTER_WIDTH;
 			for(j = 0; j < LETTER_HEIGHT; j++){
-				letter_position = f->letters->bmp_data + ((str[i] - f->lower_limit) % f->letters_per_line)*width*LETTER_HEIGHT + (str[i] - f->lower_limit)*LETTER_WIDTH;
 				for(k = 0; k < LETTER_WIDTH; k++){
-					vg_set_pixel(x+k, y+j, *(letter_position + j*width + k));
+					vg_set_pixel(x+k+i*LETTER_WIDTH, y+j, *(letter_position + j*width + k));
 				}
 			}
 		}

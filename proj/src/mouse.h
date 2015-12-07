@@ -2,6 +2,7 @@
 #define __MOUSE_H
 
 #include "i8042.h"
+#include "bitmap.h"
 
 /** @name Mouse Information Struct*/
 /**@{
@@ -11,6 +12,7 @@
 typedef struct{
 	short x, y;
 	unsigned char rmb_pressed, mmb_pressed, lmb_pressed;
+	bitmap* cursor;
 } mouse_info_t;
 /** @} end of Mouse Information Struct */
 
@@ -75,5 +77,10 @@ void mouse_init();
  * @param mouse Information about the mouse position and state
  */
 void mouse_draw();
+
+/**
+ * @brief Destructs mouse struct
+ */
+void mouse_destruct();
 
 #endif

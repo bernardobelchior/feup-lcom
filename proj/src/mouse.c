@@ -94,8 +94,13 @@ void mouse_init(){
 	mouse_info.rmb_pressed = 0;
 	mouse_info.mmb_pressed = 0;
 	mouse_info.lmb_pressed = 0;
+	mouse_info.cursor = bitmap_load("cursor.bmp");
 }
 
 void mouse_draw(){
-	vg_draw_frame(mouse_info.x, mouse_info.y, 5, 5, rgb(0xFF66B2));
+	bitmap_draw(mouse_info.cursor, mouse_info.x, mouse_info.y, ALIGN_LEFT);
+}
+
+void mouse_destruct(){
+	bitmap_delete(mouse_info.cursor);
 }

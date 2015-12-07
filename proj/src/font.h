@@ -32,15 +32,22 @@ font* font_init(const char* filename);
 * @param y Position on the y axis to print the string
 * @param str String to print
 */
-
 void font_draw_string(font* f, short x, short y, const char* str);
+
+/**
+ * @brief Changes the color in the font
+ *
+ * @param f Font to recolor
+ * @param initial_color Color to replace
+ * @param final_color Color to replace with
+ */
+void font_recolor(font* f, unsigned short initial_color, unsigned short final_color);
 
 /**
  * @brief Delete font
  *
  * @param f Font to be deleted
  */
-
 void font_delete(font* f);
 
 #endif
