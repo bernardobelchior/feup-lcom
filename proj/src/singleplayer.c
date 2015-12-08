@@ -4,8 +4,6 @@ extern enum singleplayer_controller controller;
 extern enum game_state state;
 
 void singleplayer_init() {
-	/*if((singleplayer_game.shields = (shield**) malloc(NUMBER_OF_SHIELDS * sizeof(shield*))) == NULL)
-	 return;*/
 
 	singleplayer_game.score = 0;
 
@@ -14,6 +12,7 @@ void singleplayer_init() {
 
 	projectile_list_init();
 	alien_list_init();
+	shield_list_init();
 }
 
 void singleplayer_tick() {
@@ -42,6 +41,7 @@ void singleplayer_tick() {
 	}
 
 	aliens_draw();
+	shields_draw();
 	player_draw(singleplayer_game.play);
 	singleplayer_check_projectiles_state();
 }
@@ -69,7 +69,7 @@ void singleplayer_check_projectiles_state() {
 int singleplayer_projectile_collision(projectile* proj) {
 	//TODO Add shield collision
 
-	return aliens_collision_handler(proj->x, proj->y) | player_collision_handler(singleplayer_game.play, proj->x, proj->y);
+	return aliens_collision_handler(proj->x, proj->y) | player_collision_handler(singleplayer_game.play, proj->x, proj->y) | shield_collision_handler(proj->x, proj->y);
 }
 
 int singleplayer_move(char direction) {
@@ -83,7 +83,6 @@ int singleplayer_fire() {
 void singleplayer_destruct() { //TODO still need to free shield, after implementing
 	aliens_destruct();
 	player_destruct(singleplayer_game.play);
-
-	//free(singleplayer_game.shields); //temporary
+	shields_destruct();
 }
 

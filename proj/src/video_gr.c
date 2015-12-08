@@ -113,6 +113,7 @@ char vg_set_pixel(short x, short y, unsigned short color) {
 	return 0;
 }
 
+
 int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width,
 		unsigned short height, unsigned short color) {
 	unsigned int i;

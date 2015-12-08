@@ -205,7 +205,7 @@ int aliens_collision_handler(unsigned short x, unsigned short y) {
 	unsigned short rightmost_collision_point, lowest_collision_point;
 
 	if (invaders->head == NULL)
-		return;
+		return 0;
 
 	rightmost_collision_point = invaders->head->x + ALIEN_WIDTH * ALIENS_PER_ROW
 			+ (ALIENS_PER_ROW - 1) * ALIEN_SPACEMENT;
@@ -292,5 +292,5 @@ void aliens_destruct() {
 	while (invaders->head != NULL)
 		alien_remove(invaders->head);
 
-	free(invaders);
+	//free(invaders);
 }
