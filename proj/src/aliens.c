@@ -34,13 +34,13 @@ void alien_list_init() {
 			x += ALIEN_WIDTH + ALIEN_SPACEMENT;
 
 		if (line == 1)
-			type = 1;
+			type = SMALL;
 
 		else if (line == 2 || line == 3)
-			type = 2;
+			type = MEDIUM;
 
 		else if (line == 4 || line == 5)
-			type = 3;
+			type = LARGE;
 
 		alien_add((alien_init(x, y, type)));
 
@@ -48,6 +48,25 @@ void alien_list_init() {
 
 	search_new_extreme(1);
 	search_new_extreme(2);
+
+	//initialize small aliens animation
+	invaders->small_alien = animation_init();
+	animation_add(invaders->small_alien, "small_invader1.bmp");
+	animation_add(invaders->small_alien, "small_invader2.bmp");
+
+	//initialize medium aliens animation
+	invaders->medium_alien = animation_init();
+	animation_add(invaders->medium_alien, "medium_invader1.bmp");
+	animation_add(invaders->medium_alien, "medium_invader2.bmp");
+
+	//initialize large aliens animation
+	invaders->large_alien = animation_init();
+	animation_add(invaders->large_alien, "large_invader1.bmp");
+	animation_add(invaders->large_alien, "large_invader2.bmp");
+
+	//initialize ufo "animation"
+	invaders->ufo = animation_init();
+	animation_add(invaders->ufo, "ufo.bmp");
 }
 
 void alien_add(alien *a1) {
@@ -129,15 +148,19 @@ int alien_remove(alien *a1) {
 }
 
 int aliens_move() {
+	animation_next(invaders->small_alien);
+	animation_next(invaders->medium_alien);
+	animation_next(invaders->large_alien);
+	animation_next(invaders->ufo);
 
 	alien* iterator = invaders->head;
 
 	if ((direction == -1
 			&& invaders->leftmost->x + direction * invaders->velocity
-					< PLACEHOLDER_LEFT_BORDER)
+			< PLACEHOLDER_LEFT_BORDER)
 			|| (direction == 1
 					&& invaders->rightmost->x + invaders->rightmost->width
-							+ invaders->velocity > PLACEHOLDER_RIGHT_BORDER)) {
+					+ invaders->velocity > PLACEHOLDER_RIGHT_BORDER)) {
 
 		if (invaders->last->y + invaders->last->height + ALIEN_Y_DELTA
 				> PLACEHOLDER_SHIELD_LINE) {
@@ -161,7 +184,21 @@ int aliens_move() {
 }
 
 int alien_draw(alien *a1) {
-	vg_draw_frame(a1->x, a1->y, a1->width, a1->height, rgb(0x00FFFFFF));
+	switch(a1->type){
+	case SMALL:
+		bitmap_draw(invaders->small_alien->current->bmp, a1->x, a1->y, ALIGN_LEFT);
+		break;
+	case MEDIUM:
+		bitmap_draw(invaders->medium_alien->current->bmp, a1->x, a1->y, ALIGN_LEFT);
+		break;
+	case LARGE:
+		bitmap_draw(invaders->large_alien->current->bmp, a1->x, a1->y, ALIGN_LEFT);
+		break;
+	case UFO:
+		bitmap_draw(invaders->ufo->current->bmp, a1->x, a1->y, ALIGN_LEFT);
+		break;
+	}
+
 #ifdef DEBUG
 	if (invaders->last == a1)
 		vg_draw_frame(a1->x + a1->width / 2, a1->y + a1->height / 2, 5, 5,
@@ -218,7 +255,7 @@ int aliens_collision_handler(unsigned short x, unsigned short y) {
 
 		do {
 			if (x > iterator->x&& x < iterator->x + ALIEN_WIDTH &&
-			y > iterator->y && y < iterator->y + ALIEN_HEIGHT) {
+					y > iterator->y && y < iterator->y + ALIEN_HEIGHT) {
 				return alien_remove(iterator);
 			}
 			iterator = iterator->next;
@@ -285,6 +322,10 @@ void aliens_draw() {
 }
 
 void aliens_destruct() {
+	animation_destruct(invaders->small_alien);
+	animation_destruct(invaders->medium_alien);
+	animation_destruct(invaders->large_alien);
+	animation_destruct(invaders->ufo);
 
 	if (invaders->head == NULL)
 		return;

@@ -7,14 +7,14 @@
 #include "state.h"
 #include "proj.h"
 #include "player.h"
-
+#include "animation.h"
 
 #define ALIENS_PER_ROW 11
 #define ALIEN_ROWS 5
 #define INITIAL_X_POS 50
 #define INITIAL_Y_POS 20
-#define ALIEN_WIDTH 45
-#define ALIEN_HEIGHT 30
+#define ALIEN_WIDTH 48
+#define ALIEN_HEIGHT 32
 #define ALIEN_SPACEMENT 10
 #define VELOCITY_INCREASE 1
 #define ALIEN_X_DELTA ALIEN_WIDTH + ALIEN_SPACEMENT
@@ -45,6 +45,7 @@ typedef struct {
 	//alien *player_controlled; TODO if we implement vs multiplayer
 	int velocity;
 	unsigned char alien_num;
+	animation *small_alien, *medium_alien, *large_alien, *ufo;
 } alien_list;
 
 alien_list* invaders;
