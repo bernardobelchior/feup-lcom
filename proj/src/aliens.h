@@ -16,8 +16,9 @@
 #define ALIEN_WIDTH 48
 #define ALIEN_HEIGHT 32
 #define ALIEN_SPACEMENT 10
-#define VELOCITY_INCREASE 1
-#define ALIEN_X_DELTA ALIEN_WIDTH + ALIEN_SPACEMENT
+#define MOVEMENT_INCREASE 1
+#define INITIAL_MOV_FREQ 90
+#define ALIEN_X_DELTA 15
 #define ALIEN_Y_DELTA ALIEN_HEIGHT + ALIEN_SPACEMENT
 #define ALIEN_MOVES_PER_COLUMN 8
 #define ALIEN_MOVES_PER_ROW 5
@@ -43,9 +44,9 @@ typedef struct {
 	alien *rightmost;
 	alien *leftmost;
 	//alien *player_controlled; TODO if we implement vs multiplayer
-	int velocity;
 	unsigned char alien_num;
 	animation *small_alien, *medium_alien, *large_alien, *ufo;
+	int movement_frequency;
 } alien_list;
 
 alien_list* invaders;
@@ -114,6 +115,16 @@ void aliens_draw();
  * @return Returns 0 if a new extreme has been successfully found, returning non-zero otherwise.
  */
 int search_new_extreme(unsigned char side);
+
+/**
+ * @brief fires a projectile
+ */
+int alien_fire(alien *a1);
+
+/**
+ * @brief checks if the alien is on the row closest to the player(s)
+ */
+int is_on_last_row(alien *a1);
 
 /**
  * @brief Frees memory when no longer in use

@@ -10,10 +10,9 @@ void alien_list_init() {
 	if ((invaders = (alien_list*) malloc(sizeof(alien_list))) == NULL)
 		return;
 
-	invaders->alien_num = ALIEN_ROWS * ALIENS_PER_ROW;
 	invaders->head = NULL;
 	invaders->last = NULL;
-	invaders->velocity = ALIEN_X_DELTA;
+	invaders->movement_frequency = INITIAL_MOV_FREQ;
 
 	unsigned char row_pos;
 	unsigned char line = 1;
@@ -22,7 +21,7 @@ void alien_list_init() {
 	int y = INITIAL_Y_POS;
 	enum alien_type type;
 
-	for (counter = 0; counter < invaders->alien_num; counter++) {
+	for (counter = 0; counter < ALIENS_PER_ROW * ALIEN_ROWS; counter++) {
 
 		if (counter % ALIENS_PER_ROW == 0) {
 			y += ALIEN_HEIGHT + ALIEN_SPACEMENT;
@@ -85,6 +84,8 @@ void alien_add(alien *a1) {
 int alien_remove(alien *a1) {
 	unsigned char flag = 0;
 
+	invaders->movement_frequency -= MOVEMENT_INCREASE;
+
 	if (invaders->rightmost == a1)
 		flag = 1;
 
@@ -102,7 +103,6 @@ int alien_remove(alien *a1) {
 		invaders->head = invaders->head->next;
 		free(a1);
 		invaders->head->prev = NULL;
-		invaders->velocity += VELOCITY_INCREASE;
 		if (!flag)
 			return 1;
 		else {
@@ -128,13 +128,13 @@ int alien_remove(alien *a1) {
 	alien* iterator = invaders->head;
 	do {
 		if (iterator->next == a1) {
-			iterator->next = iterator->next->next;
+			iterator->next = a1->next;
 			free(a1);
 			iterator->next->prev = iterator;
-			invaders->velocity += VELOCITY_INCREASE;
 
 			if (!flag)
 				return 1;
+
 			else {
 				search_new_extreme(flag);
 				return 1;
@@ -156,11 +156,11 @@ int aliens_move() {
 	alien* iterator = invaders->head;
 
 	if ((direction == -1
-			&& invaders->leftmost->x + direction * invaders->velocity
-			< PLACEHOLDER_LEFT_BORDER)
+			&& invaders->leftmost->x + direction * ALIEN_X_DELTA
+					< PLACEHOLDER_LEFT_BORDER)
 			|| (direction == 1
 					&& invaders->rightmost->x + invaders->rightmost->width
-					+ invaders->velocity > PLACEHOLDER_RIGHT_BORDER)) {
+							+ ALIEN_X_DELTA > PLACEHOLDER_RIGHT_BORDER)) {
 
 		if (invaders->last->y + invaders->last->height + ALIEN_Y_DELTA
 				> PLACEHOLDER_SHIELD_LINE) {
@@ -176,7 +176,7 @@ int aliens_move() {
 
 	} else
 		do {
-			alien_move(iterator, direction * invaders->velocity, 0);
+			alien_move(iterator, direction * ALIEN_X_DELTA, 0);
 			iterator = iterator->next;
 		} while (iterator != NULL);
 
@@ -184,15 +184,18 @@ int aliens_move() {
 }
 
 int alien_draw(alien *a1) {
-	switch(a1->type){
+	switch (a1->type) {
 	case SMALL:
-		bitmap_draw(invaders->small_alien->current->bmp, a1->x, a1->y, ALIGN_LEFT);
+		bitmap_draw(invaders->small_alien->current->bmp, a1->x, a1->y,
+				ALIGN_LEFT);
 		break;
 	case MEDIUM:
-		bitmap_draw(invaders->medium_alien->current->bmp, a1->x, a1->y, ALIGN_LEFT);
+		bitmap_draw(invaders->medium_alien->current->bmp, a1->x, a1->y,
+				ALIGN_LEFT);
 		break;
 	case LARGE:
-		bitmap_draw(invaders->large_alien->current->bmp, a1->x, a1->y, ALIGN_LEFT);
+		bitmap_draw(invaders->large_alien->current->bmp, a1->x, a1->y,
+				ALIGN_LEFT);
 		break;
 	case UFO:
 		bitmap_draw(invaders->ufo->current->bmp, a1->x, a1->y, ALIGN_LEFT);
@@ -244,10 +247,8 @@ int aliens_collision_handler(unsigned short x, unsigned short y) {
 	if (invaders->head == NULL)
 		return 0;
 
-	rightmost_collision_point = invaders->head->x + ALIEN_WIDTH * ALIENS_PER_ROW
-			+ (ALIENS_PER_ROW - 1) * ALIEN_SPACEMENT;
-	lowest_collision_point = invaders->head->y + ALIEN_HEIGHT * ALIEN_ROWS
-			+ (ALIEN_ROWS - 1) * ALIEN_SPACEMENT;
+	rightmost_collision_point = invaders->rightmost->x + ALIEN_WIDTH;
+	lowest_collision_point = invaders->last->y + ALIEN_HEIGHT;
 
 	if (x >= invaders->head->x && x <= rightmost_collision_point
 			&& y >= invaders->head->y && y <= lowest_collision_point) {
@@ -255,7 +256,7 @@ int aliens_collision_handler(unsigned short x, unsigned short y) {
 
 		do {
 			if (x > iterator->x&& x < iterator->x + ALIEN_WIDTH &&
-					y > iterator->y && y < iterator->y + ALIEN_HEIGHT) {
+			y > iterator->y && y < iterator->y + ALIEN_HEIGHT) {
 				return alien_remove(iterator);
 			}
 			iterator = iterator->next;
@@ -319,6 +320,30 @@ void aliens_draw() {
 		alien_draw(iterator);
 		iterator = iterator->next;
 	} while (iterator != NULL);
+}
+
+int alien_fire(alien *a1) {
+
+	if (a1 == NULL) {
+		return 1;
+	}
+
+	return projectile_init((int) (a1->x + ALIEN_WIDTH / 2),
+			a1->y + ALIEN_HEIGHT+ALIEN_Y_DELTA, 5); //TODO remove + ALIEN_Y_DELTA AFTER THE DIMENSIONS ARE SORTED OUT
+}
+
+int is_on_last_row(alien *a1) {
+
+	alien *iterator = a1->next;
+
+	while (iterator != NULL) {
+		if ((int) (a1->x + ALIEN_WIDTH / 2) >= iterator->x  && (int) (a1->x + ALIEN_WIDTH / 2) <= iterator->x + ALIEN_WIDTH)
+			return 0;
+
+		iterator = iterator->next;
+	}
+
+	return 1;
 }
 
 void aliens_destruct() {

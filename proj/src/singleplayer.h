@@ -7,11 +7,15 @@
 #include "projectile.h"
 #include "player.h"
 #include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 
 typedef struct {
 	shield* (*shields);
 	player* play;
 	unsigned int score;
+	unsigned char reset_ticks;
+
 } game_t;
 
 game_t singleplayer_game;
@@ -59,6 +63,11 @@ void singleplayer_check_projectiles_state();
  * @return Returns 0 if the projectile does not collide with anything, returning non-zero otherwise.
  */
 int singleplayer_projectile_collision(projectile* proj);
+
+/*/
+ * @brief randomly chooses alien to fire
+ */
+alien *singleplayer_alien_to_fire();
 
 /**
  * @brief Deletes singleplayer game information

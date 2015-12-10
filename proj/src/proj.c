@@ -34,6 +34,7 @@ int start() {
 	unsigned char packet[3];
 	unsigned short counter = 0;
 
+	srand(1);
 	options_load();
 	mouse_init();
 	init_state();
