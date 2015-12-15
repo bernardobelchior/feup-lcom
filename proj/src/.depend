@@ -65,9 +65,23 @@ aliens.o:	state.h
 aliens.o:	timer.h
 aliens.o:	video_gr.h
 
+animation.o:	/usr/include/minix/dir.h
+animation.o:	/usr/include/minix/types.h
+animation.o:	/usr/include/sys/null.h
+animation.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/ansi.h
+animation.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/stdio.h
+animation.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
 animation.o:	animation.c
 animation.o:	animation.h
 animation.o:	bitmap.h
+animation.o:	button.h
+animation.o:	font.h
+animation.o:	i8042.h
+animation.o:	menu.h
+animation.o:	mouse.h
+animation.o:	proj.h
+animation.o:	state.h
+animation.o:	video_gr.h
 
 bitmap.o:	/usr/include/minix/dir.h
 bitmap.o:	/usr/include/minix/types.h
@@ -442,9 +456,11 @@ proj.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/stdio.h
 proj.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/stdlib.h
 proj.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/string.h
 proj.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/syslimits.h
+proj.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/time.h
 proj.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/unistd.h
 proj.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
 proj.o:	aliens.h
+proj.o:	animation.h
 proj.o:	bitmap.h
 proj.o:	button.h
 proj.o:	events.h
@@ -527,6 +543,7 @@ shield.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/syslimits.h
 shield.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/unistd.h
 shield.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
 shield.o:	aliens.h
+shield.o:	animation.h
 shield.o:	bitmap.h
 shield.o:	button.h
 shield.o:	font.h
@@ -590,9 +607,11 @@ singleplayer.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/stdio.h
 singleplayer.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/stdlib.h
 singleplayer.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/string.h
 singleplayer.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/syslimits.h
+singleplayer.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/time.h
 singleplayer.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/unistd.h
 singleplayer.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
 singleplayer.o:	aliens.h
+singleplayer.o:	animation.h
 singleplayer.o:	bitmap.h
 singleplayer.o:	button.h
 singleplayer.o:	font.h

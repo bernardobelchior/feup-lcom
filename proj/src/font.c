@@ -32,22 +32,16 @@ void font_recolor(font* f, unsigned short initial_color, unsigned short final_co
 	}
 }
 
-void font_draw_string(font* f, short x, short y, const char* str){
-
-	/*while(str[i] != '\0'){
-		if(str[i] >= f->lower_limit && str[i] <= f->higher_limit){
-			letter_position = f->letters->bmp_data;
-			//letter_position = f->letters->bmp_data + ((str[i]-f->lower_limit)%f->letters_per_line)*LETTER_HEIGHT*LETTER_WIDTH + (str[i]-f->lower_limit)*LETTER_WIDTH;
-			vg_draw_pixmap(letter_position, x+LETTER_WIDTH*i, y, LETTER_WIDTH, LETTER_HEIGHT);//, ALIGN_LEFT);
-		}
-		i++;
-	}*/
-
-
+void font_draw_string(font* f, short x, short y, const char* str, Alignment alignment){
 	unsigned short width = f->letters->bmp_info_header.width;
 	unsigned short height = f->letters->bmp_info_header.height;
 	unsigned short i, j, k;
 	unsigned short *letter_position;
+
+	if(alignment == ALIGN_CENTER)
+		x -= (unsigned short) ((LETTER_WIDTH*strlen(str))/2);
+	else if(alignment == ALIGN_RIGHT)
+		x -= LETTER_WIDTH*strlen(str);
 
 	//prints the string
 

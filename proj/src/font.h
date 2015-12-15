@@ -32,7 +32,7 @@ font* font_init(const char* filename);
 * @param y Position on the y axis to print the string
 * @param str String to print
 */
-void font_draw_string(font* f, short x, short y, const char* str);
+void font_draw_string(font* f, short x, short y, const char* str, Alignment alignment);
 
 /**
  * @brief Changes the color in the font

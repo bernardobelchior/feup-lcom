@@ -15,7 +15,7 @@ void alien_list_init() {
 	invaders->movement_frequency = INITIAL_MOV_FREQ;
 
 	unsigned char row_pos;
-	unsigned char line = 1;
+	unsigned char line = 0;
 	unsigned char counter;
 	int x = INITIAL_X_POS;
 	int y = INITIAL_Y_POS;

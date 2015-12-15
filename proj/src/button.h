@@ -3,6 +3,7 @@
 
 #include "state.h"
 #include "font.h"
+#include "bitmap.h"
 
 /** @name Button Information Struct*/
 /**@{
@@ -15,6 +16,7 @@ typedef struct { //TODO still have to add text or image
 	void (*function)();
 	unsigned short color;
 	char* title;
+	Alignment text_align;
 } button;
 /** @} end of Button Information Struct */
 
@@ -30,7 +32,7 @@ typedef struct { //TODO still have to add text or image
  *
  * @return Returns the button created
  */
-button* create_button(short x, short y, unsigned short width, unsigned short height, void (*function)(), const char* title, unsigned short color);
+button* create_button(short x, short y, unsigned short width, unsigned short height, Alignment button_align, void (*function)(), const char* title, unsigned short color, Alignment text_align);
 
 /**
  * @brief Draws button
