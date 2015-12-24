@@ -1,13 +1,8 @@
 #ifndef ALIENS_H
 #define ALIENS_H
 
-#include <stdio.h>
-
-#include "video_gr.h"
-#include "state.h"
-#include "proj.h"
-#include "player.h"
 #include "animation.h"
+#include "projectile.h"
 
 #define ALIENS_PER_ROW 11
 #define ALIEN_ROWS 5
@@ -22,6 +17,12 @@
 #define ALIEN_Y_DELTA ALIEN_HEIGHT + ALIEN_SPACEMENT
 #define ALIEN_MOVES_PER_COLUMN 8
 #define ALIEN_MOVES_PER_ROW 5
+#define ALIEN_PROJECTILE_WIDTH 5
+#define ALIEN_PROJECTILE_HEIGHT 10
+#define LARGE_ALIEN_SCORE 1
+#define MEDIUM_ALIEN_SCORE 2
+#define SMALL_ALIEN_SCORE 3
+#define UFO_ALIEN_SCORE 5
 
 #define PLACEHOLDER_LEFT_BORDER 100
 #define PLACEHOLDER_RIGHT_BORDER 900  //TODO eliminar
@@ -98,10 +99,12 @@ int aliens_move();
  *
  * @param x Projectile's x position
  * @param y Projectile's y position
+ * @param width Projectile's width
+ * @param height Projectile's height
  *
  * @return Returns zero if the projectile has not hit an alien, returning non-zero otherwise.
  */
-int aliens_collision_handler(unsigned short x, unsigned short y);
+int aliens_collision_handler(projectile* proj);
 
 /**
  * @brief draws all the aliens

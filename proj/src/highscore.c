@@ -1,7 +1,4 @@
 #include "highscore.h"
-#include "proj.h"
-#include "state.h"
-#include "video_gr.h"
 
 void highscore_init(){
 	FILE* file;

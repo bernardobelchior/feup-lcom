@@ -1,15 +1,4 @@
 #include "events.h"
-#include "keyboard.h"
-#include "mouse.h"
-#include "menu.h"
-#include "button.h"
-#include "video_gr.h"
-#include "vbe.h"
-#include "proj.h"
-#include "i8042.h"
-#include "highscore.h"
-#include "options.h"
-#include "state.h"
 
 extern mouse_info_t mouse_info;
 extern enum game_state state;

@@ -16,17 +16,22 @@ player* player_init() {
 	p1->num_lives = NUM_LIVES; //TODO implementar dificuldade??
 	p1->x = PLAYER_INITIAL_X_POS;
 	p1->y = PLAYER_INITIAL_Y_POS;
+	p1->score = 0;
+	p1->score_str = (char*) malloc(15*sizeof(char));
 
 	return p1;
 }
 
 int player_draw(player *p1){
 	bitmap_draw(p1->player_ship, p1->x, p1->y, ALIGN_LEFT);
-	//vg_draw_frame(p1->x, p1->y, SHIP_WIDTH, SHIP_HEIGHT, rgb(0x00FF00));
+	font_draw_string(space_invaders_font, 0, 724, "Score: ", ALIGN_LEFT);
+	itoa(p1->score, p1->score_str, 10);
+	font_draw_string(space_invaders_font, strlen("Score")*LETTER_WIDTH, 724, p1->score_str, ALIGN_LEFT);
+	//vg_draw_frame(p1->x, p1->y, SHIP_WIDTH, SHIP_HEIGHT, rgb(0x0000FF));
 }
 
 int player_fire(player *p1) {
-	return projectile_init((int) (p1->x+SHIP_WIDTH/2), p1->y-1, -5);
+	return projectile_init(p1, (unsigned short) (p1->x+SHIP_WIDTH/2), p1->y-PLAYER_PROJECTILE_HEIGHT, PLAYER_PROJECTILE_WIDTH, PLAYER_PROJECTILE_HEIGHT, -5);
 }
 
 void player_hit(player *p1) {	//TODO
@@ -42,15 +47,11 @@ void player_hit(player *p1) {	//TODO
 }
 
 int player_move(player *p1, char direction){
-	if(p1->x + direction*SHIP_X_DELTA < 0){
+	if(p1->x + direction*SHIP_X_DELTA < 0)
 		p1->x = 0;
-		return 1;
-	}
 
-	if(p1->x + direction*SHIP_X_DELTA + SHIP_WIDTH >= 800){
-		p1->x = 800 - SHIP_WIDTH;
-		return 1;
-	}
+	if(p1->x + direction*SHIP_X_DELTA + SHIP_WIDTH >= get_h_res())
+		p1->x = get_h_res() - SHIP_WIDTH - 1;
 
 	p1->x += direction*SHIP_X_DELTA;
 	return 0;
@@ -71,8 +72,9 @@ int player_set_x_pos(player *p1, unsigned short x){
 	return 0;
 }
 
-int player_collision_handler(player* p1, unsigned short x, unsigned short y){//TODO make a better check because an object can collide with another, even thought his x,y position doesnt
-	if((x > p1->x && x < p1->x + SHIP_WIDTH) && (y > p1->y && y < p1->y + SHIP_HEIGHT)){
+int player_collision_handler(player* p1, struct _projectile* proj){
+	if((proj->x > p1->x && proj->x < p1->x + SHIP_WIDTH) && (proj->y > p1->y && proj->y < p1->y + SHIP_HEIGHT)
+			|| (proj->x + proj->width > p1->x && proj->x + proj->width < p1->x + SHIP_WIDTH) && (proj->y + proj->height > p1->y && proj->y + proj->height < p1->y + SHIP_HEIGHT)){
 		player_hit(p1);
 		return 1;
 	}
@@ -86,5 +88,6 @@ void player_game_over (player *p1){
 
 void player_destruct(player *p1){
 	bitmap_delete(p1->player_ship);
+	free(p1->score_str);
 	free(p1);
 }

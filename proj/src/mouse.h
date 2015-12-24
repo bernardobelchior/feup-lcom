@@ -1,8 +1,7 @@
 #ifndef __MOUSE_H
 #define __MOUSE_H
 
-#include "i8042.h"
-#include "bitmap.h"
+#include "proj.h"
 
 /** @name Mouse Information Struct*/
 /**@{

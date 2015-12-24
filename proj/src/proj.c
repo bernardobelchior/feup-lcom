@@ -1,17 +1,4 @@
-#include <minix/drivers.h>
 #include "proj.h"
-#include "events.h"
-#include "timer.h"
-#include "mouse.h"
-#include "keyboard.h"
-#include "vbe.h"
-#include "video_gr.h"
-#include "singleplayer.h"
-#include "i8042.h"
-#include <stdlib.h>
-#include "highscore.h"
-#include "options.h"
-#include "state.h"
 
 extern menu* start_menu;
 
@@ -34,6 +21,7 @@ int start() {
 	unsigned char packet[3];
 	unsigned short counter = 0;
 
+	space_invaders_font = font_init("/home/proj/res/spaceinvader_font_transparent.bmp");
 	srand(1);
 	options_load();
 	mouse_init();

@@ -1,6 +1,5 @@
 #include "projectile.h"
 
-
 void projectile_list_init(){
 	if( (projectiles = (projectile_list *)malloc(sizeof(projectile_list))) == NULL)
 		return;
@@ -10,7 +9,7 @@ void projectile_list_init(){
 }
 
 
-int projectile_init(unsigned short x, unsigned short y, int velocity){
+int projectile_init(struct _player* p, unsigned short x, unsigned short y, unsigned short width, unsigned short height, int velocity) {
 
 	projectile *proj = NULL;
 
@@ -19,9 +18,12 @@ int projectile_init(unsigned short x, unsigned short y, int velocity){
 
 	proj->x = x;
 	proj->y = y;
+	proj->width = width;
+	proj->height = height;
 	proj->velocity = velocity;
 	proj->next = NULL;
 	proj->prev = NULL;
+	proj->shooter = p;
 
 	if(projectiles->head == NULL){
 		projectiles->head = proj;
@@ -40,7 +42,7 @@ int projectile_init(unsigned short x, unsigned short y, int velocity){
 }
 
 int projectile_draw(projectile *proj) {
-	vg_draw_frame(proj->x, proj->y, 5, 5, rgb(0xFF0000));
+	vg_draw_frame(proj->x, proj->y, proj->width, proj->height, rgb(0xFF0000));
 
 	return 1;
 }
@@ -74,32 +76,11 @@ int projectile_delete(projectile *proj){
 
 int projectile_move(projectile *proj) {
 	proj->y += proj->velocity;
-	//if (cor do proximo pixel != cor do alien ou jogador ou escudo
-	//faz projectile_draw na posicao x+velocity;
-
-	//senao, lanca collision
-
 	return 1;
 }
 
 int collision(projectile* proj, unsigned char color, unsigned short x, unsigned short y) {
-	//verifica qual a cor do objeto atingido, e lanca a funcao apropriada
-
 	projectile_delete(proj);
-	return 1;
-}
-
-int alien_collision(unsigned short x, unsigned short y){
-	//procura na lista de aliens qual o alien que esta na posicao x,y
-	//lanca alien_hit para o alien em questao
-
-	return 1;
-}
-
-int shield_collision(unsigned short x, unsigned short y){
-	//procura na lista de shields qual o shield que esta na posicao x,y
-		//lanca shield_hit para o shields em questao
-
 	return 1;
 }
 

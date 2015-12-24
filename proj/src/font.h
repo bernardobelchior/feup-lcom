@@ -2,11 +2,6 @@
 #define FONT_H
 
 #include "bitmap.h"
-#include <stdio.h>
-
-//change bitmap_draw to have 3 args: bitmap_data, width and height
-//16 pixels width
-//44 pixels height
 
 #define LETTER_HEIGHT 44
 #define LETTER_WIDTH 32

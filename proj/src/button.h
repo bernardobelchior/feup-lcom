@@ -1,9 +1,8 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include "state.h"
-#include "font.h"
 #include "bitmap.h"
+#include "font.h"
 
 /** @name Button Information Struct*/
 /**@{

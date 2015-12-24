@@ -87,11 +87,9 @@ void singleplayer_check_projectiles_state() {
 }
 
 int singleplayer_projectile_collision(projectile* proj) {
-	//TODO Add shield collision
-
-	return aliens_collision_handler(proj->x, proj->y)
-			| player_collision_handler(singleplayer_game.play, proj->x, proj->y)
-			| shield_collision_handler(proj->x, proj->y);
+	return aliens_collision_handler(proj)
+			| player_collision_handler(singleplayer_game.play, proj)
+			| shield_collision_handler(proj);
 }
 
 int singleplayer_move(char direction) {
@@ -103,8 +101,6 @@ int singleplayer_fire() {
 }
 
 alien *singleplayer_alien_to_fire() {
-
-
 	alien *iterator;
 	int i, randnum;
 
@@ -112,9 +108,7 @@ alien *singleplayer_alien_to_fire() {
 		return NULL;
 
 	do {
-
-
-		printf("\n o randnum eh %d\n",randnum);
+		//printf("\n o randnum eh %d\n",randnum);
 		iterator = invaders->head;
 		randnum = rand() % 55;//(ALIENS_PER_ROW * ALIEN_ROWS);
 
@@ -130,7 +124,7 @@ alien *singleplayer_alien_to_fire() {
 
 	} while (!is_on_last_row(iterator));
 
-	printf("\nFUI\n");
+	//printf("\nFUI\n");
 
 	return iterator;
 }

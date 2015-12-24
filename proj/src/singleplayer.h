@@ -1,14 +1,12 @@
 #ifndef SINGLEPLAYER_H
 #define SINGLEPLAYER_H
 
-#include "aliens.h"
-#include "proj.h"
 #include "shield.h"
-#include "projectile.h"
-#include "player.h"
-#include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
+#include "state.h"
+
+#define NUMBER_OF_SHIELDS 4
+
+
 
 typedef struct {
 	shield* (*shields);
@@ -19,8 +17,6 @@ typedef struct {
 } game_t;
 
 game_t singleplayer_game;
-
-#define NUMBER_OF_SHIELDS 4
 
 /**
  * @brief Initializes singleplayer game information

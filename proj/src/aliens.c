@@ -157,10 +157,10 @@ int aliens_move() {
 
 	if ((direction == -1
 			&& invaders->leftmost->x + direction * ALIEN_X_DELTA
-					< PLACEHOLDER_LEFT_BORDER)
+			< PLACEHOLDER_LEFT_BORDER)
 			|| (direction == 1
 					&& invaders->rightmost->x + invaders->rightmost->width
-							+ ALIEN_X_DELTA > PLACEHOLDER_RIGHT_BORDER)) {
+					+ ALIEN_X_DELTA > PLACEHOLDER_RIGHT_BORDER)) {
 
 		if (invaders->last->y + invaders->last->height + ALIEN_Y_DELTA
 				> PLACEHOLDER_SHIELD_LINE) {
@@ -241,7 +241,7 @@ alien *alien_init(int x, int y, enum alien_type type) {
 	return et;
 }
 
-int aliens_collision_handler(unsigned short x, unsigned short y) {
+int aliens_collision_handler(projectile* proj) {
 	unsigned short rightmost_collision_point, lowest_collision_point;
 
 	if (invaders->head == NULL)
@@ -250,13 +250,31 @@ int aliens_collision_handler(unsigned short x, unsigned short y) {
 	rightmost_collision_point = invaders->rightmost->x + ALIEN_WIDTH;
 	lowest_collision_point = invaders->last->y + ALIEN_HEIGHT;
 
-	if (x >= invaders->head->x && x <= rightmost_collision_point
-			&& y >= invaders->head->y && y <= lowest_collision_point) {
+	if (proj->x >= invaders->head->x && proj->x <= rightmost_collision_point
+			&& proj->y >= invaders->head->y && proj->y <= lowest_collision_point) {
 		alien* iterator = invaders->head;
 
 		do {
-			if (x > iterator->x&& x < iterator->x + ALIEN_WIDTH &&
-			y > iterator->y && y < iterator->y + ALIEN_HEIGHT) {
+			if ((proj->x > iterator->x && proj->x < iterator->x + ALIEN_WIDTH &&
+					proj->y > iterator->y && proj->y < iterator->y + ALIEN_HEIGHT) ||
+					(proj->x + proj->width > iterator->x && proj->x + proj->width < iterator->x + ALIEN_WIDTH &&
+							proj->y + proj->height > iterator->y && proj->y + proj->height < iterator->y + ALIEN_HEIGHT)) {
+				if(proj->shooter != NULL){
+					switch(iterator->type){
+					case SMALL:
+						proj->shooter->score += SMALL_ALIEN_SCORE;
+						break;
+					case MEDIUM:
+						proj->shooter->score += MEDIUM_ALIEN_SCORE;
+						break;
+					case LARGE:
+						proj->shooter->score += LARGE_ALIEN_SCORE;
+						break;
+					case UFO:
+						proj->shooter->score += UFO_ALIEN_SCORE;
+						break;
+					}
+				}
 				return alien_remove(iterator);
 			}
 			iterator = iterator->next;
@@ -328,8 +346,9 @@ int alien_fire(alien *a1) {
 		return 1;
 	}
 
-	return projectile_init((int) (a1->x + ALIEN_WIDTH / 2),
-			a1->y + ALIEN_HEIGHT+ALIEN_Y_DELTA, 5); //TODO remove + ALIEN_Y_DELTA AFTER THE DIMENSIONS ARE SORTED OUT
+	projectile_init(NULL, (unsigned short) (a1->x + ALIEN_WIDTH / 2), a1->y + ALIEN_HEIGHT+ALIEN_Y_DELTA,
+			ALIEN_PROJECTILE_WIDTH, ALIEN_PROJECTILE_HEIGHT, 5); //TODO remove + ALIEN_Y_DELTA AFTER THE DIMENSIONS ARE SORTED OUT
+ return 0;
 }
 
 int is_on_last_row(alien *a1) {

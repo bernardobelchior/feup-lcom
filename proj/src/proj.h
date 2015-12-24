@@ -3,9 +3,20 @@
 
 #define DEBUG
 
+#include <minix/drivers.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "font.h"
+#include "video_gr.h"
 #include "mouse.h"
+#include "vbe.h"
+#include "keyboard.h"
+#include "i8042.h"
 #include "menu.h"
 
+
+font* space_invaders_font;
 enum singleplayer_controller { keyboard = 0, mouse = 1 } controller;
 
 /**

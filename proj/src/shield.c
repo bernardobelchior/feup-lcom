@@ -193,7 +193,7 @@ int shield_draw(shield *s1) {
 
 	do {
 		vg_draw_frame(iterator->xpos, iterator->ypos, SPRITE_WIDTH,
-		SPRITE_HEIGHT, rgb(0x00FFFFFF));
+				SPRITE_HEIGHT, rgb(0x00FFFFFF));
 		iterator = iterator->next;
 	} while (iterator != NULL);
 
@@ -221,20 +221,22 @@ void shields_draw() {
 
 }
 
-int shield_collision_handler(unsigned short x, unsigned short y) {
+int shield_collision_handler(projectile* proj) {
 
 	if (shields->head == NULL)
 		return 0;
 
-	if (y < shields->head->ypos || y > shields->head->ypos + SHIELD_HEIGHT)
+	if (proj->y < shields->head->ypos || proj->y > shields->head->ypos + SHIELD_HEIGHT)
 		return 0;
 
 	shield* iterator = shields->head;
 
 	do {
-		if (y <= iterator->ypos + SHIELD_HEIGHT && y >= iterator->ypos
-				&& x <= iterator->xpos + SHIELD_WIDTH && x >= iterator->xpos)
-			return (sprite_hit(iterator, x, y));
+		if ((proj->y <= iterator->ypos + SHIELD_HEIGHT && proj->y >= iterator->ypos
+				&& proj->x <= iterator->xpos + SHIELD_WIDTH && proj->x >= iterator->xpos)
+				|| (proj->y + proj->height <= iterator->ypos + SHIELD_HEIGHT && proj->y + proj->height >= iterator->ypos
+				&& proj->x + proj->width <= iterator->xpos + SHIELD_WIDTH && proj->x + proj->width >= iterator->xpos))
+		return (sprite_hit(iterator, proj->x, proj->y));
 
 		iterator = iterator->next;
 	} while (iterator != NULL);

@@ -1,10 +1,14 @@
 #ifndef BITMAP_H
 #define BITMAP_H
 
+#include <stdio.h>
+
 /** @defgroup Bitmap Bitmap
  * @{
  * Functions for manipulating bitmaps
  */
+
+struct font;
 
 typedef enum {
     ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT

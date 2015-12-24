@@ -1,7 +1,6 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
-#include "bitmap.h"
 #include "proj.h"
 
 typedef struct sprite sprite;

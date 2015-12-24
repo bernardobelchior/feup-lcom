@@ -1,5 +1,4 @@
 #include "button.h"
-#include "video_gr.h"
 
 button* create_button(short x, short y, unsigned short width, unsigned short height, Alignment button_align, void (*function)(), const char* title, unsigned short color, Alignment text_align){
 	button* b = (button*) malloc(sizeof(button));

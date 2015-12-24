@@ -1,6 +1,11 @@
 #ifndef EVENTS_H
 #define EVENTS_H
 
+#include "state.h"
+#include "singleplayer.h"
+#include "options.h"
+#include "start_menu.h"
+
 //Event Handlers
 
 /**

@@ -2,8 +2,6 @@
 #define MENU_H
 
 #include "button.h"
-#include "video_gr.h"
-#include "font.h"
 
 /** @name Menu Information Struct*/
 /**@{

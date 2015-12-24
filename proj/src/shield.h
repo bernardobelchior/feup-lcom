@@ -50,7 +50,7 @@ int delete_sprite(shield *s1, shield_sprite *shsp);
 int delete_shield(shield *s1);
 int shield_draw(shield *s1);
 void shields_draw();
-int shield_collision_handler(unsigned short x, unsigned short y);
+int shield_collision_handler(projectile* proj);
 int sprite_hit(shield *s1, unsigned short x, unsigned short y);
 void shields_destruct() ;
 

@@ -1,8 +1,8 @@
 #ifndef HIGHSCORE_H
 #define HIGHSCORE_H
 
-#include <stdio.h>
-#include "menu.h"
+#include "proj.h"
+#include "state.h"
 
 #define MAX_NUMBER_OF_SCORES 10
 
