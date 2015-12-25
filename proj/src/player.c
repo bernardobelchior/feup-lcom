@@ -34,10 +34,9 @@ int player_draw(player *p1){
 	//Draws lives
 	unsigned short i;
 	unsigned short x = get_h_res() - 3*p1->life->bmp_info_header.width - 1;
-	bitmap_draw(p1->life, 940, 700, ALIGN_LEFT);
-	/*for(i = 0; i < p1->num_lives; i++){
+	for(i = 0; i < p1->num_lives; i++){
 		bitmap_draw(p1->life, x+i*p1->life->bmp_info_header.width, get_v_res()-p1->life->bmp_info_header.height - 1, ALIGN_LEFT);
-	}*/
+	}
 }
 
 int player_fire(player *p1) {
