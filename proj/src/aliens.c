@@ -28,21 +28,21 @@ void alien_list_init() {
 			x = INITIAL_X_POS;
 			line++;
 		}
-
 		else
 			x += ALIEN_WIDTH + ALIEN_SPACEMENT;
 
-		if (line == 1)
+		switch(line){
+		case 1:
 			type = SMALL;
-
-		else if (line == 2 || line == 3)
+			break;
+		case 2: case 3:
 			type = MEDIUM;
-
-		else if (line == 4 || line == 5)
+			break;
+		case 4:	case 5:
 			type = LARGE;
-
+			break;
+		}
 		alien_add((alien_init(x, y, type)));
-
 	}
 
 	search_new_extreme(1);

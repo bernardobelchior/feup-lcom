@@ -5,6 +5,8 @@ font* font_init(const char* font_name){
 	f->lower_limit = 32;
 	f->higher_limit = 126;
 	f->letters_per_line = 10;
+	f->letter_width = LETTER_WIDTH;
+	f->letter_height = LETTER_HEIGHT;
 
 	unsigned char* full_path =  (unsigned char*) malloc((strlen(font_path) + strlen(font_name))*sizeof(unsigned char));
 
@@ -37,30 +39,46 @@ void font_draw_string(font* f, short x, short y, const char* str, Alignment alig
 	unsigned short height = f->letters->bmp_info_header.height;
 	unsigned short i, j, k;
 	unsigned short *letter_position;
+	unsigned short string_length = strlen(str);
 
 	if(alignment == ALIGN_CENTER)
-		x -= (unsigned short) ((LETTER_WIDTH*strlen(str))/2);
+		x -= (unsigned short) ((f->letter_width*strlen(str))/2);
 	else if(alignment == ALIGN_RIGHT)
-		x -= LETTER_WIDTH*strlen(str);
+		x -= f->letter_width*strlen(str);
 
 	//prints the string
 
+	/*for(i = 0; i < string_length; i++){ //seems a better approach, but does not work yet
+		font_draw_char(f, x + i*LETTER_WIDTH, y, str[i]);
+	}*/
+
 	while(str[i] != '\0'){
 		if(str[i] > f->lower_limit && str[i] < f->higher_limit){ //if the char is valid, print it, otherwise do nothing
-			letter_position = f->letters->bmp_data + ((str[i] - f->lower_limit) / f->letters_per_line)*width*LETTER_HEIGHT + ((str[i] - f->lower_limit) % f->letters_per_line)*LETTER_WIDTH;
-			for(j = 0; j < LETTER_HEIGHT; j++){
-				for(k = 0; k < LETTER_WIDTH; k++){
-					vg_set_pixel(x+k+i*LETTER_WIDTH, y+j, *(letter_position + j*width + k));
+			letter_position = f->letters->bmp_data + ((str[i] - f->lower_limit) / f->letters_per_line)*width*f->letter_height + ((str[i] - f->lower_limit) % f->letters_per_line)*f->letter_width;
+			for(j = 0; j < f->letter_height; j++){
+				for(k = 0; k < f->letter_width; k++){
+					vg_set_pixel(x+k+i*f->letter_width, y+j, *(letter_position + j*width + k));
 				}
 			}
 		}
 		i++;
 	}
 
-
-
-
 	//vg_draw_pixmap(f->letters->bmp_data, x, y, LETTER_WIDTH, LETTER_HEIGHT);
+}
+
+void font_draw_char(font *f, short x, short y, char c){
+	if(c < f->lower_limit || c > f->higher_limit)
+		return;
+
+	unsigned short width = f->letters->bmp_info_header.width;
+	unsigned short* char_start_position = f->letters->bmp_data + ((c - f->lower_limit) / f->letters_per_line)*width*f->letter_height + ((c - f->lower_limit) % f->letters_per_line)*f->letter_width;
+
+	unsigned short i, j;
+	for(i = 0; i < f->letter_height; i++){
+		for(j = 0; j < f->letter_width; j++)
+		vg_set_pixel(x + j, y + i, *(char_start_position + j + i*f->letter_height*f->letters_per_line));
+	}
 }
 
 void font_delete(font* f){

@@ -21,7 +21,7 @@ int start() {
 	unsigned char packet[3];
 	unsigned short counter = 0;
 
-	space_invaders_font = font_init("/home/proj/res/spaceinvader_font_transparent.bmp");
+	space_invaders_font = font_init("spaceinvader_font_transparent.bmp");
 	srand(1);
 	options_load();
 	mouse_init();

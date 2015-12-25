@@ -15,7 +15,6 @@
 #include "i8042.h"
 #include "menu.h"
 
-
 font* space_invaders_font;
 enum singleplayer_controller { keyboard = 0, mouse = 1 } controller;
 

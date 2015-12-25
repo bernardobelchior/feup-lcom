@@ -18,16 +18,26 @@ player* player_init() {
 	p1->y = PLAYER_INITIAL_Y_POS;
 	p1->score = 0;
 	p1->score_str = (char*) malloc(15*sizeof(char));
-
+	p1->score_str = "0";
+	p1->life = (bitmap*) bitmap_load("life.bmp");
 	return p1;
 }
 
 int player_draw(player *p1){
 	bitmap_draw(p1->player_ship, p1->x, p1->y, ALIGN_LEFT);
+
+	//Draws score
 	font_draw_string(space_invaders_font, 0, 724, "Score: ", ALIGN_LEFT);
-	itoa(p1->score, p1->score_str, 10);
-	font_draw_string(space_invaders_font, strlen("Score")*LETTER_WIDTH, 724, p1->score_str, ALIGN_LEFT);
-	//vg_draw_frame(p1->x, p1->y, SHIP_WIDTH, SHIP_HEIGHT, rgb(0x0000FF));
+	p1->score_str = (char*) itoa(p1->score, p1->score_str, 10);
+	font_draw_string(space_invaders_font, strlen("Score: ")*space_invaders_font->letter_width, 724, p1->score_str, ALIGN_LEFT);
+
+	//Draws lives
+	unsigned short i;
+	unsigned short x = get_h_res() - 3*p1->life->bmp_info_header.width - 1;
+	bitmap_draw(p1->life, 940, 700, ALIGN_LEFT);
+	/*for(i = 0; i < p1->num_lives; i++){
+		bitmap_draw(p1->life, x+i*p1->life->bmp_info_header.width, get_v_res()-p1->life->bmp_info_header.height - 1, ALIGN_LEFT);
+	}*/
 }
 
 int player_fire(player *p1) {
@@ -88,6 +98,7 @@ void player_game_over (player *p1){
 
 void player_destruct(player *p1){
 	bitmap_delete(p1->player_ship);
-	free(p1->score_str);
+	bitmap_delete(p1->life);
+	//free(p1->score_str); //TODO creates segmentation fault
 	free(p1);
 }

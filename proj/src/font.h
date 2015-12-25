@@ -10,6 +10,7 @@ static char font_path[] = "";
 
 typedef struct{
 	unsigned char lower_limit, higher_limit, letters_per_line;
+	unsigned short letter_width, letter_height;
 	bitmap* letters;
 } font; 
 
@@ -37,6 +38,16 @@ void font_draw_string(font* f, short x, short y, const char* str, Alignment alig
  * @param final_color Color to replace with
  */
 void font_recolor(font* f, unsigned short initial_color, unsigned short final_color);
+
+/**
+ * @brief Draws char on specified position
+ *
+ * @param f Font with which to draw
+ * @param x Position in the x axis
+ * @param y Position in the y axis
+ * @param c Character to draw
+ */
+void font_draw_char(font *f, short x, short y, char c);
 
 /**
  * @brief Delete font

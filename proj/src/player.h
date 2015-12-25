@@ -9,7 +9,7 @@
 #define NUM_LIVES 3
 #define PLAYER_INITIAL_X_POS 512
 #define PLAYER_INITIAL_Y_POS 668
-#define SHIP_WIDTH 50
+#define SHIP_WIDTH 68
 #define SHIP_HEIGHT 30
 #define SHIP_X_DELTA 20
 #define PLAYER_PROJECTILE_WIDTH 5
@@ -24,11 +24,12 @@ typedef struct _player{
 	int x, y;
 	int velocity;
 	bitmap* player_ship;
+	bitmap* life;
 	unsigned int score;
 	char* score_str;
 } player;
 
-static char SHIP_RES_NAME[] = "ufo.bmp";
+static char SHIP_RES_NAME[] = "player.bmp";
 
 extern font* space_invaders_font;
 
