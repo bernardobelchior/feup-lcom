@@ -2,6 +2,7 @@
 #define __MOUSE_H
 
 #include "proj.h"
+#include "bitmap.h"
 
 /** @name Mouse Information Struct*/
 /**@{

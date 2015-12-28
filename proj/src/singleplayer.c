@@ -4,7 +4,6 @@ extern enum singleplayer_controller controller;
 extern enum game_state state;
 
 void singleplayer_init() {
-
 	singleplayer_game.score = 0;
 	singleplayer_game.reset_ticks = 1;
 
@@ -26,23 +25,25 @@ void singleplayer_tick() {
 		singleplayer_game.reset_ticks = 0;
 		return;
 	}
+
 	if (controller == mouse)
 		player_set_x_pos(singleplayer_game.play, mouse_info.x);
 
-	if (invaders->head == NULL)
-		change_state(main_menu);
+	if (invaders->alien_num == 0 || singleplayer_game.play->num_lives == 0) {
+		singleplayer_game_over();
+	}
 
 	if (ticks % 60 == 0) {
 		seconds++;
 		if (seconds >= 5) {
 			if (alien_fire(singleplayer_alien_to_fire()) == -1)
-				change_state(main_menu);
+				singleplayer_game_over();
 		}
 	}
 
 	if (((ticks - ( (seconds-1) * 60))) % invaders->movement_frequency == 0) {
 		if (aliens_move() == -1)
-			change_state(main_menu);
+			singleplayer_game_over();
 	}
 
 #ifdef DEBUG
@@ -51,14 +52,10 @@ void singleplayer_tick() {
 	vg_draw_line(PLACEHOLDER_RIGHT_BORDER, 0, PLACEHOLDER_RIGHT_BORDER,
 			get_v_res(), rgb(0x00FFFFFF));
 	vg_draw_line(0, PLACEHOLDER_SHIELD_LINE, get_h_res(),
-	PLACEHOLDER_SHIELD_LINE, rgb(0x00FFFFFF));
+			PLACEHOLDER_SHIELD_LINE, rgb(0x00FFFFFF));
 #endif
 
 	ticks++;
-
-	if (invaders->alien_num == 0) {
-		change_state(main_menu);
-	}
 
 	aliens_draw();
 	shields_draw();
@@ -87,9 +84,8 @@ void singleplayer_check_projectiles_state() {
 }
 
 int singleplayer_projectile_collision(projectile* proj) {
-	return aliens_collision_handler(proj)
-			| player_collision_handler(singleplayer_game.play, proj)
-			| shield_collision_handler(proj);
+	return shield_collision_handler(proj) || aliens_collision_handler(proj)
+			|| player_collision_handler(singleplayer_game.play, proj);
 }
 
 int singleplayer_move(char direction) {
@@ -108,9 +104,8 @@ alien *singleplayer_alien_to_fire() {
 		return NULL;
 
 	do {
-		//printf("\n o randnum eh %d\n",randnum);
 		iterator = invaders->head;
-		randnum = rand() % 55;//(ALIENS_PER_ROW * ALIEN_ROWS);
+		randnum = rand() % (ALIENS_PER_ROW * ALIEN_ROWS); //55;
 
 
 		for (i = 0; i < randnum; i++) {
@@ -124,12 +119,22 @@ alien *singleplayer_alien_to_fire() {
 
 	} while (!is_on_last_row(iterator));
 
-	//printf("\nFUI\n");
-
 	return iterator;
 }
 
-void singleplayer_destruct() { //TODO still need to free shield, after implementing
+void singleplayer_game_over(){
+	if(is_on_highscores(singleplayer_game.play->score)){
+		//game_over_menu_init(singleplayer_game.play->score);
+		highscore_add("teste", get_todays_date(), singleplayer_game.play->score);
+	}
+
+	/*while(state != singleplayer){
+
+	}*/
+	change_state(main_menu);
+}
+
+void singleplayer_destruct() {
 	aliens_destruct();
 	player_destruct(singleplayer_game.play);
 	shields_destruct();

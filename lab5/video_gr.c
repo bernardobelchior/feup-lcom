@@ -184,8 +184,7 @@ int vg_draw_line(unsigned short xi, unsigned short yi, unsigned short xf,
 	return 0;
 }
 
-char vg_draw_pixmap(unsigned short xi, unsigned short yi, unsigned short width,
-		unsigned short height, char *pixmap) {
+char vg_draw_pixmap(unsigned short *pixmap, unsigned short xi, unsigned short yi, unsigned short width, unsigned short height) {
 	if (xi + width >= h_res || yi + height >= v_res || xi < 0 || yi < 0)
 		return 1;
 

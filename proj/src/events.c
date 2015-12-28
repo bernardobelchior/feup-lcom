@@ -6,6 +6,7 @@ extern enum singleplayer_controller controller;
 extern menu* start_menu;
 extern menu* highscore_menu;
 extern menu* options_menu;
+extern menu* game_over_menu;
 
 void kb_event_handler(unsigned short key) {
 	if (key & KB_BREAKCODE)
@@ -94,7 +95,7 @@ void key_pressed(unsigned long key) {
 	case singleplayer:
 		switch (key) {
 		case ESC_MAKECODE: //TODO add a pause menu
-			change_state(main_menu);
+			singleplayer_game_over();
 			break;
 		case RIGHT_ARROW_MAKECODE:
 			if(controller == keyboard)
@@ -170,6 +171,9 @@ void lmb_released() {
 	case options:
 		click_button(options_menu, mouse_info.x, mouse_info.y);
 		break;
+	case game_over:
+		click_button(game_over_menu, mouse_info.x, mouse_info.y);
+		break;
 	}
 }
 
@@ -182,8 +186,7 @@ void lmb_pressed() {
 void tick() {
 	switch (state) {
 	case main_menu:
-		menu_draw(start_menu);
-		mouse_draw();
+		start_menu_draw();
 		break;
 	case singleplayer:
 		singleplayer_tick();
@@ -193,6 +196,10 @@ void tick() {
 		break;
 	case highscore:
 		highscore_tick();
+		mouse_draw();
+		break;
+	case game_over:
+		game_over_menu_tick();
 		mouse_draw();
 		break;
 	case options:

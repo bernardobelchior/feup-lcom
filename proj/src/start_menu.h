@@ -3,9 +3,12 @@
 
 #include "menu.h"
 
+extern font* space_invaders_font;
 menu* start_menu;
 
 void start_menu_init();
+
+void start_menu_draw();
 
 void start_menu_singleplayer_on_click();
 

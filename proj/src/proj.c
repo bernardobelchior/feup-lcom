@@ -26,6 +26,7 @@ int start() {
 	options_load();
 	mouse_init();
 	init_state();
+	highscore_load();
 	vg_init(VBE_VIDEO_MODE);
 
 	while (1) { //TODO change condition
@@ -74,6 +75,7 @@ void leave(){
 	mouse_unsubscribe_int();
 	empty_out_buf();
 	vg_exit();
+	highscore_save();
 	options_save();
 	exit(0);
 }

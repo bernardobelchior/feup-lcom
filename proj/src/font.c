@@ -34,6 +34,13 @@ void font_recolor(font* f, unsigned short initial_color, unsigned short final_co
 	}
 }
 
+void font_draw_int(font* f, short x, short y, int number, Alignment alignment){
+	char* temp = (char*) malloc(100*sizeof(char));
+	sprintf(temp, "%d", number);
+	font_draw_string(f, x, y, temp, alignment);
+	free(temp);
+}
+
 void font_draw_string(font* f, short x, short y, const char* str, Alignment alignment){
 	unsigned short width = f->letters->bmp_info_header.width;
 	unsigned short height = f->letters->bmp_info_header.height;
@@ -42,9 +49,9 @@ void font_draw_string(font* f, short x, short y, const char* str, Alignment alig
 	unsigned short string_length = strlen(str);
 
 	if(alignment == ALIGN_CENTER)
-		x -= (unsigned short) ((f->letter_width*strlen(str))/2);
+		x -= (unsigned short) ((LETTER_SPACEMENT*(string_length-1) + f->letter_width*string_length)/2);
 	else if(alignment == ALIGN_RIGHT)
-		x -= f->letter_width*strlen(str);
+		x -= LETTER_SPACEMENT*(string_length-1) + f->letter_width*strlen(str);
 
 	//prints the string
 
@@ -57,7 +64,7 @@ void font_draw_string(font* f, short x, short y, const char* str, Alignment alig
 			letter_position = f->letters->bmp_data + ((str[i] - f->lower_limit) / f->letters_per_line)*width*f->letter_height + ((str[i] - f->lower_limit) % f->letters_per_line)*f->letter_width;
 			for(j = 0; j < f->letter_height; j++){
 				for(k = 0; k < f->letter_width; k++){
-					vg_set_pixel(x+k+i*f->letter_width, y+j, *(letter_position + j*width + k));
+					vg_set_pixel(x+k+i*(f->letter_width+LETTER_SPACEMENT), y+j, *(letter_position + j*width + k));
 				}
 			}
 		}
@@ -67,9 +74,14 @@ void font_draw_string(font* f, short x, short y, const char* str, Alignment alig
 	//vg_draw_pixmap(f->letters->bmp_data, x, y, LETTER_WIDTH, LETTER_HEIGHT);
 }
 
-void font_draw_char(font *f, short x, short y, char c){
+void font_draw_char(font *f, short x, short y, char c, Alignment alignment){
 	if(c < f->lower_limit || c > f->higher_limit)
 		return;
+
+	if(alignment == ALIGN_CENTER)
+		x -= f->letter_width/2;
+	else if(alignment == ALIGN_RIGHT)
+		x -= f->letter_width;
 
 	unsigned short width = f->letters->bmp_info_header.width;
 	unsigned short* char_start_position = f->letters->bmp_data + ((c - f->lower_limit) / f->letters_per_line)*width*f->letter_height + ((c - f->lower_limit) % f->letters_per_line)*f->letter_width;
@@ -77,7 +89,8 @@ void font_draw_char(font *f, short x, short y, char c){
 	unsigned short i, j;
 	for(i = 0; i < f->letter_height; i++){
 		for(j = 0; j < f->letter_width; j++)
-		vg_set_pixel(x + j, y + i, *(char_start_position + j + i*f->letter_height*f->letters_per_line));
+			vg_set_pixel(x + j, y + i, *(char_start_position + j));
+		char_start_position += width;
 	}
 }
 

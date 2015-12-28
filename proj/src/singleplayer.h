@@ -3,10 +3,10 @@
 
 #include "shield.h"
 #include "state.h"
+#include "rtc.h"
+#include "game_over_menu.h"
 
 #define NUMBER_OF_SHIELDS 4
-
-
 
 typedef struct {
 	shield* (*shields);
@@ -64,6 +64,11 @@ int singleplayer_projectile_collision(projectile* proj);
  * @brief randomly chooses alien to fire
  */
 alien *singleplayer_alien_to_fire();
+
+/**
+ * @brief Deletes the game and goes to main menu
+ */
+void singleplayer_game_over();
 
 /**
  * @brief Deletes singleplayer game information

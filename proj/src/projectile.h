@@ -6,8 +6,6 @@
 
 #include "player.h"
 
-//typedef struct player player;
-
 struct _player;
 
 typedef struct _projectile{

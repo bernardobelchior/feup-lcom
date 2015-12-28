@@ -1,7 +1,9 @@
 #ifndef STATE_H
 #define STATE_H
 
-enum game_state { main_menu, singleplayer, multiplayer, highscore, options } state;
+#include "game_over_menu.h"
+
+enum game_state { main_menu, singleplayer, game_over, multiplayer, highscore, options } state;
 
 void init_state();
 

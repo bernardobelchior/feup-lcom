@@ -104,10 +104,10 @@ int alien_remove(alien *a1) {
 		free(a1);
 		invaders->head->prev = NULL;
 		if (!flag)
-			return 1;
+			return 0;
 		else {
 			search_new_extreme(flag);
-			return 1;
+			return 0;
 		}
 	}
 
@@ -118,10 +118,10 @@ int alien_remove(alien *a1) {
 		free(a1);
 
 		if (!flag)
-			return 1;
+			return 0;
 		else {
 			search_new_extreme(flag);
-			return 1;
+			return 0;
 		}
 	}
 
@@ -133,11 +133,11 @@ int alien_remove(alien *a1) {
 			iterator->next->prev = iterator;
 
 			if (!flag)
-				return 1;
+				return 0;
 
 			else {
 				search_new_extreme(flag);
-				return 1;
+				return 0;
 			}
 		}
 
@@ -152,6 +152,9 @@ int aliens_move() {
 	animation_next(invaders->medium_alien);
 	animation_next(invaders->large_alien);
 	animation_next(invaders->ufo);
+
+	if(invaders->head == NULL)
+		return -1;
 
 	alien* iterator = invaders->head;
 
@@ -250,7 +253,8 @@ int aliens_collision_handler(projectile* proj) {
 	rightmost_collision_point = invaders->rightmost->x + ALIEN_WIDTH;
 	lowest_collision_point = invaders->last->y + ALIEN_HEIGHT;
 
-	if (proj->x >= invaders->head->x && proj->x <= rightmost_collision_point
+
+	if (proj->x >= invaders->leftmost->x && proj->x <= rightmost_collision_point
 			&& proj->y >= invaders->head->y && proj->y <= lowest_collision_point) {
 		alien* iterator = invaders->head;
 
@@ -275,7 +279,8 @@ int aliens_collision_handler(projectile* proj) {
 						break;
 					}
 				}
-				return alien_remove(iterator);
+				alien_remove(iterator);
+				return 1;
 			}
 			iterator = iterator->next;
 		} while (iterator != NULL);
@@ -377,5 +382,5 @@ void aliens_destruct() {
 	while (invaders->head != NULL)
 		alien_remove(invaders->head);
 
-	//free(invaders);
+	free(invaders);
 }
