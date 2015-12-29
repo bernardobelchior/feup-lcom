@@ -42,6 +42,9 @@ void font_draw_int(font* f, short x, short y, int number, Alignment alignment){
 }
 
 void font_draw_string(font* f, short x, short y, const char* str, Alignment alignment){
+	if (str == NULL || str == "")
+		return;
+
 	unsigned short width = f->letters->bmp_info_header.width;
 	unsigned short height = f->letters->bmp_info_header.height;
 	unsigned short i, j, k;

@@ -20,6 +20,9 @@ void change_state(enum game_state new_state){
 	case multiplayer:
 		//TODO
 		break;
+	case game_over:
+		game_over_menu_init();
+		break;
 	case highscore:
 		highscore_init();
 		break;
@@ -39,6 +42,9 @@ void delete_state(){
 		break;
 	case multiplayer:
 		//TODO
+		break;
+	case game_over:
+		game_over_menu_destruct();
 		break;
 	case highscore:
 		highscore_destruct();

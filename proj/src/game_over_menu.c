@@ -1,91 +1,88 @@
 #include "game_over_menu.h"
 
-void game_over_menu_init(unsigned int points){
+void game_over_menu_init(){
 	game_over_menu = create_menu("spaceinvader_font_transparent.bmp");
-	state = game_over;
 
 	//Accept and Clear buttons.
 	menu_add_button(game_over_menu, create_button(312, 600, 100, 100, ALIGN_CENTER, &game_over_accept_button, "Accept", rgb(0xFFFFFF), ALIGN_CENTER));
 	menu_add_button(game_over_menu, create_button(712, 600, 100, 100, ALIGN_CENTER, &game_over_clear_button, "Clear", rgb(0xFFFFFF), ALIGN_CENTER));
 
 	//Next and previous buttons.
-	menu_add_button(game_over_menu, create_button(412, 150, 75, 45, ALIGN_CENTER, &game_over_first_letter_prev, "", rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(game_over_menu, create_button(412, 250, 75, 45, ALIGN_CENTER, &game_over_first_letter_next, "", rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(game_over_menu, create_button(512, 150, 75, 45, ALIGN_CENTER, &game_over_second_letter_prev, "", rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(game_over_menu, create_button(512, 250, 75, 45, ALIGN_CENTER, &game_over_second_letter_next, "", rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(game_over_menu, create_button(612, 150, 75, 45, ALIGN_CENTER, &game_over_third_letter_prev, "", rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(game_over_menu, create_button(612, 250, 75, 45, ALIGN_CENTER, &game_over_third_letter_next, "", rgb(0xFFFFFF), ALIGN_CENTER));
+	menu_add_button(game_over_menu, create_button(412, 150, 75, 45, ALIGN_CENTER, &game_over_first_letter_prev, NULL, rgb(0xFFFFFF), ALIGN_CENTER));
+	menu_add_button(game_over_menu, create_button(412, 250, 75, 45, ALIGN_CENTER, &game_over_first_letter_next, NULL, rgb(0xFFFFFF), ALIGN_CENTER));
+	menu_add_button(game_over_menu, create_button(512, 150, 75, 45, ALIGN_CENTER, &game_over_second_letter_prev, NULL, rgb(0xFFFFFF), ALIGN_CENTER));
+	menu_add_button(game_over_menu, create_button(512, 250, 75, 45, ALIGN_CENTER, &game_over_second_letter_next, NULL, rgb(0xFFFFFF), ALIGN_CENTER));
+	menu_add_button(game_over_menu, create_button(612, 150, 75, 45, ALIGN_CENTER, &game_over_third_letter_prev, NULL, rgb(0xFFFFFF), ALIGN_CENTER));
+	menu_add_button(game_over_menu, create_button(612, 250, 75, 45, ALIGN_CENTER, &game_over_third_letter_next, NULL, rgb(0xFFFFFF), ALIGN_CENTER));
 
-	game_over_info.letters[0] = 'A';
-	game_over_info.letters[1] = 'A';
-	game_over_info.letters[2] = 'A';
-	game_over_info.letters[3] = '\0';
-	game_over_info.points = points;
+	new_score.letters[0] = 'A';
+	new_score.letters[1] = 'A';
+	new_score.letters[2] = 'A';
+	new_score.letters[3] = '\0';
 }
 
 void game_over_menu_tick(){
 	font_draw_string(space_invaders_font, 512, 50, "Game over :(", ALIGN_CENTER);
-	font_draw_char(space_invaders_font, 412, 200, game_over_info.letters[0], ALIGN_CENTER);
-	font_draw_char(space_invaders_font, 512, 200, game_over_info.letters[1], ALIGN_CENTER);
-	font_draw_char(space_invaders_font, 612, 200, game_over_info.letters[2], ALIGN_CENTER);
+	font_draw_char(space_invaders_font, 412, 200, new_score.letters[0], ALIGN_CENTER);
+	font_draw_char(space_invaders_font, 512, 200, new_score.letters[1], ALIGN_CENTER);
+	font_draw_char(space_invaders_font, 612, 200, new_score.letters[2], ALIGN_CENTER);
 	menu_draw(game_over_menu);
 }
 
 void game_over_accept_button(){
-	highscore_add(game_over_info.letters, get_todays_date(), game_over_info.points);
-	game_over_menu_destruct();
+	highscore_add(new_score.letters, get_todays_date(), new_score.points);
+	change_state(main_menu);
 }
 
 void game_over_clear_button(){
-	game_over_info.letters[0] = 'A';
-	game_over_info.letters[1] = 'A';
-	game_over_info.letters[2] = 'A';
+	new_score.letters[0] = 'A';
+	new_score.letters[1] = 'A';
+	new_score.letters[2] = 'A';
 }
 
 void game_over_first_letter_prev(){
-	if(game_over_info.letters[0] == 'A')
-		game_over_info.letters[0] = 'Z';
+	if(new_score.letters[0] == 'A')
+		new_score.letters[0] = 'Z';
 	else
-		game_over_info.letters[0]--;
+		new_score.letters[0]--;
 }
 
 void game_over_first_letter_next(){
-	if(game_over_info.letters[0] == 'Z')
-		game_over_info.letters[0] = 'A';
+	if(new_score.letters[0] == 'Z')
+		new_score.letters[0] = 'A';
 	else
-		game_over_info.letters[0]++;
+		new_score.letters[0]++;
 }
 
 void game_over_second_letter_prev(){
-	if(game_over_info.letters[1] == 'A')
-		game_over_info.letters[1] = 'Z';
+	if(new_score.letters[1] == 'A')
+		new_score.letters[1] = 'Z';
 	else
-		game_over_info.letters[1]--;
+		new_score.letters[1]--;
 }
 
 void game_over_second_letter_next(){
-	if(game_over_info.letters[1] == 'Z')
-		game_over_info.letters[1] = 'A';
+	if(new_score.letters[1] == 'Z')
+		new_score.letters[1] = 'A';
 	else
-		game_over_info.letters[1]++;
+		new_score.letters[1]++;
 }
 
 void game_over_third_letter_prev(){
-	if(game_over_info.letters[2] == 'A')
-		game_over_info.letters[2] = 'Z';
+	if(new_score.letters[2] == 'A')
+		new_score.letters[2] = 'Z';
 	else
-		game_over_info.letters[2]--;
+		new_score.letters[2]--;
 }
 
 void game_over_third_letter_next(){
-	if(game_over_info.letters[2] == 'Z')
-		game_over_info.letters[2] = 'A';
+	if(new_score.letters[2] == 'Z')
+		new_score.letters[2] = 'A';
 	else
-		game_over_info.letters[2]++;
+		new_score.letters[2]++;
 }
 
 void game_over_menu_destruct(){
 	delete_menu(game_over_menu);
-	free(game_over_info.letters);
-	state = singleplayer;
+	free(new_score.letters);
 }

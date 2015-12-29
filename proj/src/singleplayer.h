@@ -18,6 +18,8 @@ typedef struct {
 
 game_t singleplayer_game;
 
+extern game_over_info new_score;
+
 /**
  * @brief Initializes singleplayer game information
  */

@@ -124,14 +124,11 @@ alien *singleplayer_alien_to_fire() {
 
 void singleplayer_game_over(){
 	if(is_on_highscores(singleplayer_game.play->score)){
-		//game_over_menu_init(singleplayer_game.play->score);
-		highscore_add("teste", get_todays_date(), singleplayer_game.play->score);
+		new_score.points = singleplayer_game.play->score;
+		change_state(game_over);
 	}
-
-	/*while(state != singleplayer){
-
-	}*/
-	change_state(main_menu);
+	else
+		change_state(main_menu);
 }
 
 void singleplayer_destruct() {

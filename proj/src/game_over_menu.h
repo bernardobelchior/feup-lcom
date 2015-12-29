@@ -6,10 +6,12 @@
 #include "font.h"
 #include "state.h"
 
-struct {
+typedef struct {
 	char letters[4];
 	unsigned int points;
 } game_over_info;
+
+game_over_info new_score;
 
 menu* game_over_menu;
 
@@ -17,7 +19,7 @@ extern enum game_state state;
 
 extern font* space_invaders_font;
 
-void game_over_menu_init(unsigned int points);
+void game_over_menu_init();
 
 void game_over_menu_tick();
 
