@@ -4,7 +4,10 @@ int test_config(){
 	unsigned long reading;
 	unsigned char i;
 
-	change_RTC_to_binary();
+	if(is_rtc_binary())
+		printf("Registers are in binary:\n");
+	else
+		printf("Registers are in BCD:\n");
 
 	for(i = 0; i < 10; i++){
 		read_from_RTC(i, &reading);
@@ -17,8 +20,6 @@ int test_config(){
 int test_date(){
 	unsigned long hours, minutes, seconds, day_of_the_week, day, month, year;
 
-	change_RTC_to_binary();
-
 	read_from_RTC(RTC_SECONDS_REG, &seconds);
 	read_from_RTC(RTC_MINUTES_REG, &minutes);
 	read_from_RTC(RTC_HOURS_REG, &hours);
@@ -26,6 +27,15 @@ int test_date(){
 	read_from_RTC(RTC_DAY_REG, &day);
 	read_from_RTC(RTC_MONTH_REG, &month);
 	read_from_RTC(RTC_YEAR_REG, &year);
+
+	if(!is_rtc_binary()){
+		hours = convert_to_binary(hours);
+		minutes = convert_to_binary(minutes);
+		seconds = convert_to_binary(seconds);
+		day = convert_to_binary(day);
+		month = convert_to_binary(month);
+		year = convert_to_binary(year);
+	}
 
 	printf("%d:%d:%d\t", hours, minutes, seconds);
 
@@ -53,13 +63,11 @@ int test_date(){
 		break;
 	}
 
-	//printf("%x", day_of_the_week);//test another day. It is sunday and day_of_the_week has the value of 0.
-
 	printf(", %d/%d/%d", day, month, year);
 
 	return 0;
 }
 
 int test_int(){
-	change_RTC_to_binary();
+
 }

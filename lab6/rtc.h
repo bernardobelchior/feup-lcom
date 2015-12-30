@@ -20,6 +20,9 @@
 #define RTC_REGISTER_A 10
 #define RTC_REGISTER_B 11
 
+typedef struct {
+	unsigned long day, month, year;
+} Date;
 
 /**
  * @brief Checks if there is an update in progress
@@ -49,13 +52,26 @@ int read_from_RTC(unsigned char address, unsigned long *result);
 int write_to_RTC(unsigned char address, unsigned long write);
 
 /**
- * @brief Changes RTC registers to binary
+ * @brief Checks if the rtc is binary
+ *
+ * @return Returns whether or not the rtc is in binary
  */
-void change_RTC_to_binary();
+int is_rtc_binary();
 
 /**
- * @brief Changes RTC registers to binary coded decimal
+ * @brief Converts a bcd number to binary
+ *
+ * @param bcd Binary coded decimal number
+ *
+ * @returne Returns converted number
  */
-void change_RTC_to_bcd();
+unsigned long convert_to_binary(unsigned long bcd);
+
+/**
+ * @brief Gets today's date
+ *
+ * @return Returns today's date
+ */
+Date* get_todays_date();
 
 #endif

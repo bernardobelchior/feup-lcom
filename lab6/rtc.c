@@ -27,16 +27,35 @@ int write_to_RTC(unsigned char address, unsigned long write){
 	return 0;
 }
 
-void change_RTC_to_binary(){
-	unsigned long reading;
+int is_rtc_binary(){
+	unsigned long result;
+	sys_outb(RTC_ADDR_REG, RTC_REGISTER_B);
+	sys_inb(RTC_DATA_REG, &result);
 
-	read_from_RTC(RTC_REGISTER_B, &reading);
-	write_to_RTC(RTC_REGISTER_B, reading | RTC_BINARY);
+	return (result & RTC_BINARY);
 }
 
-void change_RTC_to_bcd(){
-	unsigned long reading;
+unsigned long convert_to_binary(unsigned long bcd){
+	unsigned long result = 0;
+	unsigned char i;
+	for(i = 0; i < sizeof(unsigned long)/4; i++) {
+		result += ((bcd & (0xF << i)) >> i)*10^i;
+	}
+	return result;
+}
 
-	read_from_RTC(RTC_REGISTER_B, &reading);
-	write_to_RTC(RTC_REGISTER_B, reading & !RTC_BINARY);
+Date* get_todays_date(){
+	Date* date = (Date*) malloc(sizeof(Date));
+
+	read_from_RTC(RTC_DAY_REG, &(date->day));
+	read_from_RTC(RTC_MONTH_REG, &(date->month));
+	read_from_RTC(RTC_YEAR_REG, &(date->year));
+
+	if(!is_rtc_binary()){
+		date->day = convert_to_binary(date->day);
+		date->month = convert_to_binary(date->month);
+		date->year = convert_to_binary(date->year);
+	}
+
+	return date;
 }
