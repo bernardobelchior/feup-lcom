@@ -3,7 +3,7 @@
 
 #include "game_over_menu.h"
 
-enum game_state { main_menu, singleplayer, game_over, multiplayer, highscore, options } state;
+enum game_state { main_menu, singleplayer, game_over, multiplayer, highscore, options} state;
 
 void init_state();
 

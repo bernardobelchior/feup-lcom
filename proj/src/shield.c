@@ -1,6 +1,6 @@
 #include "shield.h"
 
-int shield_list_init() {
+int shield_list_init(char mode) {
 
 	if ((shields = (shield_list *) malloc(sizeof(shield_list))) == NULL)
 		return 1;
@@ -9,7 +9,11 @@ int shield_list_init() {
 
 	unsigned char i = 0;
 	unsigned int x = SHIELD_INITIALX;
-	unsigned int y = PLACEHOLDER_SHIELD_LINE;
+	unsigned int y;
+
+	if(!mode)
+		y = VERSUS_MP_YPOS;
+	else y = PLACEHOLDER_SHIELD_LINE;
 
 	for (i = 0; i < NUM_SHIELDS; i++) {
 

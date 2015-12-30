@@ -7,12 +7,12 @@ void singleplayer_init() {
 	singleplayer_game.score = 0;
 	singleplayer_game.reset_ticks = 1;
 
-	if ((singleplayer_game.play = player_init()) == NULL)
+	if ((singleplayer_game.play = player_init(0)) == NULL)
 		return;
 
 	projectile_list_init();
 	alien_list_init();
-	shield_list_init();
+	shield_list_init(1);
 }
 
 void singleplayer_tick() {
@@ -60,6 +60,19 @@ void singleplayer_tick() {
 	aliens_draw();
 	shields_draw();
 	player_draw(singleplayer_game.play);
+
+	//Draws score
+	font_draw_string(space_invaders_font, 0, 724, "Score: ", ALIGN_LEFT);
+	font_draw_int(space_invaders_font, strlen("Score: ")*space_invaders_font->letter_width, 724, singleplayer_game.play->score, ALIGN_LEFT);
+
+	//Draws lives
+	unsigned short i;
+	unsigned short x = get_h_res() - 3*singleplayer_game.play->life->bmp_info_header.width - 1;
+	for(i = 0; i < singleplayer_game.play->num_lives; i++){
+		bitmap_draw(singleplayer_game.play->life, x+i*singleplayer_game.play->life->bmp_info_header.width,
+				get_v_res()-singleplayer_game.play->life->bmp_info_header.height - 1, ALIGN_LEFT);
+	}
+
 	singleplayer_check_projectiles_state();
 }
 
@@ -93,7 +106,7 @@ int singleplayer_move(char direction) {
 }
 
 int singleplayer_fire() {
-	return player_fire(singleplayer_game.play);
+	return player_fire(singleplayer_game.play,1);
 }
 
 alien *singleplayer_alien_to_fire() {
@@ -132,8 +145,8 @@ void singleplayer_game_over(){
 }
 
 void singleplayer_destruct() {
-	//aliens_destruct();
+	aliens_destruct();
 	player_destruct(singleplayer_game.play);
-	//shields_destruct();
+	shields_destruct();
 }
 

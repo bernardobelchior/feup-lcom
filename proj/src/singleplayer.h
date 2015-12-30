@@ -31,6 +31,10 @@ void singleplayer_init();
 void singleplayer_tick();
 
 /**
+ * \brief calls the player_fire function
+ */
+int singleplayer_fire();
+/**
  * @brief Moves the player in the x axis
  *
  * @param direction -1 to move to the left, 1 to the right.

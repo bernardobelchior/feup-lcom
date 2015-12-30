@@ -112,7 +112,35 @@ void key_pressed(unsigned long key) {
 		}
 		break;
 		case multiplayer:
+			switch(key){
+			case A_MAKECODE:
+				versus_mp_move(1,-1);
+				break;
 
+			case D_MAKECODE:
+				versus_mp_move(1,1);
+				break;
+
+			case W_MAKECODE:
+				versus_mp_fire(1);
+				break;
+
+			case LEFT_ARROW_MAKECODE:
+				versus_mp_move(2,-1);
+				break;
+
+			case RIGHT_ARROW_MAKECODE:
+				versus_mp_move(2,1);
+				break;
+
+			case UP_ARROW_MAKECODE:
+				versus_mp_fire(2);
+				break;
+
+			case ESC_MAKECODE:
+				change_state(main_menu);
+				break;
+			}
 			break;
 		case highscore:
 
@@ -192,7 +220,7 @@ void tick() {
 		singleplayer_tick();
 		break;
 	case multiplayer:
-
+		versus_mp_game_tick();
 		break;
 	case highscore:
 		highscore_tick();

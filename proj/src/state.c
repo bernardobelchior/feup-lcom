@@ -18,7 +18,7 @@ void change_state(enum game_state new_state){
 		singleplayer_init();
 		break;
 	case multiplayer:
-		//TODO
+		versus_mp_game_init();
 		break;
 	case game_over:
 		game_over_menu_init();
@@ -41,7 +41,7 @@ void delete_state(){
 		singleplayer_destruct();
 		break;
 	case multiplayer:
-		//TODO
+		versus_mp_game_destruct();
 		break;
 	case game_over:
 		game_over_menu_destruct();

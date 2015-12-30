@@ -9,11 +9,6 @@
  * Functions for outputing data to screen in graphics mode
  */
 
-unsigned short* double_buffer;
-unsigned h_res; /* Horizontal screen resolution in pixels */
-unsigned v_res; /* Vertical screen resolution in pixels */
-unsigned bits_per_pixel; /* Number of VRAM bits per pixel */
-
 /**
  * @brief Initializes the video module in graphics mode
  * 

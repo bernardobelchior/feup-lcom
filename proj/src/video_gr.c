@@ -21,6 +21,11 @@
 /* Private global variables */
 
 static unsigned short *video_mem; /* Process address to which VRAM is mapped */
+static unsigned short* double_buffer;
+
+static unsigned h_res; /* Horizontal screen resolution in pixels */
+static unsigned v_res; /* Vertical screen resolution in pixels */
+static unsigned bits_per_pixel; /* Number of VRAM bits per pixel */
 
 void *vg_init(unsigned short mode) {
 	vbe_mode_info_t info;
@@ -115,21 +120,17 @@ int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width,
 
 	//Prints first line
 	for (i = 0; i < width; i++) {
-		//vg_set_pixel_asm((unsigned long) (x+i), (unsigned long) y, (unsigned long) color);
 		vg_set_pixel(x + i, y, color);
 	}
 
 	//Prints vertical lines
 	for (i = 1; i < height - 1; i++) {
-		//vg_set_pixel_asm(x, y + i, color);
-		//vg_set_pixel_asm(x + width - 1, y + i, color);
 		vg_set_pixel(x, y + i, color);
 		vg_set_pixel(x + width - 1, y + i, color);
 	}
 
 	//Prints last line
 	for (i = 0; i < width; i++) {
-		//vg_set_pixel_asm(x + i, y + height - 1, color);
 		vg_set_pixel(x + i, y + height - 1, color);
 	}
 
