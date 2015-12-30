@@ -86,5 +86,4 @@ void game_over_third_letter_next(){
 
 void game_over_menu_destruct(){
 	delete_menu(game_over_menu);
-	free(new_score.letters);
 }

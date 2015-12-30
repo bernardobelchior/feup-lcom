@@ -50,6 +50,7 @@ char collides_with_button(button* b, short x, short y){
 }
 
 void button_delete(button* b){
-	free(b->title);
+	if(b->title != NULL)
+		free(b->title);
 	free(b);
 }

@@ -17,7 +17,7 @@ void menu_add_button(menu* m, button* b){
 }
 
 void menu_delete_button(menu* m, unsigned char index){
-	free(m->buttons[index]);
+	button_delete(m->buttons[index]);
 	unsigned int i;
 	for(i = index; i < m->buttons_size-1; i++ ){
 		m->buttons[i] == m->buttons[i+1];
