@@ -25,7 +25,7 @@ int serial_subscribe_int(unsigned short base_addr) {
 	return temp;
 }
 
-int serial_get_conf(unsigned short base_addr, char *st) {
+int serial_get_conf(unsigned short base_addr, unsigned char *st) {
 
 	unsigned long conf;
 
@@ -36,60 +36,63 @@ int serial_get_conf(unsigned short base_addr, char *st) {
 	else if (base_addr == 2)
 		ret = sys_inb(COM2_BASE_ADDR + UART_LINE_CTRL, &conf);
 
-	*st = (char) conf;
+	*st = (unsigned char) conf;
 
-	return ret;
-}
-
-int serial_get_line_status(unsigned short base_addr, char *st) {
-
-	unsigned long conf;
-
-	int ret = 0;
-
-	/*if(base_addr == 1)
-	 ret = sys_outb(base_addr + UART_LINE_STATUS, &conf);
-
-	 if(base_addr == 2)
-	 ret = sys_outb(base_addr + UART_LINE_STATUS, &conf);
-
-	 *st = (char) conf;*/
 	return ret;
 }
 
 int toggle_dlab(unsigned short base_addr) {
+	if(base_addr != 1 && base_addr != 2)
+		return -1;
 
-	char lcr;
-	unsigned long input;
+	unsigned char lcr;
 	unsigned long conf;
 
 	serial_get_conf(base_addr,&lcr);
 
-	if ((lcr & BIT(7)) >> 7) {
-		printf("!!!  %d\n", lcr);
-		input = (lcr & (0x07F));
-	}
+	printf("Old LCR: 0x%x\n", lcr);
 
-	else {
-		printf("adwdaa %d\n", lcr);
-		input = (lcr | BIT(DL));
-	}
+	lcr = lcr ^ BIT(7); //toggles lcr bit 7
 
+	printf("LCR after XOR: 0x%x\n", lcr);
 
-	input = 0|BIT(6);
-	printf("%d\n\n", input);
 	if (base_addr == 1) {
-		 sys_outb(COM1_BASE_ADDR + UART_LINE_CTRL, input);
+		sys_outb(COM1_BASE_ADDR + UART_LINE_CTRL, (unsigned long) lcr);
+		sys_inb(COM1_BASE_ADDR + UART_LINE_CTRL, &conf);
+	}
+	else {
+		sys_outb(COM2_BASE_ADDR + UART_LINE_CTRL, (unsigned long) lcr);
+		sys_inb(COM2_BASE_ADDR + UART_LINE_CTRL, &conf);
 	}
 
-	if (base_addr == 2) {
-		sys_outb(COM1_BASE_ADDR + UART_LINE_CTRL, input);
+	//serial_get_conf(base_addr, &conf);
+	printf("New LCR: 0x%x\n", conf);
+}
+
+int set_dlab(unsigned short base_addr, unsigned char bit){
+	if(base_addr != 1 && base_addr != 2)
+		return -1;
+
+	unsigned char lcr;
+	unsigned long conf;
+
+	serial_get_conf(base_addr,&lcr);
+
+	printf("Old LCR: 0x%x\n", lcr);
+
+	lcr = lcr & (bit << 7);
+
+	if (base_addr == 1) {
+		sys_outb(COM1_BASE_ADDR + UART_LINE_CTRL, (unsigned long) lcr);
+		sys_inb(COM1_BASE_ADDR + UART_LINE_CTRL, &conf);
+	}
+	else {
+		sys_outb(COM2_BASE_ADDR + UART_LINE_CTRL, (unsigned long) lcr);
+		sys_inb(COM2_BASE_ADDR + UART_LINE_CTRL, &conf);
 	}
 
-	sys_inb(COM1_BASE_ADDR + UART_LINE_CTRL, &conf);
-	printf("lcr no toggle %d\n", conf);
-	//serial_get_conf(base_addr,&lcr); printf("lcr no toggle :\n%d",lcr);
-
+	//serial_get_conf(base_addr, &conf);
+	printf("New LCR: 0x%x\n", conf);
 }
 
 int serial_get_ier(unsigned short base_addr, char *st){

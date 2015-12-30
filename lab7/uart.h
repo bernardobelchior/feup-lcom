@@ -29,12 +29,13 @@
 #define	ENABLE_RECEIVER_LINE_STATUS_INT BIT(2)
 
 int serial_subscribe_int(unsigned short base_addr);
-int serial_get_conf(unsigned short base_addr, char *st);
+int serial_get_conf(unsigned short base_addr, unsigned char *st);
 int serial_get_ier(unsigned short base_addr, char *st);
 int serial_get_dll(unsigned short base_addr, char *st);
 int serial_get_dlm(unsigned short base_addr, char *st);
+int toggle_dlab(unsigned short base_addr);
+int set_dlab(unsigned short base_addr, unsigned char bit);
 int serial_unsubscribe_int();
-int serial_get_line_status(unsigned short base_addr, char *st);
 //int put_word
 
 #endif

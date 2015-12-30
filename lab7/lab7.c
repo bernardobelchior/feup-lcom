@@ -11,7 +11,8 @@ static unsigned char parse_uchar(char *str, int base);
 
 int main(int argc, char **argv) {
 	sef_startup();
-	proc_args(argc, argv);
+	set_dlab(1, 0);
+	//proc_args(argc, argv);
 	return 0;
 }
 
@@ -48,13 +49,8 @@ static int proc_args(int argc, char *argv[]) {
 
 		printf("lab7:: conf(%d)\n", base_addr);
 
-	//	ser_test_conf(base_addr);
-		toggle_dlab(base_addr);
 		ser_test_conf(base_addr);
 
-//		toggle_dlab(base_addr);
-
-//		ser_test_conf(base_addr);
 		return 0;
 	}
 

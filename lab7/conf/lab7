@@ -4,6 +4,11 @@ service lab7
         system
                 DEVIO
                 IRQCTL
+                UMAP
+                INT86
+                PRIVCTL
+                READBIOS
+                IOPENABLE
                 ;
         ipc
                 SYSTEM
