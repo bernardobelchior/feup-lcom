@@ -14,8 +14,12 @@ button* create_button(short x, short y, unsigned short width, unsigned short hei
 	b->height = height;
 	b->function = function;
 	b->color = color;
-	b->title = (char*) malloc(strlen(title)*sizeof(char));
-	strcpy(b->title, title);
+	if(title == NULL || title == "")
+		b->title = NULL;
+	else{
+		b->title = (char*) malloc(strlen(title)*sizeof(char));
+		strcpy(b->title, title);
+	}
 	b->text_align = text_align;
 	return b;
 }

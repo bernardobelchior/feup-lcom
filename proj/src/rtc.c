@@ -51,11 +51,11 @@ Date* get_todays_date(){
 	read_from_RTC(RTC_MONTH_REG, &(date->month));
 	read_from_RTC(RTC_YEAR_REG, &(date->year));
 
-	if(!is_rtc_binary()){
+	/*if(!is_rtc_binary()){
 		date->day = convert_to_binary(date->day);
 		date->month = convert_to_binary(date->month);
 		date->year = convert_to_binary(date->year);
-	}
+	}*/
 
 	return date;
 }

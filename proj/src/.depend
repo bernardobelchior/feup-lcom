@@ -435,8 +435,6 @@ menu.o:	button.h
 menu.o:	font.h
 menu.o:	menu.c
 menu.o:	menu.h
-menu.o:	state.h
-menu.o:	video_gr.h
 
 mouse.o:	/usr/include/errno.h
 mouse.o:	/usr/include/limits.h
