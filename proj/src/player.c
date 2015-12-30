@@ -85,8 +85,11 @@ int player_collision_handler(player* p1, struct _projectile* proj){
 	return 0;
 }
 
-void player_destruct(player *p1){
-	bitmap_delete(p1->player_ship);
-	bitmap_delete(p1->life);
-	free(p1);
+void player_destruct(player *p1){ //TODO when deleting bitmaps, the program crashes. when freeing the player, the program enters an infinite loop.
+	if(p1 == NULL)
+		return;
+
+	//bitmap_delete(p1->player_ship);
+	//bitmap_delete(p1->life);
+	//free(p1);
 }
