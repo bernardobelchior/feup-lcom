@@ -765,6 +765,8 @@ rtc.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
 rtc.o:	rtc.c
 rtc.o:	rtc.h
 
+set_pixel.o:	set_pixel.S
+
 shield.o:	/usr/include/errno.h
 shield.o:	/usr/include/limits.h
 shield.o:	/usr/include/machine/bios.h
