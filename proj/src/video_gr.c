@@ -115,19 +115,18 @@ int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width,
 
 	//Prints first line
 	for (i = 0; i < width; i++) {
-		//vg_set_pixel(x + i, y, color);
 		vg_set_pixel_asm(x + i, y, color);
 	}
 
 	//Prints vertical lines
 	for (i = 1; i < height - 1; i++) {
-		vg_set_pixel(x, y + i, color);
-		vg_set_pixel(x + width - 1, y + i, color);
+		vg_set_pixel_asm(x, y + i, color);
+		vg_set_pixel_asm(x + width - 1, y + i, color);
 	}
 
 	//Prints last line
 	for (i = 0; i < width; i++) {
-		vg_set_pixel(x + i, y + height - 1, color);
+		vg_set_pixel_asm(x + i, y + height - 1, color);
 	}
 
 	return 0;
