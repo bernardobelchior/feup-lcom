@@ -131,7 +131,8 @@ int vg_draw_frame(unsigned short x, unsigned short y, unsigned short width,
 
 	//Prints first line
 	for (i = 0; i < width; i++) {
-		vg_set_pixel(x + i, y, color);
+		_vg_set_pixel(x+i, y, color);
+		//vg_set_pixel(x + i, y, color);
 	}
 
 	//Prints vertical lines

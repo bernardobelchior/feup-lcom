@@ -57,15 +57,13 @@ int toggle_dlab(unsigned short base_addr) {
 	printf("LCR after XOR: 0x%x\n", lcr);
 
 	if (base_addr == 1) {
-		sys_outb(COM1_BASE_ADDR + UART_LINE_CTRL, (unsigned long) lcr);
-		sys_inb(COM1_BASE_ADDR + UART_LINE_CTRL, &conf);
+		sys_outb(COM1_BASE_ADDR + UART_LINE_CTRL, lcr);
 	}
 	else {
-		sys_outb(COM2_BASE_ADDR + UART_LINE_CTRL, (unsigned long) lcr);
-		sys_inb(COM2_BASE_ADDR + UART_LINE_CTRL, &conf);
+		sys_outb(COM2_BASE_ADDR + UART_LINE_CTRL, lcr);
 	}
 
-	//serial_get_conf(base_addr, &conf);
+	serial_get_conf(base_addr, &conf);
 	printf("New LCR: 0x%x\n", conf);
 }
 
@@ -83,7 +81,7 @@ int set_dlab(unsigned short base_addr, unsigned char bit){
 	lcr = lcr & (bit << 7);
 
 	if (base_addr == 1) {
-		sys_outb(COM1_BASE_ADDR + UART_LINE_CTRL, (unsigned long) lcr);
+		sys_outb(COM1_BASE_ADDR + UART_LINE_CTRL, lcr);
 		sys_inb(COM1_BASE_ADDR + UART_LINE_CTRL, &conf);
 	}
 	else {

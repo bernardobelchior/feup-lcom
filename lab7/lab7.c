@@ -11,8 +11,7 @@ static unsigned char parse_uchar(char *str, int base);
 
 int main(int argc, char **argv) {
 	sef_startup();
-	set_dlab(1, 0);
-	//proc_args(argc, argv);
+	proc_args(argc, argv);
 	return 0;
 }
 
