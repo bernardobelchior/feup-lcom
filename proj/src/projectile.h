@@ -3,6 +3,8 @@
 
 #define END_AT_TOP 50
 #define END_AT_BOTTOM 700
+#define PROJECTILE_WIDTH 13
+#define PROJECTILE_HEIGHT 22
 
 #include "player.h"
 #include "bitmap.h"
@@ -36,7 +38,7 @@ void projectile_list_init();
  * @param y y position of the projectile
  * @param velocity velocity of the projectile
  */
-int projectile_init(struct _player* p, unsigned short x, unsigned short y, unsigned short width, unsigned short height, int velocity);
+int projectile_init(struct _player* p, unsigned short x, unsigned short y, int velocity);
 
 /**
  * @brief draws the projectile

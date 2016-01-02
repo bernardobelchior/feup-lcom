@@ -364,8 +364,9 @@ int alien_fire(alien *a1) {
 		return 1;
 	}
 
-	projectile_init(NULL, (unsigned short) (a1->x + ALIEN_WIDTH / 2), a1->y + ALIEN_HEIGHT+ALIEN_Y_DELTA,
-			ALIEN_PROJECTILE_WIDTH, ALIEN_PROJECTILE_HEIGHT, 5); //TODO remove + ALIEN_Y_DELTA AFTER THE DIMENSIONS ARE SORTED OUT
+	projectile_init(NULL, (unsigned short) (a1->x + ALIEN_WIDTH / 2),
+			a1->y + ALIEN_HEIGHT+ALIEN_Y_DELTA, ALIEN_PROJECTILE_VELOCITY);
+	//TODO remove + ALIEN_Y_DELTA AFTER THE DIMENSIONS ARE SORTED OUT
 	return 0;
 }
 

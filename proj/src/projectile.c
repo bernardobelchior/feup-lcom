@@ -11,7 +11,7 @@ void projectile_list_init(){
 }
 
 
-int projectile_init(struct _player* p, unsigned short x, unsigned short y, unsigned short width, unsigned short height, int velocity) {
+int projectile_init(struct _player* p, unsigned short x, unsigned short y, int velocity) {
 
 	projectile *proj = NULL;
 
@@ -20,8 +20,8 @@ int projectile_init(struct _player* p, unsigned short x, unsigned short y, unsig
 
 	proj->x = x;
 	proj->y = y;
-	proj->width = width;
-	proj->height = height;
+	proj->width = PROJECTILE_WIDTH;
+	proj->height = PROJECTILE_HEIGHT;
 	proj->velocity = velocity;
 	proj->next = NULL;
 	proj->prev = NULL;

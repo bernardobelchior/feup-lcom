@@ -13,8 +13,7 @@
 #define SP_PLAYER_INITIAL_Y_POS (unsigned) 9*get_v_res()/10
 #define MP_PLAYER_1_INITIAL_Y_POS (unsigned) get_v_res()/10
 #define SHIP_X_DELTA 20
-#define PLAYER_PROJECTILE_WIDTH 5
-#define PLAYER_PROJECTILE_HEIGHT 10
+#define PLAYER_PROJECTILE_VELOCITY 5
 
 struct _projectile;
 

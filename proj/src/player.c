@@ -39,11 +39,16 @@ int player_fire(player *p1, char direction) {
 	if(p1->state == PLAYER_DESTROYED)
 		return 1;
 
-	if(direction == 1)
-		return projectile_init(p1, (unsigned short) (p1->x+SHIP_WIDTH/2), p1->y-PLAYER_PROJECTILE_HEIGHT, PLAYER_PROJECTILE_WIDTH, PLAYER_PROJECTILE_HEIGHT, -5);
+	if(direction == 1){
+		return projectile_init(p1, (unsigned short) (p1->x+SHIP_WIDTH/2),
+				p1->y-PROJECTILE_HEIGHT-1, -1 * PLAYER_PROJECTILE_VELOCITY);
+	}
+	else {
+		return projectile_init(p1, (unsigned short) (p1->x+SHIP_WIDTH/2),
+				p1->y+SHIP_HEIGHT+PROJECTILE_HEIGHT+1, PLAYER_PROJECTILE_VELOCITY);
+	}
 
-	else if (direction == -1)
-		return projectile_init(p1, (unsigned short) (p1->x+SHIP_WIDTH/2), p1->y+SHIP_HEIGHT+PLAYER_PROJECTILE_HEIGHT, PLAYER_PROJECTILE_WIDTH, PLAYER_PROJECTILE_HEIGHT, 5);
+
 }
 
 void player_tick(player* p1){
