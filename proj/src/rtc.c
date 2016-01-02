@@ -36,12 +36,7 @@ int is_rtc_binary(){
 }
 
 unsigned long convert_to_binary(unsigned long bcd){
-	unsigned long result = 0;
-	unsigned char i;
-	for(i = 0; i < sizeof(unsigned long)/4; i++) {
-		result += ((bcd & (0xF << i)) >> i)*10^i;
-	}
-	return result;
+	return (bcd & 0x0F) + (((bcd & 0x0F0) >> 4) * 10);
 }
 
 Date* get_todays_date(){
@@ -51,11 +46,11 @@ Date* get_todays_date(){
 	read_from_RTC(RTC_MONTH_REG, &(date->month));
 	read_from_RTC(RTC_YEAR_REG, &(date->year));
 
-	/*if(!is_rtc_binary()){
+	if(!is_rtc_binary()){
 		date->day = convert_to_binary(date->day);
 		date->month = convert_to_binary(date->month);
 		date->year = convert_to_binary(date->year);
-	}*/
+	}
 
 	return date;
 }
