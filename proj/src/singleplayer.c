@@ -57,9 +57,9 @@ void singleplayer_tick() {
 
 	ticks++;
 
-	aliens_draw();
+	aliens_tick();
 	shields_draw();
-	player_draw(singleplayer_game.play);
+	player_tick(singleplayer_game.play);
 
 	//Draws score
 	font_draw_string(space_invaders_font, 0, 724, "Score: ", ALIGN_LEFT);
@@ -145,6 +145,7 @@ void singleplayer_game_over(){
 }
 
 void singleplayer_destruct() {
+	projectile_list_destruct();
 	aliens_destruct();
 	player_destruct(singleplayer_game.play);
 	shields_destruct();

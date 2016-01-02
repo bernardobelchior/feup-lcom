@@ -47,6 +47,8 @@ bitmap* bitmap_load(const char* filename);
 
 void bitmap_draw(bitmap* bmp, short x, short y, Alignment alignment);
 
+void bitmap_mirror_horizontally(bitmap* bmp);
+
 void bitmap_delete(bitmap* bmp);
 
 #endif

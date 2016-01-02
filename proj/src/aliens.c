@@ -66,6 +66,9 @@ void alien_list_init() {
 	//initialize ufo "animation"
 	invaders->ufo = animation_init();
 	animation_add(invaders->ufo, "ufo.bmp");
+
+	invaders->destroy = animation_init();
+	animation_add(invaders->destroy, "explosion.bmp");
 }
 
 void alien_add(alien *a1) {
@@ -187,23 +190,28 @@ int aliens_move() {
 }
 
 int alien_draw(alien *a1) {
-	switch (a1->type) {
-	case SMALL:
-		bitmap_draw(invaders->small_alien->current->bmp, a1->x, a1->y,
-				ALIGN_LEFT);
-		break;
-	case MEDIUM:
-		bitmap_draw(invaders->medium_alien->current->bmp, a1->x, a1->y,
-				ALIGN_LEFT);
-		break;
-	case LARGE:
-		bitmap_draw(invaders->large_alien->current->bmp, a1->x, a1->y,
-				ALIGN_LEFT);
-		break;
-	case UFO:
-		bitmap_draw(invaders->ufo->current->bmp, a1->x, a1->y, ALIGN_LEFT);
-		break;
+	if(a1->state == ALIEN_ALIVE){
+		switch (a1->type) {
+		case SMALL:
+			bitmap_draw(invaders->small_alien->current->bmp, a1->x, a1->y,
+					ALIGN_LEFT);
+			break;
+		case MEDIUM:
+			bitmap_draw(invaders->medium_alien->current->bmp, a1->x, a1->y,
+					ALIGN_LEFT);
+			break;
+		case LARGE:
+			bitmap_draw(invaders->large_alien->current->bmp, a1->x, a1->y,
+					ALIGN_LEFT);
+			break;
+		case UFO:
+			bitmap_draw(invaders->ufo->current->bmp, a1->x, a1->y, ALIGN_LEFT);
+			break;
+		}
+	} else {
+		bitmap_draw(invaders->destroy->current->bmp, a1->x, a1->y, ALIGN_LEFT);
 	}
+
 
 #ifdef DEBUG
 	if (invaders->last == a1)
@@ -236,10 +244,12 @@ alien *alien_init(int x, int y, enum alien_type type) {
 	et->y = y;
 	et->type = type;
 
+	et->state = ALIEN_ALIVE;
 	et->width = ALIEN_WIDTH;
 	et->height = ALIEN_HEIGHT;
 	et->next = NULL;
 	et->prev = NULL;
+	et->ticks = 0;
 
 	return et;
 }
@@ -259,28 +269,31 @@ int aliens_collision_handler(projectile* proj) {
 		alien* iterator = invaders->head;
 
 		do {
-			if ((proj->x > iterator->x && proj->x < iterator->x + ALIEN_WIDTH &&
-					proj->y > iterator->y && proj->y < iterator->y + ALIEN_HEIGHT) ||
-					(proj->x + proj->width > iterator->x && proj->x + proj->width < iterator->x + ALIEN_WIDTH &&
-							proj->y + proj->height > iterator->y && proj->y + proj->height < iterator->y + ALIEN_HEIGHT)) {
-				if(proj->shooter != NULL){
-					switch(iterator->type){
-					case SMALL:
-						proj->shooter->score += SMALL_ALIEN_SCORE;
-						break;
-					case MEDIUM:
-						proj->shooter->score += MEDIUM_ALIEN_SCORE;
-						break;
-					case LARGE:
-						proj->shooter->score += LARGE_ALIEN_SCORE;
-						break;
-					case UFO:
-						proj->shooter->score += UFO_ALIEN_SCORE;
-						break;
+			if(iterator->state == ALIEN_ALIVE){
+				if ((proj->x > iterator->x && proj->x < iterator->x + ALIEN_WIDTH &&
+						proj->y > iterator->y && proj->y < iterator->y + ALIEN_HEIGHT) ||
+						(proj->x + proj->width > iterator->x && proj->x + proj->width < iterator->x + ALIEN_WIDTH &&
+								proj->y + proj->height > iterator->y && proj->y + proj->height < iterator->y + ALIEN_HEIGHT)) {
+					if(proj->shooter != NULL){
+						switch(iterator->type){
+						case SMALL:
+							proj->shooter->score += SMALL_ALIEN_SCORE;
+							break;
+						case MEDIUM:
+							proj->shooter->score += MEDIUM_ALIEN_SCORE;
+							break;
+						case LARGE:
+							proj->shooter->score += LARGE_ALIEN_SCORE;
+							break;
+						case UFO:
+							proj->shooter->score += UFO_ALIEN_SCORE;
+							break;
+						}
 					}
+					iterator->state = PLAYER_DESTROYED;
+					//alien_remove(iterator);
+					return 1;
 				}
-				alien_remove(iterator);
-				return 1;
 			}
 			iterator = iterator->next;
 		} while (iterator != NULL);
@@ -353,7 +366,7 @@ int alien_fire(alien *a1) {
 
 	projectile_init(NULL, (unsigned short) (a1->x + ALIEN_WIDTH / 2), a1->y + ALIEN_HEIGHT+ALIEN_Y_DELTA,
 			ALIEN_PROJECTILE_WIDTH, ALIEN_PROJECTILE_HEIGHT, 5); //TODO remove + ALIEN_Y_DELTA AFTER THE DIMENSIONS ARE SORTED OUT
- return 0;
+	return 0;
 }
 
 int is_on_last_row(alien *a1) {
@@ -370,11 +383,31 @@ int is_on_last_row(alien *a1) {
 	return 1;
 }
 
+void aliens_tick(){
+	alien* iterator = invaders->head;
+
+	if(iterator == NULL)
+		return;
+
+	while(iterator->next != NULL){
+		if(iterator->state == ALIEN_DESTROYED){
+			iterator->ticks++;
+			if(iterator->ticks > 60){
+				alien_remove(iterator);
+			}
+		}
+		iterator = iterator->next;
+	}
+
+	aliens_draw();
+}
+
 void aliens_destruct() {
 	animation_destruct(invaders->small_alien);
 	animation_destruct(invaders->medium_alien);
 	animation_destruct(invaders->large_alien);
 	animation_destruct(invaders->ufo);
+	animation_destruct(invaders->destroy);
 
 	if (invaders->head == NULL)
 		return;

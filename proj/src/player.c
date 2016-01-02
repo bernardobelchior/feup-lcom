@@ -3,7 +3,6 @@
 #include "bitmap.h"
 
 player* player_init(char player_num) {
-
 	player *p1 = (player *) malloc(sizeof(player));
 
 	if (p1 == NULL) {
@@ -22,14 +21,23 @@ player* player_init(char player_num) {
 	p1->score = 0;
 	p1->initial_y = p1->y;
 	p1->life = (bitmap*) bitmap_load("life.bmp");
+	p1->state = PLAYER_ALIVE;
+	p1->destroy = (bitmap*) bitmap_load("explosion.bmp");
+	p1->ticks = 0;
 	return p1;
 }
 
 int player_draw(player *p1){
-	bitmap_draw(p1->player_ship, p1->x, p1->y, ALIGN_LEFT);
+	if(p1->state == PLAYER_ALIVE){
+		bitmap_draw(p1->player_ship, p1->x, p1->y, ALIGN_LEFT);
+	} else {
+		bitmap_draw(p1->destroy, p1->x, p1->y, ALIGN_LEFT);
+	}
 }
 
 int player_fire(player *p1, char direction) {
+	if(p1->state == PLAYER_DESTROYED)
+		return 1;
 
 	if(direction == 1)
 		return projectile_init(p1, (unsigned short) (p1->x+SHIP_WIDTH/2), p1->y-PLAYER_PROJECTILE_HEIGHT, PLAYER_PROJECTILE_WIDTH, PLAYER_PROJECTILE_HEIGHT, -5);
@@ -38,17 +46,33 @@ int player_fire(player *p1, char direction) {
 		return projectile_init(p1, (unsigned short) (p1->x+SHIP_WIDTH/2), p1->y+SHIP_HEIGHT+PLAYER_PROJECTILE_HEIGHT, PLAYER_PROJECTILE_WIDTH, PLAYER_PROJECTILE_HEIGHT, 5);
 }
 
+void player_tick(player* p1){
+	if(p1->state == PLAYER_DESTROYED){
+		if(p1->ticks > 60){
+			p1->x = PLAYER_INITIAL_X_POS;
+			p1->y = p1->initial_y;
+			p1->state = PLAYER_ALIVE;
+		}
+	}
+
+	p1->ticks++;
+	player_draw(p1);
+}
+
 int player_hit(player *p1) {
 	if (p1->num_lives > 0) {
 		p1->num_lives--;
-		p1->x = PLAYER_INITIAL_X_POS;
-		p1->y = p1->initial_y;
+		p1->ticks = 0;
+		p1->state = PLAYER_DESTROYED;
 		return 0;
 	} else
 		return 1;
 }
 
 int player_move(player *p1, char direction){
+	if(p1->state == PLAYER_DESTROYED)
+		return 1;
+
 	if(p1->x + direction*SHIP_X_DELTA < 0)
 		p1->x = 0;
 
@@ -60,6 +84,9 @@ int player_move(player *p1, char direction){
 }
 
 int player_set_x_pos(player *p1, unsigned short x){
+	if(p1->state == PLAYER_DESTROYED)
+		return 1;
+
 	if(x + SHIP_WIDTH >= get_h_res()){
 		p1->x = get_h_res() - SHIP_WIDTH;
 		return 1;
@@ -85,6 +112,9 @@ int player_set_y_pos(player *p1, unsigned short y){
 }
 
 int player_collision_handler(player* p1, struct _projectile* proj){
+	if(p1->state == PLAYER_DESTROYED)
+		return 0;
+
 	if((proj->x > p1->x && proj->x < p1->x + SHIP_WIDTH) && (proj->y > p1->y && proj->y < p1->y + SHIP_HEIGHT)
 			|| (proj->x + proj->width > p1->x && proj->x + proj->width < p1->x + SHIP_WIDTH) && (proj->y + proj->height > p1->y && proj->y + proj->height < p1->y + SHIP_HEIGHT)){
 		player_hit(p1);
@@ -95,6 +125,10 @@ int player_collision_handler(player* p1, struct _projectile* proj){
 		return 1;
 	}
 	return 0;
+}
+
+void player_mirror_image(player* p1){
+	bitmap_mirror_horizontally(p1->player_ship);
 }
 
 void player_destruct(player *p1){ //TODO when deleting bitmaps, the program crashes. when freeing the player, the program enters an infinite loop.

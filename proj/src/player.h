@@ -18,16 +18,21 @@
 
 struct _projectile;
 
+enum player_state { PLAYER_ALIVE, PLAYER_DESTROYED };
+
 typedef struct _player{
+	enum player_state state;
+	unsigned short ticks;
 	int num_lives;
 	int x, y, initial_y;
 	int velocity;
 	bitmap* player_ship;
 	bitmap* life;
+	bitmap* destroy;
 	unsigned int score;
 } player;
 
-static char SHIP_RES_NAME[] = "player.bmp";
+static char SHIP_RES_NAME[] = "player_ship.bmp";
 
 extern font* space_invaders_font;
 
@@ -101,9 +106,16 @@ int player_hit(player *p1);
  * @param p1 Player
  * @param proj Projectile
  *
- * @param Returns if the player was hit, returning 0 otherwise.
+ * @return Returns if the player was hit, returning 0 otherwise.
  */
 int player_collision_handler(player* p1, struct _projectile* proj);
+
+/**
+ * @brief Mirrors player ship image. Useful on multiplayer.
+ *
+ * @param p1 Player to mirror image
+ */
+void player_mirror_image(player* p1);
 
 /**
  * @brief Destructs player "object"

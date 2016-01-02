@@ -13,7 +13,6 @@ typedef struct {
 	player* play;
 	unsigned int score;
 	unsigned char reset_ticks;
-
 } game_t;
 
 game_t singleplayer_game;

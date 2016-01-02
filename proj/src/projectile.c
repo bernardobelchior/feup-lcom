@@ -4,6 +4,8 @@ void projectile_list_init(){
 	if( (projectiles = (projectile_list *)malloc(sizeof(projectile_list))) == NULL)
 		return;
 
+	projectile_img = bitmap_load("projectile.bmp");
+
 	projectiles->head = NULL;
 	return;
 }
@@ -42,7 +44,8 @@ int projectile_init(struct _player* p, unsigned short x, unsigned short y, unsig
 }
 
 int projectile_draw(projectile *proj) {
-	vg_draw_frame(proj->x, proj->y, proj->width, proj->height, rgb(0xFF0000));
+	//vg_draw_frame(proj->x, proj->y, proj->width, proj->height, rgb(0xFF0000));
+	bitmap_draw(projectile_img, proj->x, proj->y, ALIGN_LEFT);
 
 	return 1;
 }
@@ -88,3 +91,16 @@ int projectile_reached_end(projectile *proj){
 	return (proj->y < END_AT_TOP || proj->y > END_AT_BOTTOM);
 }
 
+void projectile_list_destruct() {
+	bitmap_delete(projectile_img);
+
+	projectile* iterator = projectiles->head;
+
+	if(iterator == NULL)
+		return;
+
+	while(iterator->next != NULL){
+		iterator = iterator->next;
+		free(iterator->prev);
+	}
+}

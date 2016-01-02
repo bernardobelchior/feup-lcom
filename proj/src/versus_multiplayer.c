@@ -8,6 +8,8 @@ void versus_mp_game_init(){
 	if((mp_game.p2 = player_init(0)) == NULL)
 		return;
 
+	player_mirror_image(mp_game.p2);
+
 	mp_game.reset_ticks = 1;
 	projectile_list_init();
 	shield_list_init(0);
@@ -64,8 +66,8 @@ void versus_mp_game_tick(){
 		shields_draw();
 		mp_game.p1->num_lives = 5;
 		mp_game.p2->num_lives = 5;
-		player_draw(mp_game.p1);
-		player_draw(mp_game.p2);
+		player_tick(mp_game.p1);
+		player_tick(mp_game.p2);
 		versus_mp_check_projectiles_state();
 	}
 

@@ -5,6 +5,7 @@
 #define END_AT_BOTTOM 700
 
 #include "player.h"
+#include "bitmap.h"
 
 struct _player;
 
@@ -16,6 +17,7 @@ typedef struct _projectile{
 	struct _projectile *prev;
 } projectile;
 
+bitmap* projectile_img;
 
 typedef struct{
 	projectile *head;
@@ -45,5 +47,6 @@ int projectile_delete(projectile *proj);
 int projectile_move(projectile *proj);
 int collision(projectile* proj, unsigned char color, unsigned short x, unsigned short y); //checks what kind of target was hit and throws the appropriate destruction event
 int projectile_reached_end(projectile *proj);
+void projectile_list_destruct();
 
 #endif

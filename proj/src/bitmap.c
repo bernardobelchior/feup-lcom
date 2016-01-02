@@ -59,11 +59,21 @@ bitmap* bitmap_load(const char* filename) {
 	}
 
 	// read the bitmap image data and invert its content as it is stored with lines inverted horizontally
+	//bmp uses 32-bit padding, so if the image has odd width, the last byte will be garbage.
+	//in order to solve it, the last byte must be ignored if the image width is not even
 	unsigned short i;
 	unsigned short width = bmp_info_header.width;
 	unsigned short height = bmp_info_header.height;
-	for (i = 1; i <= height; i++) {
-		fread(bitmap_image + (height - i) * width, sizeof(unsigned short), width, image);
+	if(width % 2 == 0){
+		for (i = 1; i <= height; i++) {
+			fread(bitmap_image + (height - i) * width, sizeof(unsigned short), width, image);
+		}
+	} else {
+		unsigned short garbage;
+		for (i = 1; i <= height; i++) {
+			fread(bitmap_image + (height - i) * width, sizeof(unsigned short), width, image);
+			fread(&garbage, 1, sizeof(unsigned short), image); //garbage pixel due to 32-bit padding
+		}
 	}
 
 	// make sure bitmap image data was read
@@ -79,6 +89,21 @@ bitmap* bitmap_load(const char* filename) {
 	bmp->bmp_info_header = bmp_info_header;
 
 	return bmp;
+}
+
+void bitmap_mirror_horizontally(bitmap* bmp){
+	unsigned short height = bmp->bmp_info_header.height;
+	unsigned short width = bmp->bmp_info_header.width;
+
+	unsigned short i;
+	unsigned short* line = (unsigned short*) malloc(width*sizeof(unsigned short));
+	for(i = 0; i < height; i++){
+		memcpy(line, bmp->bmp_data + i*width, width*sizeof(unsigned short));
+		memcpy(bmp->bmp_data + i*width, bmp->bmp_data + width*(height-i-1), width*sizeof(unsigned short));
+		memcpy(bmp->bmp_data + width*(height-i-1), line, width*sizeof(unsigned short));
+	}
+
+	free(line);
 }
 
 void bitmap_draw(bitmap* bmp, short x, short y,

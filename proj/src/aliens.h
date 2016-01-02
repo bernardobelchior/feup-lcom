@@ -29,9 +29,12 @@
 #define PLACEHOLDER_SHIELD_LINE 568
 
 enum alien_type { SMALL, MEDIUM, LARGE, UFO};
+enum alien_state { ALIEN_ALIVE, ALIEN_DESTROYED };
 
 typedef struct _alien{
+	unsigned short ticks;
 	enum alien_type type;
+	enum alien_state state;
 	int x, y;
 	int width, height;
 	char *mem_pos;
@@ -46,7 +49,7 @@ typedef struct {
 	alien *leftmost;
 	//alien *player_controlled; TODO if we implement vs multiplayer
 	unsigned char alien_num;
-	animation *small_alien, *medium_alien, *large_alien, *ufo;
+	animation *small_alien, *medium_alien, *large_alien, *ufo, *destroy;
 	int movement_frequency;
 } alien_list;
 
@@ -123,6 +126,11 @@ int search_new_extreme(unsigned char side);
  * @brief fires a projectile
  */
 int alien_fire(alien *a1);
+
+/**
+ * @brief Handles ticks in aliens
+ */
+void aliens_tick();
 
 /**
  * @brief checks if the alien is on the row closest to the player(s)
