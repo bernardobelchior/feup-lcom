@@ -9,12 +9,22 @@ extern enum singleplayer_controller controller;
 enum singleplayer_controller temp;
 
 void options_init(){
+	next = bitmap_load("right_arrow.bmp");
+	prev = bitmap_load("left_arrow.bmp");
+
 	options_menu = (menu*) malloc(sizeof(menu));
 	options_menu = create_menu("spaceinvader_font_transparent.bmp");
 	menu_add_button(options_menu, create_button(300, 650, 200, 100, ALIGN_CENTER, &options_accept_on_click, "Accept", rgb(0xFFFFFF), ALIGN_CENTER));
 	menu_add_button(options_menu, create_button(700, 650, 200, 100, ALIGN_CENTER, &options_cancel_on_click, "Cancel", rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(options_menu, create_button(850, 175, 30, 50, ALIGN_CENTER, &options_next_ctrl_on_click, "N", rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(options_menu, create_button(450, 175, 30, 50, ALIGN_CENTER, &options_prev_ctrl_on_click, "P", rgb(0xFFFFFF), ALIGN_CENTER));
+
+	button* next_button = create_button(850, 175, 30, 50, ALIGN_CENTER, &options_next_ctrl_on_click, NULL, rgb(0xFFFFFF), ALIGN_CENTER);
+	button_set_background(next_button, next);
+	menu_add_button(options_menu, next_button);
+
+	button* prev_button = create_button(450, 175, 30, 50, ALIGN_CENTER, &options_prev_ctrl_on_click, NULL, rgb(0xFFFFFF), ALIGN_CENTER);
+	button_set_background(prev_button, prev);
+	menu_add_button(options_menu, prev_button);
+
 	temp = controller;
 }
 
@@ -30,7 +40,7 @@ void options_tick(){
 	vg_draw_line(400, 150, 400, 600, rgb(0xFFFFFF));
 
 	//Options
-	font_draw_string(space_invaders_font, 375, 175, "Controller:", ALIGN_RIGHT);
+	font_draw_string(space_invaders_font, 375, 175, "Cont.:", ALIGN_RIGHT);
 
 	//Display current configuration
 	switch(temp){
@@ -93,4 +103,6 @@ void options_cancel_on_click(){
 
 void options_destruct(){
 	delete_menu(options_menu);
+	bitmap_delete(prev);
+	bitmap_delete(next);
 }

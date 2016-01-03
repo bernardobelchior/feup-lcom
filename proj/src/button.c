@@ -21,11 +21,15 @@ button* create_button(short x, short y, unsigned short width, unsigned short hei
 		strcpy(b->title, title);
 	}
 	b->text_align = text_align;
+	b->background = NULL;
 	return b;
 }
 
+void button_set_background(button* b, bitmap* bmp){
+	b->background = bmp;
+}
+
 void button_draw(button* b, font* f){
-	vg_draw_frame(b->x, b->y, b->width, b->height, b->color);
 	if(f != NULL){
 		switch(b->text_align){
 		case ALIGN_LEFT:
@@ -40,6 +44,10 @@ void button_draw(button* b, font* f){
 		}
 	}
 
+	if(b->background != NULL)
+		bitmap_draw(b->background, b->x, b->y, ALIGN_LEFT);
+	else
+		vg_draw_frame(b->x, b->y, b->width, b->height, b->color);
 }
 
 char collides_with_button(button* b, short x, short y){

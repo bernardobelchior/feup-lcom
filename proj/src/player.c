@@ -13,6 +13,11 @@ player* player_init(char player_num) {
 	p1->player_ship = (bitmap*) bitmap_load(SHIP_RES_NAME);
 
 	p1->num_lives = NUM_LIVES; //TODO implementar dificuldade??
+
+#ifdef DEBUG
+	p1->num_lives = 1;
+#endif
+
 	p1->x = PLAYER_INITIAL_X_POS;
 	if(!player_num)
 		p1->y = SP_PLAYER_INITIAL_Y_POS;
@@ -22,7 +27,7 @@ player* player_init(char player_num) {
 	p1->initial_y = p1->y;
 	p1->life = (bitmap*) bitmap_load("life.bmp");
 	p1->state = PLAYER_ALIVE;
-	p1->destroy = (bitmap*) bitmap_load("explosion.bmp");
+	p1->destroy = (bitmap*) bitmap_load("ship_destroyed.bmp");
 	p1->ticks = 0;
 	return p1;
 }
@@ -47,8 +52,6 @@ int player_fire(player *p1, char direction) {
 		return projectile_init(p1, (unsigned short) (p1->x+SHIP_WIDTH/2),
 				p1->y+SHIP_HEIGHT+PROJECTILE_HEIGHT+1, PLAYER_PROJECTILE_VELOCITY);
 	}
-
-
 }
 
 void player_tick(player* p1){
@@ -136,11 +139,11 @@ void player_mirror_image(player* p1){
 	bitmap_mirror_horizontally(p1->player_ship);
 }
 
-void player_destruct(player *p1){ //TODO when deleting bitmaps, the program crashes. when freeing the player, the program enters an infinite loop.
+void player_destruct(player *p1){
 	if(p1 == NULL)
 		return;
 
-	//bitmap_delete(p1->player_ship);
-	//bitmap_delete(p1->life);
-	//free(p1);
+	bitmap_delete(p1->player_ship);
+	bitmap_delete(p1->life);
+	//free(p1); //crashes here
 }

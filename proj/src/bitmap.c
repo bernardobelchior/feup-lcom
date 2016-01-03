@@ -106,8 +106,7 @@ void bitmap_mirror_horizontally(bitmap* bmp){
 	free(line);
 }
 
-void bitmap_draw(bitmap* bmp, short x, short y,
-		Alignment alignment) {
+void bitmap_draw(bitmap* bmp, short x, short y, Alignment alignment) {
 	if (bmp == NULL)
 		return;
 

@@ -15,6 +15,7 @@ typedef struct { //TODO still have to add text or image
 	void (*function)();
 	unsigned short color;
 	char* title;
+	bitmap* background;
 	Alignment text_align;
 } button;
 /** @} end of Button Information Struct */
@@ -40,6 +41,14 @@ button* create_button(short x, short y, unsigned short width, unsigned short hei
  * @param f Font to draw the title with
  */
 void button_draw(button* b, font* f);
+
+/**
+ * @brief Sets the button background
+ *
+ * @param b Button
+ * @param bmp Background
+ */
+void button_set_background(button* b, bitmap* bmp);
 
 /**
  * @brief Checks if the position (x,y) is inside the button

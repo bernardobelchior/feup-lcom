@@ -99,6 +99,9 @@ int alien_remove(alien *a1) {
 
 		if (invaders->last == a1) { /*if the alien to remove is the last adversary */
 			invaders->head = NULL;
+			invaders->last = NULL;
+			invaders->rightmost = NULL;
+			invaders->leftmost = NULL;
 			free(a1);
 			return 1;
 		}
@@ -290,8 +293,7 @@ int aliens_collision_handler(projectile* proj) {
 							break;
 						}
 					}
-					iterator->state = PLAYER_DESTROYED;
-					//alien_remove(iterator);
+					iterator->state = ALIEN_DESTROYED;
 					return 1;
 				}
 			}
@@ -387,20 +389,19 @@ int is_on_last_row(alien *a1) {
 void aliens_tick(){
 	alien* iterator = invaders->head;
 
-	if(iterator == NULL)
-		return;
-
-	while(iterator->next != NULL){
+	while(iterator != NULL){
 		if(iterator->state == ALIEN_DESTROYED){
 			iterator->ticks++;
 			if(iterator->ticks > 60){
-				alien_remove(iterator);
+				if(alien_remove(iterator) == 1)
+					return;
 			}
 		}
 		iterator = iterator->next;
 	}
 
-	aliens_draw();
+	if(invaders->alien_num != 0)
+		aliens_draw();
 }
 
 void aliens_destruct() {
@@ -416,5 +417,5 @@ void aliens_destruct() {
 	while (invaders->head != NULL)
 		alien_remove(invaders->head);
 
-	free(invaders);
+	//free(invaders); //crashes here
 }

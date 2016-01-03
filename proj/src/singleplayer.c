@@ -29,7 +29,7 @@ void singleplayer_tick() {
 	if (controller == mouse)
 		player_set_x_pos(singleplayer_game.play, mouse_info.x);
 
-	if (invaders->alien_num == 0 || singleplayer_game.play->num_lives == 0) {
+	if (invaders->alien_num == 0 || singleplayer_game.play->num_lives == 0){
 		singleplayer_game_over();
 	}
 

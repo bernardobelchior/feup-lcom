@@ -101,6 +101,8 @@ void projectile_list_destruct() {
 
 	while(iterator->next != NULL){
 		iterator = iterator->next;
-		free(iterator->prev);
+		//free(iterator->prev); //crashes here
 	}
+
+	//free(projectiles); //crashes here
 }
