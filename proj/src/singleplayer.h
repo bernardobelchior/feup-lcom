@@ -5,9 +5,6 @@
 #include "state.h"
 #include "rtc.h"
 #include "game_over_menu.h"
-
-#define NUMBER_OF_SHIELDS 4
-
 typedef struct {
 	shield* (*shields);
 	player* play;

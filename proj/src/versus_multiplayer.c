@@ -49,8 +49,8 @@ void versus_mp_game_tick(){
 		font_draw_int(space_invaders_font, strlen("P1 Score: ")*space_invaders_font->letter_width, 0, mp_game.p1->score, ALIGN_LEFT);
 
 
-		font_draw_string(space_invaders_font, 0, SP_PLAYER_INITIAL_Y_POS+SHIP_HEIGHT, "P2 Score: ", ALIGN_LEFT);
-		font_draw_int(space_invaders_font, strlen("P2 Score: ")*space_invaders_font->letter_width, SP_PLAYER_INITIAL_Y_POS+SHIP_HEIGHT, mp_game.p2->score, ALIGN_LEFT);
+		font_draw_string(space_invaders_font, 0, MP_PLAYER_2_INITIAL_Y_POS+SHIP_HEIGHT, "P2 Score: ", ALIGN_LEFT);
+		font_draw_int(space_invaders_font, strlen("P2 Score: ")*space_invaders_font->letter_width, MP_PLAYER_2_INITIAL_Y_POS+SHIP_HEIGHT, mp_game.p2->score, ALIGN_LEFT);
 
 
 		//Draws timer

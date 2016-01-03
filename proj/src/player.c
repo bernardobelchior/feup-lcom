@@ -2,7 +2,7 @@
 #include "state.h"
 #include "bitmap.h"
 
-player* player_init(char player_num) {
+player* player_init(enum player_type mode) {
 	player *p1 = (player *) malloc(sizeof(player));
 
 	if (p1 == NULL) {
@@ -10,19 +10,27 @@ player* player_init(char player_num) {
 		return NULL;
 	}
 
-	p1->player_ship = (bitmap*) bitmap_load(SHIP_RES_NAME);
-
 	p1->num_lives = NUM_LIVES; //TODO implementar dificuldade??
 
 #ifdef DEBUG
 	p1->num_lives = 1;
 #endif
 
-	p1->x = PLAYER_INITIAL_X_POS;
-	if(!player_num)
+	switch(mode) {
+	case SP:
+		p1->player_ship = (bitmap*) bitmap_load(SHIP_RES_NAME);
 		p1->y = SP_PLAYER_INITIAL_Y_POS;
-	else
+		break;
+	case MP1:
+		p1->player_ship = (bitmap*) bitmap_load(INV_SHIP_RES_NAME);
 		p1->y = MP_PLAYER_1_INITIAL_Y_POS;
+		break;
+	case MP2:
+		p1->player_ship = (bitmap*) bitmap_load(SHIP_RES_NAME);
+		p1->y = MP_PLAYER_2_INITIAL_Y_POS;
+		break;
+	}
+	p1->x = PLAYER_INITIAL_X_POS;
 	p1->score = 0;
 	p1->initial_y = p1->y;
 	p1->life = (bitmap*) bitmap_load("life.bmp");
@@ -143,8 +151,8 @@ void player_destruct(player *p1){
 	if(p1 == NULL)
 		return;
 
-	//crashes after this comment
-	//bitmap_delete(p1->player_ship);
-	//bitmap_delete(p1->life);
-	//free(p1);
+	bitmap_delete(p1->life);
+
+	//bitmap_delete(p1->player_ship); //crashes here
+	//free(p1); //crashes here
 }

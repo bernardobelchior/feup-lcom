@@ -7,16 +7,18 @@
 #include "video_gr.h"
 
 #define NUM_LIVES 3
-#define SHIP_WIDTH 68
-#define SHIP_HEIGHT 30
+#define SHIP_WIDTH 63
+#define SHIP_HEIGHT 45
 #define PLAYER_INITIAL_X_POS (unsigned) get_h_res()/2-SHIP_WIDTH/2
 #define SP_PLAYER_INITIAL_Y_POS (unsigned) 9*get_v_res()/10
 #define MP_PLAYER_1_INITIAL_Y_POS (unsigned) get_v_res()/10
+#define MP_PLAYER_2_INITIAL_Y_POS (unsigned) 8*get_v_res()/10
 #define SHIP_X_DELTA 20
 #define PLAYER_PROJECTILE_VELOCITY 5
 
 struct _projectile;
 
+enum player_type { SP, MP1, MP2 };
 enum player_state { PLAYER_ALIVE, PLAYER_DESTROYED };
 
 typedef struct _player{
@@ -32,16 +34,17 @@ typedef struct _player{
 } player;
 
 static char SHIP_RES_NAME[] = "player_ship.bmp";
+static char INV_SHIP_RES_NAME[] = "inv_player_ship.bmp";
 
 extern font* space_invaders_font;
 
 /**
  * @brief Initializes player
  *
- * @param player_num 0 for singleplayer/player 2 in versus mp, 1 for player 1 in versus mp
+ * @param mode Game mode
  * @return Returns player
  */
-player* player_init(char player_num);
+player* player_init(enum player_type mode);
 
 /**
  * @brief Sets the player x position. Used with mouse.

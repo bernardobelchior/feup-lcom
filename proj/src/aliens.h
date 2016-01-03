@@ -4,8 +4,8 @@
 #include "animation.h"
 #include "projectile.h"
 
-#define ALIENS_PER_ROW 11
-#define ALIEN_ROWS 5
+#define ALIENS_PER_ROW 1
+#define ALIEN_ROWS 3
 #define INITIAL_X_POS 50
 #define INITIAL_Y_POS 20
 #define ALIEN_WIDTH 48
@@ -27,7 +27,7 @@
 
 #define PLACEHOLDER_LEFT_BORDER 100
 #define PLACEHOLDER_RIGHT_BORDER 900  //TODO eliminar
-#define PLACEHOLDER_SHIELD_LINE 568
+#define PLACEHOLDER_SHIELD_LINE 543
 
 enum alien_type { SMALL, MEDIUM, LARGE, UFO};
 enum alien_state { ALIEN_ALIVE, ALIEN_DESTROYED };

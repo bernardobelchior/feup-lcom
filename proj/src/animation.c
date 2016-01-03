@@ -35,13 +35,25 @@ void animation_next(animation* a){
 }
 
 void animation_destruct(animation* a){
-	sprite* it = a->head;
-	sprite* next = a->head->next;
-	while(it->next != a->head){
+	if(a->head == NULL)
+		return;
+
+	sprite* it = a->head->next;
+	sprite* next;
+
+	a->head->next = NULL;
+
+	if(it == a->head){
+		free(a->head);
+		return;
+	}
+
+	while(it != NULL){
+		next = it->next;
 		bitmap_delete(it->bmp);
 		free(it);
 		it = next;
-		next = next->next;
 	}
-	free(a);
+
+	//free(a); //crashes here
 }

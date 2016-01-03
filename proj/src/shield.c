@@ -1,6 +1,20 @@
 #include "shield.h"
 
 int shield_list_init(char mode) {
+	shield_left = bitmap_load("left_shield.bmp");
+	shield_middle = bitmap_load("middle_shield.bmp");
+	shield_right = bitmap_load("right_shield.bmp");
+
+	if(!mode){
+		inv_shield_left = bitmap_load("inv_left_shield.bmp");
+		inv_shield_middle = bitmap_load("inv_middle_shield.bmp");
+		inv_shield_right = bitmap_load("inv_right_shield.bmp");
+	}
+	else {
+		inv_shield_left = NULL;
+		inv_shield_middle = NULL;
+		inv_shield_right = NULL;
+	}
 
 	if ((shields = (shield_list *) malloc(sizeof(shield_list))) == NULL)
 		return 1;
@@ -8,8 +22,8 @@ int shield_list_init(char mode) {
 	shields->head = NULL;
 
 	unsigned char i = 0;
-	unsigned int x = SHIELD_INITIALX;
-	unsigned int y;
+	unsigned short x = SHIELD_INITIALX;
+	unsigned short y;
 
 	if(!mode)
 		y = VERSUS_MP_YPOS;
@@ -26,40 +40,26 @@ int shield_list_init(char mode) {
 	return 0;
 }
 
-shield *shield_init(unsigned int x, unsigned int y) {
-
+shield *shield_init(unsigned short x, unsigned short y) {
 	shield *s1 = NULL;
 
 	if ((s1 = (shield *) malloc(sizeof(shield))) == NULL)
 		return NULL;
 
-	s1->xpos = x;
-	s1->ypos = y;
+	s1->x = x;
+	s1->y = y;
 	s1->next = NULL;
 	s1->prev = NULL;
 	s1->list = NULL;
 
-	unsigned char i = 0;
-	unsigned int xi = s1->xpos;
-	unsigned int yi = s1->ypos;
-
-	for (i = 0; i < SPRITES_PER_SHIELD; i++) {
-		if (add_sprite(s1, xi, yi) != 0) {
-			return NULL;
-		}
-
-		xi += SPRITE_WIDTH;
-
-		if (i == SPRITES_PER_SHIELD / 2 - 1) {
-			yi += SPRITE_HEIGHT;
-			xi = s1->xpos;
-		}
-	}
+	add_sprite(s1, s1->x + LEFT_SPRITE_DELTA_X, s1->y, SHIELD_SIDE_WIDTH, SHIELD_SIDE_HEIGHT, shield_left);	//Left sprite
+	add_sprite(s1, s1->x + MIDDLE_SPRITE_DELTA_X, s1->y, SHIELD_MIDDLE_WIDTH, SHIELD_MIDDLE_HEIGHT, shield_middle);	//Middle sprite
+	add_sprite(s1, s1->x + RIGHT_SPRITE_DELTA_X, s1->y, SHIELD_SIDE_WIDTH, SHIELD_SIDE_HEIGHT, shield_right);	//Right sprite
 
 	return s1;
 }
 
-int add_sprite(shield *s1, unsigned int x, unsigned int y) {
+int add_sprite(shield *s1, unsigned short x, unsigned short y, unsigned short width, unsigned short height, bitmap* bmp) {
 
 	if (s1 == NULL)
 		return 1;
@@ -69,9 +69,12 @@ int add_sprite(shield *s1, unsigned int x, unsigned int y) {
 	if ((sh_sprt = (shield_sprite *) malloc(sizeof(shield_sprite))) == NULL)
 		return 1;
 
-	sh_sprt->xpos = x;
-	sh_sprt->ypos = y;
+	sh_sprt->x = x;
+	sh_sprt->y = y;
+	sh_sprt->width = width;
+	sh_sprt->height = height;
 	sh_sprt->durability = SPRITE_DURABILITY;
+	sh_sprt->bmp = bmp;
 	sh_sprt->next = NULL;
 	sh_sprt->prev = NULL;
 
@@ -196,14 +199,13 @@ int shield_draw(shield *s1) {
 	shield_sprite* iterator = s1->list;
 
 	do {
-		vg_draw_frame(iterator->xpos, iterator->ypos, SPRITE_WIDTH,
-				SPRITE_HEIGHT, rgb(0x00FFFFFF));
+		bitmap_draw(iterator->bmp, iterator->x, iterator->y, ALIGN_LEFT);
 		iterator = iterator->next;
 	} while (iterator != NULL);
 
 #ifdef DEBUG
 	if(s1 == shields->head)
-		vg_draw_frame(s1->xpos,s1->ypos, 5 , 5, 3);
+		vg_draw_frame(s1->x,s1->y, 5 , 5, 3);
 #endif
 
 }
@@ -214,15 +216,12 @@ void shields_draw() {
 		return;
 	}
 
-
-
 	shield* iterator = shields->head;
 
 	do {
 		shield_draw(iterator);
 		iterator = iterator->next;
 	} while (iterator != NULL);
-
 }
 
 int shield_collision_handler(projectile* proj) {
@@ -230,17 +229,17 @@ int shield_collision_handler(projectile* proj) {
 	if (shields->head == NULL)
 		return 0;
 
-	if (proj->y < shields->head->ypos || proj->y > shields->head->ypos + SHIELD_HEIGHT)
+	if (proj->y < shields->head->y || proj->y > shields->head->y + SHIELD_HEIGHT)
 		return 0;
 
 	shield* iterator = shields->head;
 
 	do {
-		if ((proj->y <= iterator->ypos + SHIELD_HEIGHT && proj->y >= iterator->ypos
-				&& proj->x <= iterator->xpos + SHIELD_WIDTH && proj->x >= iterator->xpos)
-				|| (proj->y + proj->height <= iterator->ypos + SHIELD_HEIGHT && proj->y + proj->height >= iterator->ypos
-				&& proj->x + proj->width <= iterator->xpos + SHIELD_WIDTH && proj->x + proj->width >= iterator->xpos))
-		return (sprite_hit(iterator, proj->x, proj->y));
+		if ((proj->y <= iterator->y + SHIELD_HEIGHT && proj->y >= iterator->y
+				&& proj->x <= iterator->x + SHIELD_WIDTH && proj->x >= iterator->x)
+				|| (proj->y + proj->height <= iterator->y + SHIELD_HEIGHT && proj->y + proj->height >= iterator->y
+						&& proj->x + proj->width <= iterator->x + SHIELD_WIDTH && proj->x + proj->width >= iterator->x))
+			return sprite_hit(iterator, proj);
 
 		iterator = iterator->next;
 	} while (iterator != NULL);
@@ -248,7 +247,7 @@ int shield_collision_handler(projectile* proj) {
 	return 0;
 }
 
-int sprite_hit(shield *s1, unsigned short x, unsigned short y) {
+int sprite_hit(shield *s1, projectile* proj) {
 
 	if (s1 == NULL)
 		return 0;
@@ -256,8 +255,10 @@ int sprite_hit(shield *s1, unsigned short x, unsigned short y) {
 	shield_sprite *iterator = s1->list;
 
 	do {
-		if (y <= iterator->ypos + SPRITE_HEIGHT && y >= iterator->ypos
-				&& x <= iterator->xpos + SPRITE_WIDTH && x >= iterator->xpos) {
+		if ((proj->y <= iterator->y + iterator->height && proj->y >= iterator->y
+				&& proj->x <= iterator->x + iterator->width && proj->x >= iterator->x) ||
+				(proj->y + proj->height <= iterator->y + iterator->height && proj->y + proj->height >= iterator->y
+						&& proj->x + proj->width <= iterator->x + iterator->width && proj->x + proj->width >= iterator->x)){
 			iterator->durability--;
 			if (!iterator->durability)
 				delete_sprite(s1, iterator);

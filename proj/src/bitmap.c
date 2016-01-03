@@ -49,7 +49,7 @@ bitmap* bitmap_load(const char* filename) {
 	fseek(image, bmp_file_header.offset, SEEK_SET);
 
 	// allocate enough memory for the bitmap image data
-	unsigned short* bitmap_image = (unsigned short*) malloc(bmp_info_header.image_size*sizeof(unsigned short));
+	unsigned short* bitmap_image = (unsigned short*) malloc(bmp_info_header.width*bmp_info_header.height*sizeof(unsigned short));
 
 	// verify memory allocation
 	if (!bitmap_image) {

@@ -18,7 +18,7 @@ int projectile_init(struct _player* p, unsigned short x, unsigned short y, int v
 	if((proj = (projectile *)malloc(sizeof(projectile))) == NULL)
 		return 1;
 
-	proj->x = x;
+	proj->x = x - (PROJECTILE_WIDTH/2);
 	proj->y = y;
 	proj->width = PROJECTILE_WIDTH;
 	proj->height = PROJECTILE_HEIGHT;
