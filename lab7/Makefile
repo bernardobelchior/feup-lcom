@@ -5,7 +5,7 @@ COMPILER_TYPE= gnu
 CC=gcc
 
 PROG=	lab7
-SRCS=	lab7.c test7.c uart.c
+SRCS=	lab7.c test7.c uart.c fifo.c
 
 CCFLAGS= -Wall
 

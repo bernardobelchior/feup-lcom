@@ -29,7 +29,9 @@ static int proc_args(int argc, char *argv[]) {
 	unsigned short base_addr;
 	unsigned long bits, stop, parity, rate;
 	unsigned char tx;
-	char *string;
+	int i, stringc = 1;
+	char **strings;
+	char *temp;
 
 	/* check the function to test: if the first characters match, accept it */
 	if (argc == 1) {
@@ -68,7 +70,16 @@ static int proc_args(int argc, char *argv[]) {
 		if ((stop = parse_ulong(argv[4], 10)) == ULONG_MAX)
 			return 1;
 
-		if ((parity = parse_ulong(argv[5], 10)) == ULONG_MAX)
+		if(strncmp(argv[5],"even",strlen("even")) == 0)
+			parity = 2;
+
+		else if(strncmp(argv[5], "odd",strlen("odd")) == 0)
+			parity = 1;
+
+		else if(strncmp(argv[5],"none",strlen("none")) == 0)
+			parity = 0;
+
+		if((rate = parse_ulong(argv[6],10)) == ULONG_MAX)
 			return 1;
 
 		printf("lab7::set(%d, %d, %d, %d, %d)\n", base_addr, bits, stop,
@@ -76,8 +87,8 @@ static int proc_args(int argc, char *argv[]) {
 		return ser_test_set(base_addr, bits, stop, parity, rate);
 	}
 
-	else if (strncmp(argv[1], "com", strlen("set")) == 0) {
-		if (argc != 9) {
+	else if (strncmp(argv[1], "com", strlen("com")) == 0) {
+		if (argc <	 9) {
 			printf("lab7::wrong num of args for com() \n");
 			return 1;
 		}
@@ -97,15 +108,30 @@ static int proc_args(int argc, char *argv[]) {
 		if((rate = parse_ulong(argv[6],10)) == ULONG_MAX)
 			return 1;
 
-		if((parity = parse_ulong(argv[7],10)) == ULONG_MAX)
-			return 1;
+		if(strncmp(argv[7],"none",strlen("even")) == 0)
+			parity = 2;
 
-		string = argv[8];
+		else if(strncmp(argv[7], "odd",strlen("odd")) == 0)
+			parity = 1;
 
-		printf("lab7::set(%d, %d, %d, %d, %d, %d, %d, %s)\n", base_addr,
-				tx, bits, stop, parity, rate, strlen(string), string);
+		else if(strncmp(argv[7],"none",strlen("none")) == 0)
+			parity = 0;
+
+		strings = (char **)malloc(0);
+
+		for(i = 8; i < argc; i++){
+
+			strings = realloc(strings,stringc * sizeof(char*));
+			strings[stringc - 1] =(char *) malloc(sizeof(argv[i]));
+			strings[stringc - 1] = argv[i];
+			printf("%s ", strings[stringc - 1]);
+			stringc++;
+		}
+
+		printf("lab7::set(%d, %d, %d, %d, %d, %d, %d\n", base_addr,
+				tx, bits, stop, parity, rate, stringc);
 		return ser_test_poll(base_addr, tx, bits, stop, parity, rate,
-				strlen(string), &string);
+				stringc, strings);
 	}
 
 	else {
