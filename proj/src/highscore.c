@@ -108,41 +108,41 @@ int highscore_write(FILE* file, score* sc){
 
 void highscore_tick(){
 	//Title
-	font_draw_string(space_invaders_font, get_h_res()/2, get_v_res()/20, "Highscores", ALIGN_CENTER);
+	font_draw_string(space_invaders_font, get_h_res()/2, get_v_res()/40, "Highscores", ALIGN_CENTER);
 
 	//Draws menu
 	menu_draw(highscore_menu);
 
 	//Draws table header
-	font_draw_string(space_invaders_font, 250, 105, "Name", ALIGN_CENTER);
-	font_draw_string(space_invaders_font, 550, 105, "Date", ALIGN_CENTER);
-	font_draw_string(space_invaders_font, 800, 105, "Score", ALIGN_CENTER);
+	font_draw_string(space_invaders_font, 200, 95, "Name", ALIGN_CENTER);
+	font_draw_string(space_invaders_font, 525, 95, "Date", ALIGN_CENTER);
+	font_draw_string(space_invaders_font, 850, 95, "Score", ALIGN_CENTER);
 
 	//Draws highscores
 	char* date_str = (char*) malloc(20*sizeof(char));
 	unsigned char i;
 	for(i = 0; i < highscore_size; i++){
-		font_draw_string(space_invaders_font, 250, 155+50*i, highscores[i]->name, ALIGN_CENTER);
+		font_draw_string(space_invaders_font, 200, 155+50*i, highscores[i]->name, ALIGN_CENTER);
 		sprintf(date_str, "%u/%u/%u", highscores[i]->date->day, highscores[i]->date->month, highscores[i]->date->year);
-		font_draw_string(space_invaders_font, 550, 155+50*i, date_str, ALIGN_CENTER);
-		font_draw_int(space_invaders_font, 800, 155+50*i, (int) highscores[i]->points, ALIGN_CENTER);
+		font_draw_string(space_invaders_font, 525, 155+50*i, date_str, ALIGN_CENTER);
+		font_draw_int(space_invaders_font, 850, 155+50*i, (int) highscores[i]->points, ALIGN_CENTER);
 	}
 	free(date_str);
 
 	//Draws guidelines
 #ifdef DEBUG
-	vg_draw_frame(100, 100, 800, 550, rgb(0xFFFFFF));
+	vg_draw_frame(50, 90, 900, 561, rgb(0xFFFFFF));
 
 	//Vertical lines
-	vg_draw_line(400, 100, 400, 650, rgb(0xFFFFFF));
-	vg_draw_line(700, 100, 700, 650, rgb(0xFFFFFF));
+	vg_draw_line(350, 90, 350, 650, rgb(0xFFFFFF));
+	vg_draw_line(750, 90, 750, 650, rgb(0xFFFFFF));
 
 	//Horizontal lines
-	vg_draw_line(100, 155, 900, 155, rgb(0xFFFFFF));
-	vg_draw_line(100, 150, 900, 150, rgb(0xFFFFFF));
+	vg_draw_line(50, 145, 950, 145, rgb(0xFFFFFF));
+	vg_draw_line(50, 150, 950, 150, rgb(0xFFFFFF));
 
 	for(i = 1; i < 10; i++){
-		vg_draw_line(100, 150+50*i, 900, 150+50*i, rgb(0xFFFFFF));
+		vg_draw_line(50, 150+50*i, 950, 150+50*i, rgb(0xFFFFFF));
 	}
 #endif
 }

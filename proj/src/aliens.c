@@ -88,6 +88,8 @@ int alien_remove(alien *a1) {
 	unsigned char flag = 0;
 
 	invaders->movement_frequency -= MOVEMENT_INCREASE;
+	if(invaders->movement_frequency < 1)
+		invaders->movement_frequency = 1;
 
 	if (invaders->rightmost == a1)
 		flag = 1;
@@ -233,8 +235,10 @@ int alien_draw(alien *a1) {
 }
 
 void alien_move(alien* a1, char x, char y) {
-	a1->x += x;
-	a1->y += y;
+	if(a1->state == ALIEN_ALIVE){
+		a1->x += x;
+		a1->y += y;
+	}
 }
 
 alien *alien_init(int x, int y, enum alien_type type) {
@@ -392,7 +396,7 @@ void aliens_tick(){
 	while(iterator != NULL){
 		if(iterator->state == ALIEN_DESTROYED){
 			iterator->ticks++;
-			if(iterator->ticks > 60){
+			if(iterator->ticks > 30){
 				if(alien_remove(iterator) == 1)
 					return;
 			}
@@ -410,9 +414,6 @@ void aliens_destruct() {
 	animation_destruct(invaders->large_alien);
 	animation_destruct(invaders->ufo);
 	animation_destruct(invaders->destroy);
-
-	if (invaders->head == NULL)
-		return;
 
 	while (invaders->head != NULL)
 		alien_remove(invaders->head);

@@ -143,7 +143,8 @@ void player_destruct(player *p1){
 	if(p1 == NULL)
 		return;
 
-	bitmap_delete(p1->player_ship);
-	bitmap_delete(p1->life);
-	//free(p1); //crashes here
+	//crashes after this comment
+	//bitmap_delete(p1->player_ship);
+	//bitmap_delete(p1->life);
+	//free(p1);
 }

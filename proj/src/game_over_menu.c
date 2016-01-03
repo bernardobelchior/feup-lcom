@@ -2,18 +2,37 @@
 
 void game_over_menu_init(){
 	game_over_menu = create_menu("spaceinvader_font_transparent.bmp");
+	up = bitmap_load("up_arrow.bmp");
+	down = bitmap_load("down_arrow.bmp");
 
 	//Accept and Clear buttons.
-	menu_add_button(game_over_menu, create_button(312, 600, 100, 100, ALIGN_CENTER, &game_over_accept_button, "Accept", rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(game_over_menu, create_button(712, 600, 100, 100, ALIGN_CENTER, &game_over_clear_button, "Clear", rgb(0xFFFFFF), ALIGN_CENTER));
+	menu_add_button(game_over_menu, create_button(312, 600, 250, 100, ALIGN_CENTER, &game_over_accept_button, "Accept", rgb(0xFFFFFF), ALIGN_CENTER));
+	menu_add_button(game_over_menu, create_button(712, 600, 250, 100, ALIGN_CENTER, &game_over_clear_button, "Clear", rgb(0xFFFFFF), ALIGN_CENTER));
 
 	//Next and previous buttons.
-	menu_add_button(game_over_menu, create_button(412, 250, 75, 45, ALIGN_CENTER, &game_over_first_letter_prev, NULL, rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(game_over_menu, create_button(412, 350, 75, 45, ALIGN_CENTER, &game_over_first_letter_next, NULL, rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(game_over_menu, create_button(512, 250, 75, 45, ALIGN_CENTER, &game_over_second_letter_prev, NULL, rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(game_over_menu, create_button(512, 350, 75, 45, ALIGN_CENTER, &game_over_second_letter_next, NULL, rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(game_over_menu, create_button(612, 250, 75, 45, ALIGN_CENTER, &game_over_third_letter_prev, NULL, rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(game_over_menu, create_button(612, 350, 75, 45, ALIGN_CENTER, &game_over_third_letter_next, NULL, rgb(0xFFFFFF), ALIGN_CENTER));
+	button* first_letter_prev = create_button(412, 260, 48, 29, ALIGN_CENTER, &game_over_first_letter_prev, NULL, rgb(0xFFFFFF), ALIGN_CENTER);
+	button_set_background(first_letter_prev, up);
+	menu_add_button(game_over_menu, first_letter_prev);
+
+	button* first_letter_next = create_button(412, 355, 48, 29, ALIGN_CENTER, &game_over_first_letter_next, NULL, rgb(0xFFFFFF), ALIGN_CENTER);
+	button_set_background(first_letter_next, down);
+	menu_add_button(game_over_menu, first_letter_next);
+
+	button* second_letter_prev = create_button(512, 260, 48, 29, ALIGN_CENTER, &game_over_second_letter_prev, NULL, rgb(0xFFFFFF), ALIGN_CENTER);
+	button_set_background(second_letter_prev, up);
+	menu_add_button(game_over_menu, second_letter_prev);
+
+	button* second_letter_next = create_button(512, 355, 48, 29, ALIGN_CENTER, &game_over_second_letter_next, NULL, rgb(0xFFFFFF), ALIGN_CENTER);
+	button_set_background(second_letter_next, down);
+	menu_add_button(game_over_menu, second_letter_next);
+
+	button* third_letter_prev = create_button(612, 260, 48, 29, ALIGN_CENTER, &game_over_third_letter_prev, NULL, rgb(0xFFFFFF), ALIGN_CENTER);
+	button_set_background(third_letter_prev, up);
+	menu_add_button(game_over_menu, third_letter_prev);
+
+	button* third_letter_next = create_button(612, 355, 48, 29, ALIGN_CENTER, &game_over_third_letter_next, NULL, rgb(0xFFFFFF), ALIGN_CENTER);
+	button_set_background(third_letter_next, down);
+	menu_add_button(game_over_menu, third_letter_next);
 
 	new_score.letters[0] = 'A';
 	new_score.letters[1] = 'A';

@@ -12,12 +12,10 @@ typedef struct {
 } game_over_info;
 
 game_over_info new_score;
-
 menu* game_over_menu;
-
 extern enum game_state state;
-
 extern font* space_invaders_font;
+bitmap *up, *down;
 
 void game_over_menu_init();
 

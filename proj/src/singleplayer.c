@@ -26,6 +26,8 @@ void singleplayer_tick() {
 		return;
 	}
 
+	singleplayer_check_projectiles_state();
+
 	if (controller == mouse)
 		player_set_x_pos(singleplayer_game.play, mouse_info.x);
 
@@ -72,8 +74,6 @@ void singleplayer_tick() {
 		bitmap_draw(singleplayer_game.play->life, x+i*singleplayer_game.play->life->bmp_info_header.width,
 				get_v_res()-singleplayer_game.play->life->bmp_info_header.height - 1, ALIGN_LEFT);
 	}
-
-	singleplayer_check_projectiles_state();
 }
 
 void singleplayer_check_projectiles_state() {
@@ -113,23 +113,19 @@ alien *singleplayer_alien_to_fire() {
 	alien *iterator;
 	int i, randnum;
 
-	if (invaders->head == NULL)
+	if (invaders->head == NULL || (invaders->head->state == ALIEN_DESTROYED && invaders->alien_num == 1))
 		return NULL;
 
 	do {
 		iterator = invaders->head;
 		randnum = rand() % (ALIENS_PER_ROW * ALIEN_ROWS); //55;
 
-
 		for (i = 0; i < randnum; i++) {
 			if (iterator->next == NULL)
 				iterator = invaders->head;
-
 			else
 				iterator = iterator->next;
-
 		}
-
 	} while (!is_on_last_row(iterator));
 
 	return iterator;
