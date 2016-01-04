@@ -94,21 +94,21 @@ void key_pressed(unsigned short key) {
 		case singleplayer:
 			switch (key) {
 			case ESC_MAKECODE: //TODO add a pause menu
-					singleplayer_game_over();
+				singleplayer_game_over();
 				break;
 			case RIGHT_ARROW_MAKECODE:
 				if(controller == keyboard){
-						singleplayer_move(1);
+					singleplayer_move(1);
 				}
 				break;
 			case LEFT_ARROW_MAKECODE:
 				if(controller == keyboard){
-						singleplayer_move(-1);
+					singleplayer_move(-1);
 				}
 				break;
 			case SPACE_MAKECODE:
 				if(controller == keyboard){
-						singleplayer_fire();
+					singleplayer_fire();
 				}
 				break;
 			}
@@ -116,39 +116,56 @@ void key_pressed(unsigned short key) {
 			case multiplayer:
 				switch(key){
 				case A_MAKECODE:
-						versus_mp_move(1,-1);
+					versus_mp_move(1,-1);
 					break;
 				case D_MAKECODE:
-						versus_mp_move(1,1);
+					versus_mp_move(1,1);
 					break;
 
 				case W_MAKECODE:
-						versus_mp_fire(1);
+					versus_mp_fire(1);
 					break;
 
 				case LEFT_ARROW_MAKECODE:
-						versus_mp_move(2,-1);
+					versus_mp_move(2,-1);
 					break;
 
 				case RIGHT_ARROW_MAKECODE:
-						versus_mp_move(2,1);
+					versus_mp_move(2,1);
 					break;
 
 				case UP_ARROW_MAKECODE:
-						versus_mp_fire(2);
+					versus_mp_fire(2);
 					break;
 
 				case ESC_MAKECODE:
-						change_state(main_menu);
+					change_state(main_menu);
 					break;
 				}
 				break;
 				case highscore:
-
+					switch(key){
+					case ESC_MAKECODE:
+						highscore_back_on_click();
+						break;
+					}
 					break;
-				case options:
-
-					break;
+					case options:
+						switch(key){
+						case ESC_MAKECODE:
+							options_cancel_on_click();
+							break;
+						case ENTER_MAKECODE:
+							options_accept_on_click();
+							break;
+						case RIGHT_ARROW_MAKECODE:
+							options_next_ctrl_on_click();
+							break;
+						case LEFT_ARROW_MAKECODE:
+							options_prev_ctrl_on_click();
+							break;
+						}
+						break;
 	}
 }
 

@@ -15,7 +15,7 @@
 #define MP_PLAYER_2_INITIAL_Y_POS (unsigned) 8*get_v_res()/10
 #define SHIP_X_DELTA 15
 #define PLAYER_PROJECTILE_VELOCITY 5
-#define TICKS_BETWEEN_SHOTS 30
+#define TICKS_BETWEEN_SHOTS 15
 
 struct _projectile;
 

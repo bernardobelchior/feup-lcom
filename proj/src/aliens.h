@@ -7,7 +7,7 @@
 #define ALIENS_PER_ROW 11
 #define ALIEN_ROWS 5
 #define INITIAL_X_POS 50
-#define INITIAL_Y_POS 20
+#define INITIAL_Y_POS 75
 #define ALIEN_WIDTH 48
 #define ALIEN_HEIGHT 32
 #define ALIEN_SPACEMENT 10
@@ -22,8 +22,13 @@
 #define LARGE_ALIEN_SCORE 1
 #define MEDIUM_ALIEN_SCORE 2
 #define SMALL_ALIEN_SCORE 3
-#define UFO_ALIEN_SCORE 5
+#define UFO_ALIEN_SCORE 10
 #define ALIEN_PROJECTILE_VELOCITY 3
+#define UFO_WIDTH 64
+#define UFO_HEIGHT 28
+#define UFO_INITIAL_X 100
+#define UFO_INITIAL_Y 25
+#define UFO_X_DELTA 10
 
 #define PLACEHOLDER_LEFT_BORDER 100
 #define PLACEHOLDER_RIGHT_BORDER 900  //TODO eliminar
@@ -38,7 +43,6 @@ typedef struct _alien{
 	enum alien_state state;
 	int x, y;
 	int width, height;
-	char *mem_pos;
 	struct _alien *next;
 	struct _alien *prev;
 } alien;
@@ -48,13 +52,14 @@ typedef struct {
 	alien *last;
 	alien *rightmost;
 	alien *leftmost;
-	//alien *player_controlled; TODO if we implement vs multiplayer
 	unsigned char alien_num;
-	animation *small_alien, *medium_alien, *large_alien, *ufo, *destroy;
+	animation *small_alien, *medium_alien, *large_alien, *destroy;
 	int movement_frequency;
 } alien_list;
 
 alien_list* invaders;
+alien* ufo;
+bitmap* ufo_img;
 
 /**
  * @brief Initializes the alien linked list.
@@ -142,5 +147,22 @@ int is_on_last_row(alien *a1);
  * @brief Frees memory when no longer in use
  */
 void aliens_destruct();
+
+/**
+ * @brief Creates UFO
+ */
+void ufo_create();
+
+/**
+ * @brief Handles UFO movement
+ */
+void ufo_move();
+
+/**
+ * @brief Destructs UFO
+ */
+void ufo_destruct();
+
+
 
 #endif

@@ -43,10 +43,17 @@ void singleplayer_tick() {
 		}
 	}
 
+	if(rand() % 900 == 0){
+		ufo_create();
+	}
+
 	if (((ticks - ( (seconds-1) * 60))) % invaders->movement_frequency == 0) {
 		if (aliens_move() == -1)
 			singleplayer_game_over();
 	}
+
+	if(ticks % 6 == 0)
+	ufo_move();
 
 #ifdef DEBUG
 	vg_draw_line(PLACEHOLDER_LEFT_BORDER, 0, PLACEHOLDER_LEFT_BORDER,

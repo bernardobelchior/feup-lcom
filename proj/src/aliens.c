@@ -12,6 +12,8 @@ void alien_list_init() {
 	invaders->last = NULL;
 	invaders->movement_frequency = INITIAL_MOV_FREQ;
 
+	ufo = NULL;
+
 	unsigned char row_pos;
 	unsigned char line = 0;
 	unsigned char counter;
@@ -61,9 +63,8 @@ void alien_list_init() {
 	animation_add_by_filename(invaders->large_alien, "large_invader1.bmp");
 	animation_add_by_filename(invaders->large_alien, "large_invader2.bmp");
 
-	//initialize ufo "animation"
-	invaders->ufo = animation_init();
-	animation_add_by_filename(invaders->ufo, "ufo.bmp");
+	//initialize ufo image
+	ufo_img = bitmap_load("ufo.bmp");
 
 	invaders->destroy = animation_init();
 	animation_add_by_filename(invaders->destroy, "explosion.bmp");
@@ -157,7 +158,6 @@ int aliens_move() {
 	animation_next(invaders->small_alien);
 	animation_next(invaders->medium_alien);
 	animation_next(invaders->large_alien);
-	animation_next(invaders->ufo);
 
 	if(invaders->head == NULL)
 		return -1;
@@ -208,7 +208,7 @@ int alien_draw(alien *a1) {
 					ALIGN_LEFT);
 			break;
 		case UFO:
-			bitmap_draw(invaders->ufo->current->bmp, a1->x, a1->y, ALIGN_LEFT);
+			bitmap_draw(ufo_img, a1->x, a1->y, ALIGN_LEFT);
 			break;
 		}
 	} else {
@@ -268,6 +268,18 @@ int aliens_collision_handler(projectile* proj) {
 	rightmost_collision_point = invaders->rightmost->x + ALIEN_WIDTH;
 	lowest_collision_point = invaders->last->y + ALIEN_HEIGHT;
 
+	if(ufo != NULL){
+		if(ufo->state == ALIEN_ALIVE){
+			if(((proj->x >= ufo->x && proj->x <= ufo->x + ufo->width) &&
+					(proj->y >= ufo->y && proj->y <= ufo->y + ufo->height)) ||
+					((proj->x + proj->width >= ufo->x && proj->x + proj->width <= ufo->x + ufo->width) &&
+							(proj->y + proj->height >= ufo->y && proj->y + proj->height <= ufo->y + ufo->height))){
+				ufo->state = ALIEN_DESTROYED;
+				ufo->ticks = 0;
+				proj->shooter->score += UFO_ALIEN_SCORE;
+			}
+		}
+	}
 
 	if (proj->x >= invaders->leftmost->x && proj->x <= rightmost_collision_point
 			&& proj->y >= invaders->head->y && proj->y <= lowest_collision_point) {
@@ -289,9 +301,6 @@ int aliens_collision_handler(projectile* proj) {
 							break;
 						case LARGE:
 							proj->shooter->score += LARGE_ALIEN_SCORE;
-							break;
-						case UFO:
-							proj->shooter->score += UFO_ALIEN_SCORE;
 							break;
 						}
 					}
@@ -350,9 +359,11 @@ int search_new_extreme(unsigned char side) {
 }
 
 void aliens_draw() {
-
 	if (invaders->head == NULL)
 		return;
+
+	if(ufo != NULL)
+		alien_draw(ufo);
 
 	alien* iterator = invaders->head;
 
@@ -391,6 +402,14 @@ int is_on_last_row(alien *a1) {
 void aliens_tick(){
 	alien* iterator = invaders->head;
 
+	if(ufo != NULL){
+		if(ufo->state == ALIEN_DESTROYED){
+			ufo->ticks++;
+			if(ufo->ticks > 60)
+				ufo_destruct();
+		}
+	}
+
 	while(iterator != NULL){
 		if(iterator->state == ALIEN_DESTROYED){
 			iterator->ticks++;
@@ -402,19 +421,53 @@ void aliens_tick(){
 		iterator = iterator->next;
 	}
 
-	if(invaders->alien_num != 0)
+	if(invaders->alien_num != 0){
 		aliens_draw();
+	}
 }
 
 void aliens_destruct() {
 	animation_destruct(invaders->small_alien);
 	animation_destruct(invaders->medium_alien);
 	animation_destruct(invaders->large_alien);
-	animation_destruct(invaders->ufo);
 	animation_destruct(invaders->destroy);
+	bitmap_delete(ufo_img);
 
 	while (invaders->head != NULL)
 		alien_remove(invaders->head);
 
+	ufo_destruct();
+
 	//free(invaders); //crashes here
+}
+
+void ufo_create(){
+	if(ufo != NULL)
+		return;
+	ufo = (alien*) malloc(sizeof(alien));
+	ufo->ticks = 0;
+	ufo->type = UFO;
+	ufo->state = ALIEN_ALIVE;
+	ufo->x = UFO_INITIAL_X;
+	ufo->y = UFO_INITIAL_Y;
+	ufo->width = UFO_WIDTH;
+	ufo->height = UFO_HEIGHT;
+	ufo->next = NULL;
+	ufo->prev = NULL;
+}
+
+void ufo_destruct(){
+	free(ufo);
+	ufo = NULL;
+}
+
+void ufo_move(){
+	if(ufo != NULL){
+		if (ufo->x + ufo->width + UFO_X_DELTA > PLACEHOLDER_RIGHT_BORDER){
+			ufo_destruct();
+		} else {
+			if(ufo->state != ALIEN_DESTROYED)
+				alien_move(ufo, UFO_X_DELTA, 0);
+		}
+	}
 }
