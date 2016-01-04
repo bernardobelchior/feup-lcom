@@ -1,0 +1,4 @@
+<map id="fifo_push" name="fifo_push">
+<area shape="rect" id="node2" href="$group___f_i_f_o.html#ga2401daa00e9e34310a94c8dc9b492b00" title="initializes a FIFO node " alt="" coords="127,5,225,32"/>
+<area shape="rect" id="node3" href="$group___f_i_f_o.html#gad8da26bc39ff605864c62ee4a6ecd3f2" title="checks if the FIFO has elements " alt="" coords="127,56,225,83"/>
+</map>

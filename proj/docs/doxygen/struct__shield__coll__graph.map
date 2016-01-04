@@ -1,0 +1,7 @@
+<map id="_shield" name="_shield">
+<area shape="rect" id="node2" href="$struct__sh__sprite.html" title="_sh_sprite" alt="" coords="31,379,114,405"/>
+<area shape="rect" id="node3" href="$structanimation.html" title="animation" alt="" coords="33,288,112,315"/>
+<area shape="rect" id="node4" href="$structsprite.html" title="sprite" alt="" coords="45,184,100,211"/>
+<area shape="rect" id="node5" href="$structbitmap.html" title="Represents a Bitmap. " alt="" coords="42,95,103,121"/>
+<area shape="rect" id="node6" href="$structbitmap__info__header.html" title="bitmap_info_header" alt="" coords="5,5,140,32"/>
+</map>

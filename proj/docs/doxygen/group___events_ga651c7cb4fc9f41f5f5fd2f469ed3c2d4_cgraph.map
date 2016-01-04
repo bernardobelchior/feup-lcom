@@ -1,0 +1,20 @@
+<map id="mouse_event_handler" name="mouse_event_handler">
+<area shape="rect" id="node2" href="$group___events.html#ga2074457508bdd6c4845a3474a45b655e" title="Event thrown on middle mouse button released. " alt="" coords="200,5,307,32"/>
+<area shape="rect" id="node3" href="$group___events.html#ga442316b750287822865c887a1f4d78ea" title="Event thrown on middle mouse button pressed. " alt="" coords="201,56,305,83"/>
+<area shape="rect" id="node4" href="$group___events.html#gad1b887366bfd15da30a8a33ee8983721" title="Event thrown on right mouse button released. " alt="" coords="203,107,303,133"/>
+<area shape="rect" id="node5" href="$group___events.html#ga2bbd09b6dcfaf267cb36300d5bb0a96c" title="Event thrown on right mouse button pressed. " alt="" coords="205,157,302,184"/>
+<area shape="rect" id="node6" href="$group___events.html#gace71d03f4e33fde0048eb2aa5c15e8b3" title="Event thrown on left mouse button released. " alt="" coords="204,208,303,235"/>
+<area shape="rect" id="node9" href="$group___events.html#ga7162ea5678f90bb4d58de2f0ddda8c53" title="Event thrown on left mouse button pressed. " alt="" coords="205,259,301,285"/>
+<area shape="rect" id="node18" href="$group__video__gr.html#gaf79cb2326e435591867d7c3b8265c5b5" title="Gets horizontal resolution. " alt="" coords="214,309,293,336"/>
+<area shape="rect" id="node19" href="$group__video__gr.html#ga63952c5a24eead84c287cb59878fd6c4" title="Gets vertical resolution. " alt="" coords="215,360,292,387"/>
+<area shape="rect" id="node7" href="$group__menu.html#ga4e0e9f5a63b54a8d4cec8f00bd65fa8c" title="Checks if a button contained in menu is clicked and calls its function. " alt="" coords="366,208,458,235"/>
+<area shape="rect" id="node8" href="$group___button.html#ga8eae41406a593a1c2878cd903eeafe27" title="Checks if the position (x,y) is inside the button. " alt="" coords="517,208,656,235"/>
+<area shape="rect" id="node10" href="$group__singleplayer.html#gadd59e7c61f9efe879b78280f4eff4257" title="calls the player_fire function " alt="" coords="355,259,469,285"/>
+<area shape="rect" id="node11" href="$group__player.html#ga38e2fd869201cc20c4950b70d9817f26" title="Makes the player fire a projectile. " alt="" coords="546,259,627,285"/>
+<area shape="rect" id="node17" href="$group___aliens.html#ga4c57ef4fa1c062eb3fde4e6a122d7fb1" title="checks if the alien is on the row closest to the player(s) " alt="" coords="533,309,641,336"/>
+<area shape="rect" id="node12" href="$group__projectile.html#ga3b0bb927050743cdccd344932e4ee145" title="initializes the projectile struct and adds it to the list " alt="" coords="704,233,803,260"/>
+<area shape="rect" id="node13" href="$group__player.html#gab038b0480ba9a159db6dfcda1fd98f03" title="Draws the player, its score and lives. " alt="" coords="708,284,799,311"/>
+<area shape="rect" id="node14" href="$group___bitmap.html#ga8f9acbe5ff479a5283f9d6fb3a762bee" title="bitmap_draw" alt="" coords="851,284,945,311"/>
+<area shape="rect" id="node15" href="$group__video__gr.html#ga7064d33728bba6ac359c8bfe10d80328" title="Draws pixmap. " alt="" coords="993,284,1111,311"/>
+<area shape="rect" id="node16" href="$group__video__gr.html#ga494d833bd8462b0957f8a8bffa771e98" title="Sets the pixel in the (x,y) to the color passed as argument. " alt="" coords="1159,284,1252,311"/>
+</map>

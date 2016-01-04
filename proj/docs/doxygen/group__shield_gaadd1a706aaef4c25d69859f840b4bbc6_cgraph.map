@@ -1,0 +1,5 @@
+<map id="sprite_hit" name="sprite_hit">
+<area shape="rect" id="node2" href="$group__shield.html#gaa1762d372e5550bb30ec0a0d9094060a" title="deletes a shield sprite " alt="" coords="135,5,231,32"/>
+<area shape="rect" id="node4" href="$group___animation.html#gab38664f75c3aa06023e54680c85a4671" title="Goes to next sprite. " alt="" coords="128,56,239,83"/>
+<area shape="rect" id="node3" href="$group__shield.html#gacdd71e7ad4c636cde12ccc49e5390de9" title="deletes the shield struct " alt="" coords="287,5,385,32"/>
+</map>

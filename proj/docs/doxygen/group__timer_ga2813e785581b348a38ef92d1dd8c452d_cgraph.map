@@ -1,0 +1,51 @@
+<map id="wait" name="wait">
+<area shape="rect" id="node2" href="$group__timer.html#ga4c5d9f47323eda494cfd826f6d62eec9" title="Subscribes and enables Timer 0 interrupts. " alt="" coords="106,500,241,527"/>
+<area shape="rect" id="node3" href="$group__timer.html#ga10fc9c867b15c7da6649311c9987cd17" title="Timer 0 interrupt handler. " alt="" coords="113,551,234,577"/>
+<area shape="rect" id="node50" href="$group__timer.html#gab9eea51549744bca5c5c923b388bb4ee" title="Unsubscribes Timer 0 interrupts. " alt="" coords="99,601,248,628"/>
+<area shape="rect" id="node4" href="$group___events.html#ga873dd91783f9efb4a590aded1f70d6b0" title="Event thrown on every tick defined in timer.h. Updates screen. " alt="" coords="296,551,339,577"/>
+<area shape="rect" id="node5" href="$group__start__menu.html#ga7c3bd69830cd87e1eaf51e44a37eeace" title="draws the main menu on the screen " alt="" coords="401,157,523,184"/>
+<area shape="rect" id="node14" href="$group__mouse.html#ga924469770960f5c22b577b5ff2c4cbbc" title="Draws a mouse using vg_draw_frame. " alt="" coords="634,5,729,32"/>
+<area shape="rect" id="node15" href="$group__singleplayer.html#ga0904f9d405ef926b1e16ea028165701b" title="Event called when a tick occurs and the game state is singleplayer. " alt="" coords="403,1195,521,1221"/>
+<area shape="rect" id="node42" href="$group__versus__multiplayer.html#gab275d7cec04e649b47dd2b538abe91d6" title="Event called when a tick occurs and the state is versus multiplayer. " alt="" coords="387,841,537,868"/>
+<area shape="rect" id="node44" href="$group__highscore.html#ga8424e4ae5198ebe2d28542e9d2dd4d00" title="keeps and updates (if necessary) the display of the highscore menu " alt="" coords="409,512,515,539"/>
+<area shape="rect" id="node45" href="$group___game__over__menu.html#gaf20796caa204072ea78e796cca14bf4a" title="keeps and updates (if necessary) the information referring to the game over menu on the screen ..." alt="" coords="387,259,537,285"/>
+<area shape="rect" id="node47" href="$group__options.html#gab3a238fcc05a9ec24c0b0fc6fc0aed58" title="Handles a tick on options menu. " alt="" coords="416,588,508,615"/>
+<area shape="rect" id="node48" href="$group__video__gr.html#ga8a4675fe32e3939251063e8836fe37fb" title="Updates screen by bringing double buffer to the screen, and clear the double buffer. " alt="" coords="399,1452,525,1479"/>
+<area shape="rect" id="node6" href="$group___bitmap.html#ga8f9acbe5ff479a5283f9d6fb3a762bee" title="bitmap_draw" alt="" coords="1039,183,1133,209"/>
+<area shape="rect" id="node9" href="$group__video__gr.html#gaf79cb2326e435591867d7c3b8265c5b5" title="Gets horizontal resolution. " alt="" coords="863,765,942,792"/>
+<area shape="rect" id="node10" href="$group__menu.html#ga3e8bcca4bf7cf1a52456cf698de3a0d1" title="Draws every button in the menu. " alt="" coords="637,208,725,235"/>
+<area shape="rect" id="node7" href="$group__video__gr.html#ga7064d33728bba6ac359c8bfe10d80328" title="Draws pixmap. " alt="" coords="1192,253,1309,280"/>
+<area shape="rect" id="node8" href="$group__video__gr.html#ga494d833bd8462b0957f8a8bffa771e98" title="Sets the pixel in the (x,y) to the color passed as argument. " alt="" coords="1357,329,1451,356"/>
+<area shape="rect" id="node11" href="$group___button.html#ga8b226e4c5725892f54bf36b3315dd748" title="Draws button. " alt="" coords="857,157,949,184"/>
+<area shape="rect" id="node13" href="$group__video__gr.html#gaf3f1e4f7983c799550bb7f54e7a80537" title="Draws a frame starting on (x,y) with specified width, height and color. " alt="" coords="1033,284,1139,311"/>
+<area shape="rect" id="node12" href="$group___font.html#ga6768f25bb93c38683c1cc011b8b495bc" title="Draws string on x,y position. " alt="" coords="1028,443,1144,469"/>
+<area shape="rect" id="node16" href="$group__singleplayer.html#gaefc6bb210cd890919eb7cccc5d25d136" title="Checks whether each one of the projectiles collide with any object or has reached the end of screen..." alt="" coords="615,1187,748,1229"/>
+<area shape="rect" id="node22" href="$group__player.html#ga308d3b93bcc375ea1854f6a0466b903f" title="Sets the player x position. Used with mouse. " alt="" coords="619,1136,743,1163"/>
+<area shape="rect" id="node23" href="$group__singleplayer.html#ga15806753c29ec73211ae40d6ec9832b1" title="Deletes the game and goes to main menu. " alt="" coords="601,1304,761,1331"/>
+<area shape="rect" id="node26" href="$group___aliens.html#ga81bbbc1e094b14be09edd3e5c4ac7560" title="fires a projectile " alt="" coords="645,1608,718,1635"/>
+<area shape="rect" id="node28" href="$group___aliens.html#gab64eb95de2feb595d38eb68e06d7b833" title="Creates UFO. " alt="" coords="640,1557,723,1584"/>
+<area shape="rect" id="node29" href="$group___aliens.html#gaa42f6ce91a7ba7004bd1fbf07868af53" title="Moves all the aliens. " alt="" coords="635,1405,728,1432"/>
+<area shape="rect" id="node32" href="$group___aliens.html#ga83e749354d0ee24eebc399392f21e178" title="Handles UFO movement. " alt="" coords="643,1456,719,1483"/>
+<area shape="rect" id="node34" href="$group__video__gr.html#ga11990f095316b52a551d660c0f30bd30" title="Draws a line starting at (xi,yi) and ending at (xf,yf) " alt="" coords="634,715,729,741"/>
+<area shape="rect" id="node35" href="$group__video__gr.html#ga63952c5a24eead84c287cb59878fd6c4" title="Gets vertical resolution. " alt="" coords="643,765,720,792"/>
+<area shape="rect" id="node36" href="$group__video__gr.html#gac83157697cec55aa50bcbe61270c3df0" title="Converts a 8:8:8 RGB color to a 5:6:5 one. " alt="" coords="661,664,701,691"/>
+<area shape="rect" id="node37" href="$group___aliens.html#ga2e5b513f943a4891d28a967cc3e9b694" title="Handles ticks in aliens. " alt="" coords="639,1507,723,1533"/>
+<area shape="rect" id="node40" href="$group__shield.html#ga81f19157691a5b36a16376fa7ae1945f" title="draws all the shields on the list " alt="" coords="633,1035,730,1061"/>
+<area shape="rect" id="node41" href="$group___font.html#ga8f2b1dc22beb14b77bba25829a02e404" title="Draws an integer on x,y position. " alt="" coords="632,461,731,488"/>
+<area shape="rect" id="node17" href="$group__projectile.html#ga6f0e446e391b38137db6f9c455504c10" title="returns 1 if the projectile has reached the end of the screen " alt="" coords="825,976,980,1003"/>
+<area shape="rect" id="node18" href="$group__singleplayer.html#gad0167d9a582622d59fab3d9249a4be86" title="Check if the projectile collides with any object and handles its consequences. " alt="" coords="827,1187,978,1229"/>
+<area shape="rect" id="node19" href="$group__projectile.html#ga8a0fc748d29ff5db78891aa701a52ac7" title="deletes a projectile " alt="" coords="845,1079,961,1105"/>
+<area shape="rect" id="node20" href="$group__projectile.html#ga62e6b1582a7e4525eb4b0d1d3e083086" title="updates the position of a projectile " alt="" coords="847,925,958,952"/>
+<area shape="rect" id="node21" href="$group__projectile.html#ga3d4bd9b331aabad8d60ed422015d4b95" title="draws the projectile " alt="" coords="849,1027,957,1053"/>
+<area shape="rect" id="node24" href="$group__highscore.html#gadbb0f4fa05dfcf1ca617a5d57892a6b7" title="checks if a certain number of points are a new highscore " alt="" coords="841,1304,964,1331"/>
+<area shape="rect" id="node25" href="$group__state.html#ga38929beafa9946f1b4b22dc81dc94465" title="changes to a new state, deleting the previous one " alt="" coords="853,1132,953,1159"/>
+<area shape="rect" id="node27" href="$group__projectile.html#ga3b0bb927050743cdccd344932e4ee145" title="initializes the projectile struct and adds it to the list " alt="" coords="853,1659,952,1685"/>
+<area shape="rect" id="node30" href="$group___animation.html#gab38664f75c3aa06023e54680c85a4671" title="Goes to next sprite. " alt="" coords="847,1405,958,1432"/>
+<area shape="rect" id="node31" href="$group___aliens.html#ga5ca67bef7f2b2499b5510315a55d07b8" title="sets next x and y position of the alien " alt="" coords="859,1456,946,1483"/>
+<area shape="rect" id="node33" href="$group___aliens.html#gab110f7ad343349f2011b5e8e2844c8eb" title="Destructs UFO. " alt="" coords="856,1507,949,1533"/>
+<area shape="rect" id="node38" href="$group___aliens.html#ga4d89af5d2d22339a0752ba43cc6a3dbb" title="removes alien from list &#160;0 if alien is removed, 1 if alien removed is the last adversary, &#45;1 if alien cant be found " alt="" coords="854,1608,951,1635"/>
+<area shape="rect" id="node39" href="$group___aliens.html#ga32aa727b588797faef2e295ed01c11c0" title="draws all the aliens " alt="" coords="857,1557,948,1584"/>
+<area shape="rect" id="node43" href="$group__versus__multiplayer.html#gae811aef097660ced50d86256d15c87ea" title="Checks whether each one of the projectiles collide with any object or has reached the end of screen..." alt="" coords="585,918,777,959"/>
+<area shape="rect" id="node46" href="$group___font.html#ga3a461ceedc9be2e3d8047f62c6b2fcac" title="Draws char on specified position. " alt="" coords="1196,127,1305,153"/>
+<area shape="rect" id="node49" href="$group__video__gr.html#ga3541d07f307db72cac3911f3f26573a4" title="Clear screen by setting all pixels to black. " alt="" coords="624,1659,739,1685"/>
+</map>

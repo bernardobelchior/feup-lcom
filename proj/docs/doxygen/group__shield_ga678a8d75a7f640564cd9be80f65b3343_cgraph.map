@@ -1,0 +1,5 @@
+<map id="shield_init" name="shield_init">
+<area shape="rect" id="node2" href="$group___animation.html#ga71f7ece4aeb8f45a6ed334b410cce871" title="Initializes animation. " alt="" coords="161,5,264,32"/>
+<area shape="rect" id="node3" href="$group___animation.html#gafef9a75e481c9a8728f7fb3e20529442" title="Adds a sprite to the animation. " alt="" coords="133,56,292,83"/>
+<area shape="rect" id="node4" href="$group__shield.html#gadb35b6e1897291382e8cbffe933f5d4e" title="initializes and adds a sprite to the shield list " alt="" coords="171,107,254,133"/>
+</map>

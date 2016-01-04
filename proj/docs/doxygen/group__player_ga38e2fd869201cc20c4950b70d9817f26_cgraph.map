@@ -1,0 +1,7 @@
+<map id="player_fire" name="player_fire">
+<area shape="rect" id="node2" href="$group__projectile.html#ga3b0bb927050743cdccd344932e4ee145" title="initializes the projectile struct and adds it to the list " alt="" coords="135,5,233,32"/>
+<area shape="rect" id="node3" href="$group__player.html#gab038b0480ba9a159db6dfcda1fd98f03" title="Draws the player, its score and lives. " alt="" coords="139,56,229,83"/>
+<area shape="rect" id="node4" href="$group___bitmap.html#ga8f9acbe5ff479a5283f9d6fb3a762bee" title="bitmap_draw" alt="" coords="281,56,376,83"/>
+<area shape="rect" id="node5" href="$group__video__gr.html#ga7064d33728bba6ac359c8bfe10d80328" title="Draws pixmap. " alt="" coords="424,56,541,83"/>
+<area shape="rect" id="node6" href="$group__video__gr.html#ga494d833bd8462b0957f8a8bffa771e98" title="Sets the pixel in the (x,y) to the color passed as argument. " alt="" coords="589,56,683,83"/>
+</map>

@@ -1,0 +1,51 @@
+<map id="start" name="start">
+<area shape="rect" id="node2" href="$group__keyboard.html#ga46dacdf20afddee4b51722f7c5527626" title="Subscribes and enables keyboard interrupts. " alt="" coords="115,5,235,32"/>
+<area shape="rect" id="node3" href="$group__timer.html#ga4c5d9f47323eda494cfd826f6d62eec9" title="Subscribes and enables Timer 0 interrupts. " alt="" coords="107,56,242,83"/>
+<area shape="rect" id="node4" href="$group__mouse.html#ga51e6ee02a5c0a7e618abde7250cd0841" title="Subscribes and enables mouse interrupts. " alt="" coords="102,107,247,133"/>
+<area shape="rect" id="node7" href="$group___font.html#gaac1f5fc753aae51f78f7bccd039dafd9" title="Initializes font stored in filename, in the font_path directory. " alt="" coords="141,208,208,235"/>
+<area shape="rect" id="node12" href="$group__options.html#gae1d309ec7b6088911ce5255c602b9fd0" title="Loads a stored configuration from a file. " alt="" coords="127,1001,222,1028"/>
+<area shape="rect" id="node13" href="$group__mouse.html#ga4185b663b1e08cb1b80892527ae69344" title="Initializes mouse information. " alt="" coords="132,284,217,311"/>
+<area shape="rect" id="node16" href="$group__state.html#ga684accf6a94edb6102f4bb0e8a5731fb" title="initializes a state " alt="" coords="705,900,779,927"/>
+<area shape="rect" id="node18" href="$group__video__gr.html#gacef21667c79365d57a084bed994c2189" title="Initializes the video module in graphics mode. " alt="" coords="145,1052,204,1079"/>
+<area shape="rect" id="node23" href="$group__keyboard.html#ga33a1eacdc5d423b3fdbbb6aa45a4326a" title="Keyboard interrupt handler. " alt="" coords="121,1103,228,1129"/>
+<area shape="rect" id="node24" href="$group___events.html#gaad6ebf25b4c627e567b7e089efe34a8a" title="Keyboard event handler. " alt="" coords="113,664,236,691"/>
+<area shape="rect" id="node41" href="$group__mouse.html#gaa5b80bf45508d51c403a936d4cadcaf2" title="Mouse interrupt handler. " alt="" coords="109,157,240,184"/>
+<area shape="rect" id="node42" href="$group___events.html#ga651c7cb4fc9f41f5f5fd2f469ed3c2d4" title="Event thrown when a full mouse packet is read. " alt="" coords="101,436,248,463"/>
+<area shape="rect" id="node49" href="$group__timer.html#ga10fc9c867b15c7da6649311c9987cd17" title="Timer 0 interrupt handler. " alt="" coords="114,1153,235,1180"/>
+<area shape="rect" id="node5" href="$group__mouse.html#ga240974a5d43445723b7f6c98b9f6c141" title="Write to KBC. " alt="" coords="311,5,413,32"/>
+<area shape="rect" id="node6" href="$group__mouse.html#ga7b7e6c33a49f11755f77c6d3101beb3d" title="Read from KBC. " alt="" coords="305,56,419,83"/>
+<area shape="rect" id="node8" href="$group___bitmap.html#gafc50f38c391dc1f4b0a704ecf87864ee" title="loads a bitmap " alt="" coords="316,208,408,235"/>
+<area shape="rect" id="node10" href="$group___font.html#gab387bc873c69473a6b5332f2e8e1107a" title="Changes the color in the font. " alt="" coords="317,107,407,133"/>
+<area shape="rect" id="node11" href="$group__video__gr.html#gac83157697cec55aa50bcbe61270c3df0" title="Converts a 8:8:8 RGB color to a 5:6:5 one. " alt="" coords="342,157,382,184"/>
+<area shape="rect" id="node9" href="$group__proj.html#gafe1abdb6d5a98b8e65cf99d2eb20112c" title="Unsubscribes the used interrupts. Deletes menus and leaves program. " alt="" coords="535,208,585,235"/>
+<area shape="rect" id="node14" href="$group__video__gr.html#gaf79cb2326e435591867d7c3b8265c5b5" title="Gets horizontal resolution. " alt="" coords="323,309,401,336"/>
+<area shape="rect" id="node15" href="$group__video__gr.html#ga63952c5a24eead84c287cb59878fd6c4" title="Gets vertical resolution. " alt="" coords="323,259,401,285"/>
+<area shape="rect" id="node17" href="$group__proj.html#gafa1fa7e70db0d63f1ec11498a2a96df0" title="Initializes start menu. " alt="" coords="840,837,951,864"/>
+<area shape="rect" id="node19" href="$group__lmlib.html#ga00a9c17c01e794a6bfc80fc5c6ab1ed1" title="Initializes the low memory area, the region up to the 1 MByte physical address, by mapping it on the ..." alt="" coords="332,1103,392,1129"/>
+<area shape="rect" id="node20" href="$group__vbe.html#ga4ef3234e41f2050bc094a22049b69e45" title="Returns information on the input VBE mode, including screen dimensions, color depth and VRAM physical..." alt="" coords="296,1052,428,1079"/>
+<area shape="rect" id="node21" href="$group__lmlib.html#gae45d971ce2ffcf4dc2677eba033a92cd" title="Allocates a memory block in low memory area with the specified size. " alt="" coords="525,1052,595,1079"/>
+<area shape="rect" id="node22" href="$group__lmlib.html#ga73e89d9c297b7390021fb545513579c6" title="Frees a memory block in the low memory area, previously allocated using lm_alloc() ..." alt="" coords="528,1103,592,1129"/>
+<area shape="rect" id="node25" href="$group___events.html#ga66895525d0bedcb4c474008d1cec0531" title="Event thrown on key released. " alt="" coords="313,664,411,691"/>
+<area shape="rect" id="node26" href="$group___events.html#ga69e9126b658734c0549ff3d70fef7d9d" title="Event thrown on key pressed. " alt="" coords="314,715,410,741"/>
+<area shape="rect" id="node27" href="$group__menu.html#ga78d23c713f03d5864210440db2578739" title="Select previous button on screen. " alt="" coords="504,444,616,471"/>
+<area shape="rect" id="node28" href="$group__menu.html#ga0abca3c9dca48542a4d4f24733b341ca" title="Select next button on screen. " alt="" coords="515,495,605,521"/>
+<area shape="rect" id="node29" href="$group__menu.html#gac792f721e726cab2abe257ad9933856c" title="Pressed the selected button by calling its function. " alt="" coords="483,545,637,572"/>
+<area shape="rect" id="node30" href="$group__menu.html#ga10d922271dd74a7d2a59ae3cb9aef580" title="Resets button selection. " alt="" coords="509,596,611,623"/>
+<area shape="rect" id="node31" href="$group__singleplayer.html#ga15806753c29ec73211ae40d6ec9832b1" title="Deletes the game and goes to main menu. " alt="" coords="480,647,640,673"/>
+<area shape="rect" id="node32" href="$group__state.html#ga38929beafa9946f1b4b22dc81dc94465" title="changes to a new state, deleting the previous one " alt="" coords="692,773,792,800"/>
+<area shape="rect" id="node33" href="$group__singleplayer.html#ga6b61fad9f8eaa6916ea335013c199d34" title="Moves the player in the x axis. " alt="" coords="496,900,624,927"/>
+<area shape="rect" id="node34" href="$group__singleplayer.html#gadd59e7c61f9efe879b78280f4eff4257" title="calls the player_fire function " alt="" coords="503,276,617,303"/>
+<area shape="rect" id="node35" href="$group__versus__multiplayer.html#gab4c5fe6744f8451c928591df487ece34" title="Moves a player in the x axis. " alt="" coords="499,951,621,977"/>
+<area shape="rect" id="node36" href="$group__versus__multiplayer.html#ga921c217dc2d20ff83e971ee7c3d38a09" title="calls the player_fire funtion for the selected Player " alt="" coords="506,327,614,353"/>
+<area shape="rect" id="node37" href="$group__highscore.html#ga07ba3bf6d038b9d50058760e0763b3fa" title="goes back to the main menu " alt="" coords="476,697,644,724"/>
+<area shape="rect" id="node38" href="$group__options.html#gaa6e353fd94a8788d5a1faceb711ae34a" title="Handles what happens when the &quot;Cancel&quot; button is clicked. " alt="" coords="478,748,642,775"/>
+<area shape="rect" id="node39" href="$group__options.html#ga371abb7ceda6275a5d15f32b5f457b25" title="Handles what happens when the &quot;Accept&quot; button is clicked. " alt="" coords="477,799,643,825"/>
+<area shape="rect" id="node40" href="$group__options.html#ga7e8db6a348b4b07fbea73b42fa720ceb" title="Handles what happens when the next controller button is clicked. " alt="" coords="489,378,631,419"/>
+<area shape="rect" id="node43" href="$group___events.html#ga2074457508bdd6c4845a3474a45b655e" title="Event thrown on middle mouse button released. " alt="" coords="309,512,415,539"/>
+<area shape="rect" id="node44" href="$group___events.html#ga442316b750287822865c887a1f4d78ea" title="Event thrown on middle mouse button pressed. " alt="" coords="310,563,414,589"/>
+<area shape="rect" id="node45" href="$group___events.html#gad1b887366bfd15da30a8a33ee8983721" title="Event thrown on right mouse button released. " alt="" coords="312,613,412,640"/>
+<area shape="rect" id="node46" href="$group___events.html#ga2bbd09b6dcfaf267cb36300d5bb0a96c" title="Event thrown on right mouse button pressed. " alt="" coords="313,360,411,387"/>
+<area shape="rect" id="node47" href="$group___events.html#gace71d03f4e33fde0048eb2aa5c15e8b3" title="Event thrown on left mouse button released. " alt="" coords="313,411,411,437"/>
+<area shape="rect" id="node48" href="$group___events.html#ga7162ea5678f90bb4d58de2f0ddda8c53" title="Event thrown on left mouse button pressed. " alt="" coords="314,461,410,488"/>
+<area shape="rect" id="node50" href="$group___events.html#ga873dd91783f9efb4a590aded1f70d6b0" title="Event thrown on every tick defined in timer.h. Updates screen. " alt="" coords="341,1153,383,1180"/>
+</map>

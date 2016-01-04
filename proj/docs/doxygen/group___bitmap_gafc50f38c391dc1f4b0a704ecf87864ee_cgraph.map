@@ -1,0 +1,9 @@
+<map id="bitmap_load" name="bitmap_load">
+<area shape="rect" id="node2" href="$group__proj.html#gafe1abdb6d5a98b8e65cf99d2eb20112c" title="Unsubscribes the used interrupts. Deletes menus and leaves program. " alt="" coords="145,132,196,159"/>
+<area shape="rect" id="node3" href="$group__timer.html#gab9eea51549744bca5c5c923b388bb4ee" title="Unsubscribes Timer 0 interrupts. " alt="" coords="249,5,398,32"/>
+<area shape="rect" id="node4" href="$group__keyboard.html#ga806fb3c50fd416b1c653ed980923ac42" title="Unsubscribes keyboard interrupts. " alt="" coords="256,56,391,83"/>
+<area shape="rect" id="node5" href="$group__mouse.html#ga7614d1f22092d37078f6a3da58f7c957" title="Unsubscribes mouse interrupts. " alt="" coords="244,107,403,133"/>
+<area shape="rect" id="node6" href="$group__mouse.html#ga318b9a6bf5c4299c588830d7eebd1303" title="Empties output buffer. " alt="" coords="270,157,377,184"/>
+<area shape="rect" id="node7" href="$group__video__gr.html#ga42f593e6656f1a978315aff02b1bcebf" title="Returns to default Minix 3 text mode (0x03: 25 x 80, 16 colors) " alt="" coords="292,208,355,235"/>
+<area shape="rect" id="node8" href="$group__options.html#ga659ea3d83a3c199f96d2a1330ca38aa9" title="Saves the current configuration to a file. " alt="" coords="275,259,372,285"/>
+</map>

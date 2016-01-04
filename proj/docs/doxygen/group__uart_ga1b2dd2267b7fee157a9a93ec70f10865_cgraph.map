@@ -1,0 +1,16 @@
+<map id="serial_int_handler" name="serial_int_handler">
+<area shape="rect" id="node2" href="$group__uart.html#gaafffd7f99b57ee8a69b0b5508b884d72" title="passes the configuration of the IIR to a char " alt="" coords="196,132,291,159"/>
+<area shape="rect" id="node3" href="$group__uart.html#gad4d37a75d7db3aa03df1420a04072c31" title="passes the maximum possible amount of chars in the UART transmitter FIFO from the app specific code F..." alt="" coords="180,183,307,209"/>
+<area shape="rect" id="node12" href="$group__uart.html#ga0c7c730d7dd5eb13998f32fd3be0daa3" title="passes the maximum possible amount of chars in the app specific receiver FIFO from the UART receiver ..." alt="" coords="176,309,311,336"/>
+<area shape="rect" id="node4" href="$group__uart.html#gac6aebf227dc37eb01b52a35545c595d4" title="serial_check_dlab" alt="" coords="540,196,667,223"/>
+<area shape="rect" id="node6" href="$group__uart.html#ga7067540b51170ce7603afbaa3a793b1a" title="toggles the DLAB " alt="" coords="540,120,667,147"/>
+<area shape="rect" id="node7" href="$group___f_i_f_o.html#gad8da26bc39ff605864c62ee4a6ecd3f2" title="checks if the FIFO has elements " alt="" coords="554,335,653,361"/>
+<area shape="rect" id="node8" href="$group__uart.html#ga8e2cac2c1bce20b2c2d614269673548f" title="passes the configuration of the LSR to a char " alt="" coords="376,360,475,387"/>
+<area shape="rect" id="node9" href="$group__uart.html#ga30c6648ae515a019e681c08003fe825f" title="puts a char in the UART transmitter FIFO from the app specific code FIFO " alt="" coords="366,107,485,133"/>
+<area shape="rect" id="node10" href="$group___f_i_f_o.html#ga6585f47fcafe952ddf969903cc60909a" title="returns the char stored in the front of the FIFO " alt="" coords="394,157,457,184"/>
+<area shape="rect" id="node11" href="$group___f_i_f_o.html#ga554cda5287d6faa93c924789ef20d174" title="removes the front element of the FIFO " alt="" coords="392,5,459,32"/>
+<area shape="rect" id="node5" href="$group__uart.html#ga37fe0e6df69cddff887fa12cbf635243" title="passes the configuration of the LCR to a char " alt="" coords="715,159,824,185"/>
+<area shape="rect" id="node13" href="$group__uart.html#ga39604e9d69a9683596fbb7885a068d44" title="puts a char in the app specific receiver FIFO from the UART receiver FIFO " alt="" coords="359,259,492,285"/>
+<area shape="rect" id="node14" href="$group___f_i_f_o.html#ga319015ae2bedf79a09e4fa1d3397f5fa" title="puts a new element into a FIFO " alt="" coords="389,411,462,437"/>
+<area shape="rect" id="node15" href="$group___f_i_f_o.html#ga2401daa00e9e34310a94c8dc9b492b00" title="initializes a FIFO node " alt="" coords="554,411,653,437"/>
+</map>

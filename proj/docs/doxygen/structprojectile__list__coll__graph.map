@@ -1,0 +1,6 @@
+<map id="projectile_list" name="projectile_list">
+<area shape="rect" id="node2" href="$struct__projectile.html" title="_projectile" alt="" coords="32,304,113,331"/>
+<area shape="rect" id="node3" href="$struct__player.html" title="_player" alt="" coords="41,213,105,240"/>
+<area shape="rect" id="node4" href="$structbitmap.html" title="Represents a Bitmap. " alt="" coords="42,95,103,121"/>
+<area shape="rect" id="node5" href="$structbitmap__info__header.html" title="bitmap_info_header" alt="" coords="5,5,140,32"/>
+</map>

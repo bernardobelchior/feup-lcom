@@ -1,0 +1,6 @@
+<map id="get_todays_date" name="get_todays_date">
+<area shape="rect" id="node2" href="$group__rtc.html#ga9490ba36d4d304c2b780c00bb776ba57" title="Reads from RTC&#39;s registers. " alt="" coords="178,5,289,32"/>
+<area shape="rect" id="node4" href="$group__rtc.html#ga2bccb45fe57bd2fdceef07ab2a16637f" title="Checks if the rtc is binary. " alt="" coords="185,56,281,83"/>
+<area shape="rect" id="node5" href="$group__rtc.html#gac02b0131a7b47e5429062e95a215f756" title="Converts a bcd number to binary. " alt="" coords="172,107,295,133"/>
+<area shape="rect" id="node3" href="$group__rtc.html#ga119626ebbbe9af2cc20b1f022a286ee3" title="Checks if there is an update in progress. " alt="" coords="343,5,492,32"/>
+</map>

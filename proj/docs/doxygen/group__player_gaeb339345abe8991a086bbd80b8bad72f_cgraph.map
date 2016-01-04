@@ -1,0 +1,10 @@
+<map id="player_init" name="player_init">
+<area shape="rect" id="node2" href="$group___bitmap.html#gafc50f38c391dc1f4b0a704ecf87864ee" title="loads a bitmap " alt="" coords="135,132,227,159"/>
+<area shape="rect" id="node3" href="$group__proj.html#gafe1abdb6d5a98b8e65cf99d2eb20112c" title="Unsubscribes the used interrupts. Deletes menus and leaves program. " alt="" coords="275,132,325,159"/>
+<area shape="rect" id="node4" href="$group__timer.html#gab9eea51549744bca5c5c923b388bb4ee" title="Unsubscribes Timer 0 interrupts. " alt="" coords="378,5,527,32"/>
+<area shape="rect" id="node5" href="$group__keyboard.html#ga806fb3c50fd416b1c653ed980923ac42" title="Unsubscribes keyboard interrupts. " alt="" coords="385,56,520,83"/>
+<area shape="rect" id="node6" href="$group__mouse.html#ga7614d1f22092d37078f6a3da58f7c957" title="Unsubscribes mouse interrupts. " alt="" coords="373,107,532,133"/>
+<area shape="rect" id="node7" href="$group__mouse.html#ga318b9a6bf5c4299c588830d7eebd1303" title="Empties output buffer. " alt="" coords="399,157,506,184"/>
+<area shape="rect" id="node8" href="$group__video__gr.html#ga42f593e6656f1a978315aff02b1bcebf" title="Returns to default Minix 3 text mode (0x03: 25 x 80, 16 colors) " alt="" coords="421,208,484,235"/>
+<area shape="rect" id="node9" href="$group__options.html#ga659ea3d83a3c199f96d2a1330ca38aa9" title="Saves the current configuration to a file. " alt="" coords="404,259,501,285"/>
+</map>

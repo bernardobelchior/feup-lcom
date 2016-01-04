@@ -1,0 +1,4 @@
+<map id="font_draw_int" name="font_draw_int">
+<area shape="rect" id="node2" href="$group___font.html#ga6768f25bb93c38683c1cc011b8b495bc" title="Draws string on x,y position. " alt="" coords="152,5,268,32"/>
+<area shape="rect" id="node3" href="$group__video__gr.html#ga494d833bd8462b0957f8a8bffa771e98" title="Sets the pixel in the (x,y) to the color passed as argument. " alt="" coords="316,5,409,32"/>
+</map>

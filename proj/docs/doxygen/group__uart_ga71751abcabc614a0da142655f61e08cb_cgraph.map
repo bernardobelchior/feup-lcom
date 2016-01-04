@@ -1,0 +1,4 @@
+<map id="serial_subscribe_int" name="serial_subscribe_int">
+<area shape="rect" id="node2" href="$group__uart.html#ga9a498a6ecbda63ae36d4ad312bba3462" title="enables the UART FIFO " alt="" coords="191,5,312,32"/>
+<area shape="rect" id="node3" href="$group___f_i_f_o.html#ga059603fe3efb23c8286114afe91b351c" title="initializes the FIFO data structure " alt="" coords="220,56,283,83"/>
+</map>

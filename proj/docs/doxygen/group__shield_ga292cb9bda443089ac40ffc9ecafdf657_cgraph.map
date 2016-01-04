@@ -1,0 +1,6 @@
+<map id="shield_draw" name="shield_draw">
+<area shape="rect" id="node2" href="$group___bitmap.html#ga8f9acbe5ff479a5283f9d6fb3a762bee" title="bitmap_draw" alt="" coords="150,5,245,32"/>
+<area shape="rect" id="node5" href="$group__video__gr.html#gaf3f1e4f7983c799550bb7f54e7a80537" title="Draws a frame starting on (x,y) with specified width, height and color. " alt="" coords="144,56,251,83"/>
+<area shape="rect" id="node3" href="$group__video__gr.html#ga7064d33728bba6ac359c8bfe10d80328" title="Draws pixmap. " alt="" coords="299,5,416,32"/>
+<area shape="rect" id="node4" href="$group__video__gr.html#ga494d833bd8462b0957f8a8bffa771e98" title="Sets the pixel in the (x,y) to the color passed as argument. " alt="" coords="464,5,557,32"/>
+</map>

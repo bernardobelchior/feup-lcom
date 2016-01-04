@@ -1,0 +1,12 @@
+<map id="versus_mp_projectile_collision" name="versus_mp_projectile_collision">
+<area shape="rect" id="node2" href="$group__shield.html#gaef7ef803da4d869d37c4af9664790515" title="checks if a projectile collided with one of the shields " alt="" coords="197,5,355,32"/>
+<area shape="rect" id="node7" href="$group__player.html#ga23a12e8c329f3ed099e14356fd27b213" title="Handles the collision between the player and a projectile. " alt="" coords="196,56,356,83"/>
+<area shape="rect" id="node9" href="$group__player.html#ga891ebe5a54baa1b0b80e2f72c3763df6" title="Destructs player &quot;object&quot;. " alt="" coords="221,107,331,133"/>
+<area shape="rect" id="node11" href="$group__shield.html#gab0de1a5197c37245a72c9d2593d02c88" title="deletes the list and any remaining shields " alt="" coords="555,132,672,159"/>
+<area shape="rect" id="node3" href="$group__shield.html#gaadd1a706aaef4c25d69859f840b4bbc6" title="handles the collision of a projectile and a shield, check what sprite was hit " alt="" coords="418,5,493,32"/>
+<area shape="rect" id="node4" href="$group__shield.html#gaa1762d372e5550bb30ec0a0d9094060a" title="deletes a shield sprite " alt="" coords="565,5,661,32"/>
+<area shape="rect" id="node6" href="$group___animation.html#gab38664f75c3aa06023e54680c85a4671" title="Goes to next sprite. " alt="" coords="558,56,669,83"/>
+<area shape="rect" id="node5" href="$group__shield.html#gacdd71e7ad4c636cde12ccc49e5390de9" title="deletes the shield struct " alt="" coords="720,69,819,96"/>
+<area shape="rect" id="node8" href="$group__player.html#ga523fc522effa622ba91e293a58d1ae4b" title="Handles the player being hit by a projectile. " alt="" coords="416,56,495,83"/>
+<area shape="rect" id="node10" href="$group___bitmap.html#ga0deb0f48883630262267f296e451573e" title="deletes a bitmap " alt="" coords="404,107,507,133"/>
+</map>

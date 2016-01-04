@@ -1,0 +1,9 @@
+<map id="game_t" name="game_t">
+<area shape="rect" id="node2" href="$struct__player.html" title="_player" alt="" coords="5,265,69,292"/>
+<area shape="rect" id="node3" href="$structbitmap.html" title="Represents a Bitmap. " alt="" coords="55,95,116,121"/>
+<area shape="rect" id="node8" href="$structsprite.html" title="sprite" alt="" coords="107,213,162,240"/>
+<area shape="rect" id="node4" href="$structbitmap__info__header.html" title="bitmap_info_header" alt="" coords="18,5,153,32"/>
+<area shape="rect" id="node5" href="$struct__shield.html" title="_shield" alt="" coords="82,500,145,527"/>
+<area shape="rect" id="node6" href="$struct__sh__sprite.html" title="_sh_sprite" alt="" coords="91,408,173,435"/>
+<area shape="rect" id="node7" href="$structanimation.html" title="animation" alt="" coords="93,317,171,344"/>
+</map>

@@ -1,0 +1,51 @@
+<map id="key_pressed" name="key_pressed">
+<area shape="rect" id="node2" href="$group__menu.html#ga78d23c713f03d5864210440db2578739" title="Select previous button on screen. " alt="" coords="173,424,285,451"/>
+<area shape="rect" id="node3" href="$group__menu.html#ga0abca3c9dca48542a4d4f24733b341ca" title="Select next button on screen. " alt="" coords="767,461,857,488"/>
+<area shape="rect" id="node4" href="$group__menu.html#gac792f721e726cab2abe257ad9933856c" title="Pressed the selected button by calling its function. " alt="" coords="153,652,306,679"/>
+<area shape="rect" id="node5" href="$group__menu.html#ga10d922271dd74a7d2a59ae3cb9aef580" title="Resets button selection. " alt="" coords="178,703,281,729"/>
+<area shape="rect" id="node6" href="$group__singleplayer.html#ga15806753c29ec73211ae40d6ec9832b1" title="Deletes the game and goes to main menu. " alt="" coords="149,753,309,780"/>
+<area shape="rect" id="node8" href="$group__state.html#ga38929beafa9946f1b4b22dc81dc94465" title="changes to a new state, deleting the previous one " alt="" coords="369,728,469,755"/>
+<area shape="rect" id="node34" href="$group__highscore.html#ga07ba3bf6d038b9d50058760e0763b3fa" title="goes back to the main menu " alt="" coords="728,765,896,792"/>
+<area shape="rect" id="node37" href="$group__options.html#ga371abb7ceda6275a5d15f32b5f457b25" title="Handles what happens when the &quot;Accept&quot; button is clicked. " alt="" coords="729,867,895,893"/>
+<area shape="rect" id="node38" href="$group__options.html#gaa6e353fd94a8788d5a1faceb711ae34a" title="Handles what happens when the &quot;Cancel&quot; button is clicked. " alt="" coords="730,917,894,944"/>
+<area shape="rect" id="node39" href="$group__options.html#ga7e8db6a348b4b07fbea73b42fa720ceb" title="Handles what happens when the next controller button is clicked. " alt="" coords="949,969,1092,1010"/>
+<area shape="rect" id="node40" href="$group__options.html#gab8c61b321bba677fd1f8c30a614fb3e8" title="Handles what happens when the previous controller button is clicked. " alt="" coords="742,969,882,1010"/>
+<area shape="rect" id="node41" href="$group__singleplayer.html#ga6b61fad9f8eaa6916ea335013c199d34" title="Moves the player in the x axis. " alt="" coords="165,1217,293,1244"/>
+<area shape="rect" id="node44" href="$group__singleplayer.html#gadd59e7c61f9efe879b78280f4eff4257" title="calls the player_fire function " alt="" coords="172,1268,287,1295"/>
+<area shape="rect" id="node49" href="$group__versus__multiplayer.html#gab4c5fe6744f8451c928591df487ece34" title="Moves a player in the x axis. " alt="" coords="169,1167,290,1193"/>
+<area shape="rect" id="node50" href="$group__versus__multiplayer.html#ga921c217dc2d20ff83e971ee7c3d38a09" title="calls the player_fire funtion for the selected Player " alt="" coords="175,1319,283,1345"/>
+<area shape="rect" id="node7" href="$group__highscore.html#gadbb0f4fa05dfcf1ca617a5d57892a6b7" title="checks if a certain number of points are a new highscore " alt="" coords="357,677,480,704"/>
+<area shape="rect" id="node9" href="$group__state.html#gaa77b684f0a23e80795782b49fd104eab" title="deletes all the information and structures needed in a state " alt="" coords="555,1127,648,1153"/>
+<area shape="rect" id="node16" href="$group__proj.html#gafa1fa7e70db0d63f1ec11498a2a96df0" title="Initializes start menu. " alt="" coords="546,753,657,780"/>
+<area shape="rect" id="node17" href="$group__singleplayer.html#ga9f7d3604f13e2acaef59a5f306f3851e" title="Initializes singleplayer game information. " alt="" coords="544,107,659,133"/>
+<area shape="rect" id="node23" href="$group__versus__multiplayer.html#gacfe938e52e87e522ffe0b7ab0529cf81" title="Initalizes versus mode multiplayer game information. " alt="" coords="528,157,675,184"/>
+<area shape="rect" id="node25" href="$group___game__over__menu.html#ga40f00dcf742065a09b8ef35626a994e0" title="initializes the information referring to the game over menu " alt="" coords="528,525,675,552"/>
+<area shape="rect" id="node33" href="$group__highscore.html#gad1eb20ff14b427afcc817a62c04f9d9f" title="initializes the information referring to the highscores " alt="" coords="550,601,653,628"/>
+<area shape="rect" id="node36" href="$group__options.html#ga29811f7fac392964263a3af787dbcaa0" title="Initializes options. " alt="" coords="557,652,645,679"/>
+<area shape="rect" id="node10" href="$group__proj.html#gac30343724febd5cd3ad0adbafc981629" title="Destructs start menu. " alt="" coords="741,1187,883,1213"/>
+<area shape="rect" id="node11" href="$group__singleplayer.html#gae18809b979ca1b2dbd31c5790de01f34" title="Deletes singleplayer game information. " alt="" coords="739,1237,885,1264"/>
+<area shape="rect" id="node12" href="$group__versus__multiplayer.html#ga4e676d627ecf16ea0e9067cddaee8a6f" title="Deletes the versus_mp_game struct. " alt="" coords="723,1288,901,1315"/>
+<area shape="rect" id="node13" href="$group___game__over__menu.html#gad9dd2dc57a283eff6e827963302c88b2" title="deletes the information referring to the game over menu " alt="" coords="723,1035,901,1061"/>
+<area shape="rect" id="node14" href="$group__highscore.html#ga38390e54641c059947d7218a32e1a1ec" title="deletes the information relative to the highscores " alt="" coords="746,1085,878,1112"/>
+<area shape="rect" id="node15" href="$group__options.html#ga91764a57d0e36ffeee81fad9f814cff1" title="Destructs options. " alt="" coords="753,1136,871,1163"/>
+<area shape="rect" id="node18" href="$group__player.html#gaeb339345abe8991a086bbd80b8bad72f" title="Initializes player. " alt="" coords="771,56,853,83"/>
+<area shape="rect" id="node20" href="$group__projectile.html#gaa0f20b36b8c1b66af345d9d9df2d6f1f" title="Initializes the projectile linked list. " alt="" coords="751,107,873,133"/>
+<area shape="rect" id="node21" href="$group___aliens.html#ga4f8c24ce5ee3019efecd9c12a06aee22" title="Initializes the alien linked list. " alt="" coords="763,5,861,32"/>
+<area shape="rect" id="node22" href="$group__shield.html#gab521d48af19b6c1815ca0e513ea364d0" title="initializes a linked list for the shields " alt="" coords="760,157,864,184"/>
+<area shape="rect" id="node19" href="$group___bitmap.html#gafc50f38c391dc1f4b0a704ecf87864ee" title="loads a bitmap " alt="" coords="975,132,1067,159"/>
+<area shape="rect" id="node24" href="$group__player.html#gaf4d6e917e2d103f2c64d4e3a86b3c3e2" title="Mirrors player ship image. Useful on multiplayer. " alt="" coords="743,208,881,235"/>
+<area shape="rect" id="node26" href="$group__menu.html#ga25e684ef3fe2940f0c0c4c3c82eecccd" title="Initializes menu struct. " alt="" coords="763,664,861,691"/>
+<area shape="rect" id="node27" href="$group__menu.html#ga3b43c5726d37b5a7785f6760b3da7e06" title="Adds button to menu. " alt="" coords="749,512,875,539"/>
+<area shape="rect" id="node28" href="$group___button.html#ga406523c9a3812d6c4327ea74eed4144b" title="Creates and initializes a button. " alt="" coords="761,563,863,589"/>
+<area shape="rect" id="node29" href="$group___game__over__menu.html#gac8e77980f324adb97266e4246f89953d" title="button that when pressed changes the state back to the main menu " alt="" coords="725,259,899,285"/>
+<area shape="rect" id="node30" href="$group__video__gr.html#gac83157697cec55aa50bcbe61270c3df0" title="Converts a 8:8:8 RGB color to a 5:6:5 one. " alt="" coords="792,613,832,640"/>
+<area shape="rect" id="node31" href="$group___game__over__menu.html#gaa8387ceede2d91a20a9a9dd325c1cbb6" title="button that when pressed clears the name to be inserted on the highscores " alt="" coords="731,360,893,387"/>
+<area shape="rect" id="node32" href="$group___game__over__menu.html#gaa2bb381e84670089c263ffa8860f0090" title="changes the first letter to the previous in alphabetic order " alt="" coords="723,411,901,437"/>
+<area shape="rect" id="node35" href="$group__highscore.html#ga4ab8cc2d09bade42210edc6fc50bca44" title="writes a new highscore on the highscore file " alt="" coords="965,765,1077,792"/>
+<area shape="rect" id="node42" href="$group__player.html#ga4758fa64d080108fa51704b641ddf537" title="Moves the player in the specified direction. " alt="" coords="371,1217,466,1244"/>
+<area shape="rect" id="node43" href="$group__video__gr.html#gaf79cb2326e435591867d7c3b8265c5b5" title="Gets horizontal resolution. " alt="" coords="562,1228,641,1255"/>
+<area shape="rect" id="node45" href="$group__player.html#ga38e2fd869201cc20c4950b70d9817f26" title="Makes the player fire a projectile. " alt="" coords="378,1319,459,1345"/>
+<area shape="rect" id="node48" href="$group___aliens.html#ga4c57ef4fa1c062eb3fde4e6a122d7fb1" title="checks if the alien is on the row closest to the player(s) " alt="" coords="365,1268,473,1295"/>
+<area shape="rect" id="node46" href="$group__projectile.html#ga3b0bb927050743cdccd344932e4ee145" title="initializes the projectile struct and adds it to the list " alt="" coords="552,1299,651,1325"/>
+<area shape="rect" id="node47" href="$group__player.html#gab038b0480ba9a159db6dfcda1fd98f03" title="Draws the player, its score and lives. " alt="" coords="556,1349,647,1376"/>
+</map>

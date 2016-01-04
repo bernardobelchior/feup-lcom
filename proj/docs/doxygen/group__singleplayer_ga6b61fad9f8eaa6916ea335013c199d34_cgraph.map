@@ -1,0 +1,4 @@
+<map id="singleplayer_move" name="singleplayer_move">
+<area shape="rect" id="node2" href="$group__player.html#ga4758fa64d080108fa51704b641ddf537" title="Moves the player in the specified direction. " alt="" coords="181,5,276,32"/>
+<area shape="rect" id="node3" href="$group__video__gr.html#gaf79cb2326e435591867d7c3b8265c5b5" title="Gets horizontal resolution. " alt="" coords="324,5,403,32"/>
+</map>

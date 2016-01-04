@@ -1,0 +1,8 @@
+<map id="serial_unsubscribe_int" name="serial_unsubscribe_int">
+<area shape="rect" id="node2" href="$group___f_i_f_o.html#gaaff350ea5da6b9eac7aa1ef3add7612f" title="deletes the FIFO data structure " alt="" coords="236,31,316,57"/>
+<area shape="rect" id="node5" href="$group__uart.html#ga016e05b4ee53a2230158ec0648441a10" title="checks if the LSR interrupts are enabled " alt="" coords="204,81,348,108"/>
+<area shape="rect" id="node7" href="$group__uart.html#ga578ff70f0a786d200ef2a07dc23b59c3" title="toggles the LSR interrupts " alt="" coords="204,132,348,159"/>
+<area shape="rect" id="node3" href="$group___f_i_f_o.html#gad8da26bc39ff605864c62ee4a6ecd3f2" title="checks if the FIFO has elements " alt="" coords="396,5,495,32"/>
+<area shape="rect" id="node4" href="$group___f_i_f_o.html#ga554cda5287d6faa93c924789ef20d174" title="removes the front element of the FIFO " alt="" coords="412,56,479,83"/>
+<area shape="rect" id="node6" href="$group__uart.html#ga515d0af822db39f056957c802ccdd348" title="passes the configuration of the IER to a char " alt="" coords="396,119,495,145"/>
+</map>

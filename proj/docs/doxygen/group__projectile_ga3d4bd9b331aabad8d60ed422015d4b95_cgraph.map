@@ -1,0 +1,5 @@
+<map id="projectile_draw" name="projectile_draw">
+<area shape="rect" id="node2" href="$group___bitmap.html#ga8f9acbe5ff479a5283f9d6fb3a762bee" title="bitmap_draw" alt="" coords="161,5,256,32"/>
+<area shape="rect" id="node3" href="$group__video__gr.html#ga7064d33728bba6ac359c8bfe10d80328" title="Draws pixmap. " alt="" coords="304,5,421,32"/>
+<area shape="rect" id="node4" href="$group__video__gr.html#ga494d833bd8462b0957f8a8bffa771e98" title="Sets the pixel in the (x,y) to the color passed as argument. " alt="" coords="469,5,563,32"/>
+</map>

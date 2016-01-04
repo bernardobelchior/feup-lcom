@@ -1,0 +1,10 @@
+<map id="singleplayer_projectile_collision" name="singleplayer_projectile_collision">
+<area shape="rect" id="node2" href="$group__shield.html#gaef7ef803da4d869d37c4af9664790515" title="checks if a projectile collided with one of the shields " alt="" coords="205,31,363,57"/>
+<area shape="rect" id="node7" href="$group___aliens.html#ga6d130b7a286cec57b1b8a2c4dac7dd5e" title="Checks if the projectile in x,y collides with an alien. " alt="" coords="205,81,363,108"/>
+<area shape="rect" id="node8" href="$group__player.html#ga23a12e8c329f3ed099e14356fd27b213" title="Handles the collision between the player and a projectile. " alt="" coords="204,132,364,159"/>
+<area shape="rect" id="node3" href="$group__shield.html#gaadd1a706aaef4c25d69859f840b4bbc6" title="handles the collision of a projectile and a shield, check what sprite was hit " alt="" coords="414,31,489,57"/>
+<area shape="rect" id="node4" href="$group__shield.html#gaa1762d372e5550bb30ec0a0d9094060a" title="deletes a shield sprite " alt="" coords="546,5,642,32"/>
+<area shape="rect" id="node6" href="$group___animation.html#gab38664f75c3aa06023e54680c85a4671" title="Goes to next sprite. " alt="" coords="539,56,649,83"/>
+<area shape="rect" id="node5" href="$group__shield.html#gacdd71e7ad4c636cde12ccc49e5390de9" title="deletes the shield struct " alt="" coords="697,5,796,32"/>
+<area shape="rect" id="node9" href="$group__player.html#ga523fc522effa622ba91e293a58d1ae4b" title="Handles the player being hit by a projectile. " alt="" coords="412,132,491,159"/>
+</map>

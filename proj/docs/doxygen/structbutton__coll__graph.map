@@ -1,0 +1,4 @@
+<map id="button" name="button">
+<area shape="rect" id="node2" href="$structbitmap.html" title="Represents a Bitmap. " alt="" coords="42,95,103,121"/>
+<area shape="rect" id="node3" href="$structbitmap__info__header.html" title="bitmap_info_header" alt="" coords="5,5,140,32"/>
+</map>

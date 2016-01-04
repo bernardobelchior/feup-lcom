@@ -1,0 +1,6 @@
+<map id="shield_collision_handler" name="shield_collision_handler">
+<area shape="rect" id="node2" href="$group__shield.html#gaadd1a706aaef4c25d69859f840b4bbc6" title="handles the collision of a projectile and a shield, check what sprite was hit " alt="" coords="212,31,287,57"/>
+<area shape="rect" id="node3" href="$group__shield.html#gaa1762d372e5550bb30ec0a0d9094060a" title="deletes a shield sprite " alt="" coords="342,5,438,32"/>
+<area shape="rect" id="node5" href="$group___animation.html#gab38664f75c3aa06023e54680c85a4671" title="Goes to next sprite. " alt="" coords="335,56,445,83"/>
+<area shape="rect" id="node4" href="$group__shield.html#gacdd71e7ad4c636cde12ccc49e5390de9" title="deletes the shield struct " alt="" coords="493,5,592,32"/>
+</map>

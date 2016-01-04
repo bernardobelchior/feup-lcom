@@ -1,0 +1,13 @@
+<map id="create_menu" name="create_menu">
+<area shape="rect" id="node2" href="$group___font.html#gaac1f5fc753aae51f78f7bccd039dafd9" title="Initializes font stored in filename, in the font_path directory. " alt="" coords="151,183,217,209"/>
+<area shape="rect" id="node3" href="$group___bitmap.html#gafc50f38c391dc1f4b0a704ecf87864ee" title="loads a bitmap " alt="" coords="265,132,357,159"/>
+<area shape="rect" id="node11" href="$group___font.html#gab387bc873c69473a6b5332f2e8e1107a" title="Changes the color in the font. " alt="" coords="267,183,356,209"/>
+<area shape="rect" id="node12" href="$group__video__gr.html#gac83157697cec55aa50bcbe61270c3df0" title="Converts a 8:8:8 RGB color to a 5:6:5 one. " alt="" coords="291,233,331,260"/>
+<area shape="rect" id="node4" href="$group__proj.html#gafe1abdb6d5a98b8e65cf99d2eb20112c" title="Unsubscribes the used interrupts. Deletes menus and leaves program. " alt="" coords="405,132,456,159"/>
+<area shape="rect" id="node5" href="$group__timer.html#gab9eea51549744bca5c5c923b388bb4ee" title="Unsubscribes Timer 0 interrupts. " alt="" coords="509,5,658,32"/>
+<area shape="rect" id="node6" href="$group__keyboard.html#ga806fb3c50fd416b1c653ed980923ac42" title="Unsubscribes keyboard interrupts. " alt="" coords="516,56,651,83"/>
+<area shape="rect" id="node7" href="$group__mouse.html#ga7614d1f22092d37078f6a3da58f7c957" title="Unsubscribes mouse interrupts. " alt="" coords="504,107,663,133"/>
+<area shape="rect" id="node8" href="$group__mouse.html#ga318b9a6bf5c4299c588830d7eebd1303" title="Empties output buffer. " alt="" coords="530,157,637,184"/>
+<area shape="rect" id="node9" href="$group__video__gr.html#ga42f593e6656f1a978315aff02b1bcebf" title="Returns to default Minix 3 text mode (0x03: 25 x 80, 16 colors) " alt="" coords="552,208,615,235"/>
+<area shape="rect" id="node10" href="$group__options.html#ga659ea3d83a3c199f96d2a1330ca38aa9" title="Saves the current configuration to a file. " alt="" coords="535,259,632,285"/>
+</map>

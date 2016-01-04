@@ -1,0 +1,7 @@
+<map id="alien_list" name="alien_list">
+<area shape="rect" id="node2" href="$struct__alien.html" title="_alien" alt="" coords="5,289,61,316"/>
+<area shape="rect" id="node3" href="$structanimation.html" title="animation" alt="" coords="138,289,217,316"/>
+<area shape="rect" id="node4" href="$structsprite.html" title="sprite" alt="" coords="150,184,205,211"/>
+<area shape="rect" id="node5" href="$structbitmap.html" title="Represents a Bitmap. " alt="" coords="147,95,208,121"/>
+<area shape="rect" id="node6" href="$structbitmap__info__header.html" title="bitmap_info_header" alt="" coords="110,5,245,32"/>
+</map>

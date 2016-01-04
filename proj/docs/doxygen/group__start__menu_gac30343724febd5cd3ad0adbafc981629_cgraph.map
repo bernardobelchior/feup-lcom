@@ -1,0 +1,6 @@
+<map id="start_menu_destruct" name="start_menu_destruct">
+<area shape="rect" id="node2" href="$group__menu.html#ga5280cd06232cc375876e82e2898eb3cb" title="Deletes and frees menu and its buttons. " alt="" coords="195,56,291,83"/>
+<area shape="rect" id="node5" href="$group___bitmap.html#ga0deb0f48883630262267f296e451573e" title="deletes a bitmap " alt="" coords="487,81,589,108"/>
+<area shape="rect" id="node3" href="$group___button.html#ga74f903a0d33015bea7930363b4f99465" title="Deletes button. " alt="" coords="339,5,439,32"/>
+<area shape="rect" id="node4" href="$group___font.html#ga97c3591c7cced9a10c4495f37140d241" title="Delete font. " alt="" coords="346,56,431,83"/>
+</map>

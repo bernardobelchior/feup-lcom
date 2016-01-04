@@ -1,0 +1,3 @@
+<map id="player_collision_handler" name="player_collision_handler">
+<area shape="rect" id="node2" href="$group__player.html#ga523fc522effa622ba91e293a58d1ae4b" title="Handles the player being hit by a projectile. " alt="" coords="213,5,292,32"/>
+</map>

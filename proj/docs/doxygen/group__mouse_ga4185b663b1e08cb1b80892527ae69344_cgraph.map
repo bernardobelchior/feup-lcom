@@ -1,0 +1,12 @@
+<map id="mouse_init" name="mouse_init">
+<area shape="rect" id="node2" href="$group__video__gr.html#gaf79cb2326e435591867d7c3b8265c5b5" title="Gets horizontal resolution. " alt="" coords="145,31,224,57"/>
+<area shape="rect" id="node3" href="$group__video__gr.html#ga63952c5a24eead84c287cb59878fd6c4" title="Gets vertical resolution. " alt="" coords="146,81,223,108"/>
+<area shape="rect" id="node4" href="$group___bitmap.html#gafc50f38c391dc1f4b0a704ecf87864ee" title="loads a bitmap " alt="" coords="139,132,231,159"/>
+<area shape="rect" id="node5" href="$group__proj.html#gafe1abdb6d5a98b8e65cf99d2eb20112c" title="Unsubscribes the used interrupts. Deletes menus and leaves program. " alt="" coords="279,132,329,159"/>
+<area shape="rect" id="node6" href="$group__timer.html#gab9eea51549744bca5c5c923b388bb4ee" title="Unsubscribes Timer 0 interrupts. " alt="" coords="382,5,531,32"/>
+<area shape="rect" id="node7" href="$group__keyboard.html#ga806fb3c50fd416b1c653ed980923ac42" title="Unsubscribes keyboard interrupts. " alt="" coords="389,56,524,83"/>
+<area shape="rect" id="node8" href="$group__mouse.html#ga7614d1f22092d37078f6a3da58f7c957" title="Unsubscribes mouse interrupts. " alt="" coords="377,107,536,133"/>
+<area shape="rect" id="node9" href="$group__mouse.html#ga318b9a6bf5c4299c588830d7eebd1303" title="Empties output buffer. " alt="" coords="403,157,510,184"/>
+<area shape="rect" id="node10" href="$group__video__gr.html#ga42f593e6656f1a978315aff02b1bcebf" title="Returns to default Minix 3 text mode (0x03: 25 x 80, 16 colors) " alt="" coords="425,208,488,235"/>
+<area shape="rect" id="node11" href="$group__options.html#ga659ea3d83a3c199f96d2a1330ca38aa9" title="Saves the current configuration to a file. " alt="" coords="408,259,505,285"/>
+</map>
