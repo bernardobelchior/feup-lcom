@@ -57,7 +57,7 @@ void game_over_second_letter_prev();
  */
 void game_over_second_letter_next();
 
-game_over_info/**
+/**
  * @brief changes the first letter to the previous in alphabetic order
  */
 void game_over_third_letter_prev();
