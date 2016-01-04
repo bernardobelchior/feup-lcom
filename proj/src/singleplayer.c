@@ -149,7 +149,7 @@ void singleplayer_game_over(){
 
 void singleplayer_destruct() {
 	projectile_list_destruct();
-	aliens_destruct();
+	//aliens_destruct();
 	player_destruct(singleplayer_game.play);
 	shields_destruct();
 }

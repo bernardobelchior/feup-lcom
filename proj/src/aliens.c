@@ -431,7 +431,7 @@ void aliens_destruct() {
 	animation_destruct(invaders->medium_alien);
 	animation_destruct(invaders->large_alien);
 	animation_destruct(invaders->destroy);
-	bitmap_delete(ufo_img);
+	//bitmap_delete(ufo_img);
 
 	while (invaders->head != NULL)
 		alien_remove(invaders->head);
@@ -457,6 +457,9 @@ void ufo_create(){
 }
 
 void ufo_destruct(){
+	if(ufo == NULL)
+		return;
+
 	free(ufo);
 	ufo = NULL;
 }
