@@ -3,8 +3,6 @@
 static char direction;
 
 void alien_list_init() {
-
-	//moves = 0;
 	direction = 1;
 
 	if ((invaders = (alien_list*) malloc(sizeof(alien_list))) == NULL)
@@ -50,25 +48,25 @@ void alien_list_init() {
 
 	//initialize small aliens animation
 	invaders->small_alien = animation_init();
-	animation_add(invaders->small_alien, "small_invader1.bmp");
-	animation_add(invaders->small_alien, "small_invader2.bmp");
+	animation_add_by_filename(invaders->small_alien, "small_invader1.bmp");
+	animation_add_by_filename(invaders->small_alien, "small_invader2.bmp");
 
 	//initialize medium aliens animation
 	invaders->medium_alien = animation_init();
-	animation_add(invaders->medium_alien, "medium_invader1.bmp");
-	animation_add(invaders->medium_alien, "medium_invader2.bmp");
+	animation_add_by_filename(invaders->medium_alien, "medium_invader1.bmp");
+	animation_add_by_filename(invaders->medium_alien, "medium_invader2.bmp");
 
 	//initialize large aliens animation
 	invaders->large_alien = animation_init();
-	animation_add(invaders->large_alien, "large_invader1.bmp");
-	animation_add(invaders->large_alien, "large_invader2.bmp");
+	animation_add_by_filename(invaders->large_alien, "large_invader1.bmp");
+	animation_add_by_filename(invaders->large_alien, "large_invader2.bmp");
 
 	//initialize ufo "animation"
 	invaders->ufo = animation_init();
-	animation_add(invaders->ufo, "ufo.bmp");
+	animation_add_by_filename(invaders->ufo, "ufo.bmp");
 
 	invaders->destroy = animation_init();
-	animation_add(invaders->destroy, "explosion.bmp");
+	animation_add_by_filename(invaders->destroy, "explosion.bmp");
 }
 
 void alien_add(alien *a1) {

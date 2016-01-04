@@ -29,14 +29,14 @@ void mouse_event_handler(unsigned char packet[3]);
  *
  * @param key Key pressed make code
  */
-void key_pressed(unsigned long key);
+void key_pressed(unsigned short key);
 
 /**
  * @brief Event thrown on key released
  *
  * @param key Key pressed break code
  */
-void key_released(unsigned long key);
+void key_released(unsigned short key);
 
 //Mouse Events
 

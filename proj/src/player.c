@@ -37,6 +37,7 @@ player* player_init(enum player_type mode) {
 	p1->state = PLAYER_ALIVE;
 	p1->destroy = (bitmap*) bitmap_load("ship_destroyed.bmp");
 	p1->ticks = 0;
+	p1->ticks_since_last_fire = 0;
 	return p1;
 }
 
@@ -50,6 +51,11 @@ int player_draw(player *p1){
 
 int player_fire(player *p1, char direction) {
 	if(p1->state == PLAYER_DESTROYED)
+		return 1;
+
+	if(p1->ticks_since_last_fire > TICKS_BETWEEN_SHOTS)
+		p1->ticks_since_last_fire = 0;
+	else
 		return 1;
 
 	if(direction == 1){
@@ -71,6 +77,7 @@ void player_tick(player* p1){
 		}
 	}
 
+	p1->ticks_since_last_fire++;
 	p1->ticks++;
 	player_draw(p1);
 }

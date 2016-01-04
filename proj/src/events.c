@@ -73,9 +73,9 @@ void mouse_event_handler(unsigned char packet[3]) {
 	}
 }
 
-void key_pressed(unsigned long key) {
+void key_pressed(unsigned short key) {
 	switch (state) {
-	case main_menu: {
+	case main_menu:
 		switch (key) {
 		case UP_ARROW_MAKECODE:
 			previous_button(start_menu);
@@ -91,67 +91,68 @@ void key_pressed(unsigned long key) {
 			break;
 		}
 		break;
-	}
-	case singleplayer:
-		switch (key) {
-		case ESC_MAKECODE: //TODO add a pause menu
-			singleplayer_game_over();
-			break;
-		case RIGHT_ARROW_MAKECODE:
-			if(controller == keyboard)
-				singleplayer_move(1);
-			break;
-		case LEFT_ARROW_MAKECODE:
-			if(controller == keyboard)
-				singleplayer_move(-1);
-			break;
-		case SPACE_MAKECODE:
-			if(controller == keyboard)
-				singleplayer_fire();
-			break;
-		}
-		break;
-		case multiplayer:
-			switch(key){
-			case A_MAKECODE:
-				versus_mp_move(1,-1);
+		case singleplayer:
+			switch (key) {
+			case ESC_MAKECODE: //TODO add a pause menu
+					singleplayer_game_over();
 				break;
-
-			case D_MAKECODE:
-				versus_mp_move(1,1);
-				break;
-
-			case W_MAKECODE:
-				versus_mp_fire(1);
-				break;
-
-			case LEFT_ARROW_MAKECODE:
-				versus_mp_move(2,-1);
-				break;
-
 			case RIGHT_ARROW_MAKECODE:
-				versus_mp_move(2,1);
+				if(controller == keyboard){
+						singleplayer_move(1);
+				}
 				break;
-
-			case UP_ARROW_MAKECODE:
-				versus_mp_fire(2);
+			case LEFT_ARROW_MAKECODE:
+				if(controller == keyboard){
+						singleplayer_move(-1);
+				}
 				break;
-
-			case ESC_MAKECODE:
-				change_state(main_menu);
+			case SPACE_MAKECODE:
+				if(controller == keyboard){
+						singleplayer_fire();
+				}
 				break;
 			}
 			break;
-		case highscore:
+			case multiplayer:
+				switch(key){
+				case A_MAKECODE:
+						versus_mp_move(1,-1);
+					break;
+				case D_MAKECODE:
+						versus_mp_move(1,1);
+					break;
 
-			break;
-		case options:
+				case W_MAKECODE:
+						versus_mp_fire(1);
+					break;
 
-			break;
+				case LEFT_ARROW_MAKECODE:
+						versus_mp_move(2,-1);
+					break;
+
+				case RIGHT_ARROW_MAKECODE:
+						versus_mp_move(2,1);
+					break;
+
+				case UP_ARROW_MAKECODE:
+						versus_mp_fire(2);
+					break;
+
+				case ESC_MAKECODE:
+						change_state(main_menu);
+					break;
+				}
+				break;
+				case highscore:
+
+					break;
+				case options:
+
+					break;
 	}
 }
 
-void key_released(unsigned long key) {
+void key_released(unsigned short key) {
 	switch (state) {
 	case main_menu:
 
@@ -235,6 +236,7 @@ void tick() {
 		mouse_draw();
 		break;
 	}
+
 	vg_update_screen();
 	//printf("Tick.\n");
 }

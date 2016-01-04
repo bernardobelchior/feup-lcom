@@ -419,6 +419,7 @@ keyboard.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/string.h
 keyboard.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/syslimits.h
 keyboard.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include-fixed/unistd.h
 keyboard.o:	/usr/pkg/gcc44/lib/gcc/i686-pc-minix/4.4.3/include/stdarg.h
+keyboard.o:	i8042.h
 keyboard.o:	keyboard.c
 keyboard.o:	keyboard.h
 keyboard.o:	timer.h

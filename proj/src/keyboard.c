@@ -2,6 +2,7 @@
 #include <minix/drivers.h>
 #include "keyboard.h"
 #include "timer.h"
+#include "i8042.h"
 
 int hook_id;
 
@@ -127,4 +128,3 @@ void kb_toggle_led(unsigned int led) {
 	} while (msg == RESEND);
 
 }
-

@@ -4,14 +4,14 @@
 #include "animation.h"
 #include "projectile.h"
 
-#define ALIENS_PER_ROW 1
-#define ALIEN_ROWS 3
+#define ALIENS_PER_ROW 11
+#define ALIEN_ROWS 5
 #define INITIAL_X_POS 50
 #define INITIAL_Y_POS 20
 #define ALIEN_WIDTH 48
 #define ALIEN_HEIGHT 32
 #define ALIEN_SPACEMENT 10
-#define MOVEMENT_INCREASE 2
+#define MOVEMENT_INCREASE 1
 #define INITIAL_MOV_FREQ 90
 #define ALIEN_X_DELTA 15
 #define ALIEN_Y_DELTA ALIEN_HEIGHT + ALIEN_SPACEMENT

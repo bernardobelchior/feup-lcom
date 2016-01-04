@@ -5,6 +5,10 @@ int shield_list_init(char mode) {
 	shield_middle = bitmap_load("middle_shield.bmp");
 	shield_right = bitmap_load("right_shield.bmp");
 
+	dmg_shield_left = bitmap_load("damaged_left_shield.bmp");
+	dmg_shield_middle = bitmap_load("damaged_middle_shield.bmp");
+	dmg_shield_right = bitmap_load("damaged_right_shield.bmp");
+
 	if(!mode){
 		inv_shield_left = bitmap_load("inv_left_shield.bmp");
 		inv_shield_middle = bitmap_load("inv_middle_shield.bmp");
@@ -52,14 +56,26 @@ shield *shield_init(unsigned short x, unsigned short y) {
 	s1->prev = NULL;
 	s1->list = NULL;
 
-	add_sprite(s1, s1->x + LEFT_SPRITE_DELTA_X, s1->y, SHIELD_SIDE_WIDTH, SHIELD_SIDE_HEIGHT, shield_left);	//Left sprite
-	add_sprite(s1, s1->x + MIDDLE_SPRITE_DELTA_X, s1->y, SHIELD_MIDDLE_WIDTH, SHIELD_MIDDLE_HEIGHT, shield_middle);	//Middle sprite
-	add_sprite(s1, s1->x + RIGHT_SPRITE_DELTA_X, s1->y, SHIELD_SIDE_WIDTH, SHIELD_SIDE_HEIGHT, shield_right);	//Right sprite
+	animation* left_shield = animation_init();
+	animation_add_by_bmp(left_shield, shield_left);
+	animation_add_by_bmp(left_shield, dmg_shield_left);
+
+	animation* middle_shield = animation_init();
+	animation_add_by_bmp(middle_shield, shield_middle);
+	animation_add_by_bmp(middle_shield, dmg_shield_middle);
+
+	animation* right_shield = animation_init();
+	animation_add_by_bmp(right_shield, shield_right);
+	animation_add_by_bmp(right_shield, dmg_shield_right);
+
+	add_sprite(s1, s1->x + LEFT_SPRITE_DELTA_X, s1->y, SHIELD_SIDE_WIDTH, SHIELD_SIDE_HEIGHT, left_shield);	//Left sprite
+	add_sprite(s1, s1->x + MIDDLE_SPRITE_DELTA_X, s1->y, SHIELD_MIDDLE_WIDTH, SHIELD_MIDDLE_HEIGHT, middle_shield);	//Middle sprite
+	add_sprite(s1, s1->x + RIGHT_SPRITE_DELTA_X, s1->y, SHIELD_SIDE_WIDTH, SHIELD_SIDE_HEIGHT, right_shield);	//Right sprite
 
 	return s1;
 }
 
-int add_sprite(shield *s1, unsigned short x, unsigned short y, unsigned short width, unsigned short height, bitmap* bmp) {
+int add_sprite(shield *s1, unsigned short x, unsigned short y, unsigned short width, unsigned short height, animation* anim) {
 
 	if (s1 == NULL)
 		return 1;
@@ -74,7 +90,7 @@ int add_sprite(shield *s1, unsigned short x, unsigned short y, unsigned short wi
 	sh_sprt->width = width;
 	sh_sprt->height = height;
 	sh_sprt->durability = SPRITE_DURABILITY;
-	sh_sprt->bmp = bmp;
+	sh_sprt->anim = anim;
 	sh_sprt->next = NULL;
 	sh_sprt->prev = NULL;
 
@@ -199,7 +215,7 @@ int shield_draw(shield *s1) {
 	shield_sprite* iterator = s1->list;
 
 	do {
-		bitmap_draw(iterator->bmp, iterator->x, iterator->y, ALIGN_LEFT);
+		bitmap_draw(iterator->anim->current->bmp, iterator->x, iterator->y, ALIGN_LEFT);
 		iterator = iterator->next;
 	} while (iterator != NULL);
 
@@ -262,9 +278,10 @@ int sprite_hit(shield *s1, projectile* proj) {
 			iterator->durability--;
 			if (!iterator->durability)
 				delete_sprite(s1, iterator);
+			else if(iterator->durability == SPRITE_DURABILITY/2)
+				animation_next(iterator->anim);
 			return 1;
 		}
-
 		iterator = iterator->next;
 	} while (iterator != NULL);
 

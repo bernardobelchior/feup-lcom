@@ -7,6 +7,7 @@ typedef struct sprite sprite;
 
 struct sprite{
 	bitmap* bmp;
+	unsigned char delete_on_destruct;
 	sprite* next;
 };
 
@@ -28,7 +29,15 @@ animation* animation_init();
  * @param a Animation
  * @param filename Name of the image file
  */
-void animation_add(animation* a, const char* filename);
+void animation_add_by_filename(animation* a, const char* filename);
+
+/**
+ * @brief Adds a sprite to the animation
+ *
+ * @param a Animation
+ * @param bmp Bitmap
+ */
+void animation_add_by_bmp(animation* a, bitmap* bmp);
 
 /**
  * @brief Goes to next sprite

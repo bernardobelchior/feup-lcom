@@ -14,14 +14,14 @@ void options_init(){
 
 	options_menu = (menu*) malloc(sizeof(menu));
 	options_menu = create_menu("spaceinvader_font_transparent.bmp");
-	menu_add_button(options_menu, create_button(300, 650, 200, 100, ALIGN_CENTER, &options_accept_on_click, "Accept", rgb(0xFFFFFF), ALIGN_CENTER));
-	menu_add_button(options_menu, create_button(700, 650, 200, 100, ALIGN_CENTER, &options_cancel_on_click, "Cancel", rgb(0xFFFFFF), ALIGN_CENTER));
+	menu_add_button(options_menu, create_button(300, 650, 250, 100, ALIGN_CENTER, &options_accept_on_click, "Accept", rgb(0xFFFFFF), ALIGN_CENTER));
+	menu_add_button(options_menu, create_button(700, 650, 250, 100, ALIGN_CENTER, &options_cancel_on_click, "Cancel", rgb(0xFFFFFF), ALIGN_CENTER));
 
-	button* next_button = create_button(850, 175, 30, 50, ALIGN_CENTER, &options_next_ctrl_on_click, NULL, rgb(0xFFFFFF), ALIGN_CENTER);
+	button* next_button = create_button(925, 175, 30, 50, ALIGN_CENTER, &options_next_ctrl_on_click, NULL, rgb(0xFFFFFF), ALIGN_CENTER);
 	button_set_background(next_button, next);
 	menu_add_button(options_menu, next_button);
 
-	button* prev_button = create_button(450, 175, 30, 50, ALIGN_CENTER, &options_prev_ctrl_on_click, NULL, rgb(0xFFFFFF), ALIGN_CENTER);
+	button* prev_button = create_button(525, 175, 30, 50, ALIGN_CENTER, &options_prev_ctrl_on_click, NULL, rgb(0xFFFFFF), ALIGN_CENTER);
 	button_set_background(prev_button, prev);
 	menu_add_button(options_menu, prev_button);
 
@@ -35,20 +35,22 @@ void options_tick(){
 	//Menu
 	menu_draw(options_menu);
 
+#ifdef DEBUG
 	//Frame
-	vg_draw_frame(100, 150, 800, 450, rgb(0xFFFFFF));
-	vg_draw_line(400, 150, 400, 600, rgb(0xFFFFFF));
+	vg_draw_frame(50, 150, 900, 450, rgb(0xFFFFFF));
+	vg_draw_line(500, 150, 500, 600, rgb(0xFFFFFF));
+#endif
 
 	//Options
-	font_draw_string(space_invaders_font, 375, 175, "Cont.:", ALIGN_RIGHT);
+	font_draw_string(space_invaders_font, 475, 175, "Controller:", ALIGN_RIGHT);
 
 	//Display current configuration
 	switch(temp){
 	case keyboard:
-		font_draw_string(space_invaders_font, 650, 175, "Keyboard", ALIGN_CENTER);
+		font_draw_string(space_invaders_font, 725, 175, "Keyboard", ALIGN_CENTER);
 		break;
 	case mouse:
-		font_draw_string(space_invaders_font, 650, 175, "Mouse", ALIGN_CENTER);
+		font_draw_string(space_invaders_font, 725, 175, "Mouse", ALIGN_CENTER);
 	}
 }
 

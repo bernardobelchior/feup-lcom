@@ -46,4 +46,3 @@ unsigned long kb_int_handler(void);
  * @param led LED number, ranges from 0 to 2
  */
 void kb_toggle_led(unsigned int led);
-

@@ -27,7 +27,8 @@ typedef struct _sh_sprite{
 	unsigned short x, y;
 	unsigned short width, height;
 	char durability;
-	bitmap *bmp;
+	animation* anim;
+	//bitmap *bmp;
 	struct _sh_sprite *next;
 	struct _sh_sprite *prev;
 } shield_sprite;
@@ -45,7 +46,10 @@ typedef struct {
 
 shield_list *shields;
 bitmap *shield_left, *shield_middle, *shield_right;
+bitmap *dmg_shield_left, *dmg_shield_middle, *dmg_shield_right;
+
 bitmap *inv_shield_left, *inv_shield_middle, *inv_shield_right;
+
 
 /**
  * \brief initializes a linked list for the shields
@@ -69,9 +73,9 @@ shield *shield_init(unsigned short x, unsigned short y);
  * @param y top position of the sprite
  * @param width sprite width
  * @param height sprite height
- * @param bmp sprite image
+ * @param anim sprite image
  */
-int add_sprite(shield *s1, unsigned short x, unsigned short y, unsigned short width, unsigned short height, bitmap* bmp);
+int add_sprite(shield *s1, unsigned short x, unsigned short y, unsigned short width, unsigned short height, animation* anim);
 
 /**
  * \brief adds the shield to the linked shield list

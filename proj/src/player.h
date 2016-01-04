@@ -13,8 +13,9 @@
 #define SP_PLAYER_INITIAL_Y_POS (unsigned) 9*get_v_res()/10
 #define MP_PLAYER_1_INITIAL_Y_POS (unsigned) get_v_res()/10
 #define MP_PLAYER_2_INITIAL_Y_POS (unsigned) 8*get_v_res()/10
-#define SHIP_X_DELTA 20
+#define SHIP_X_DELTA 15
 #define PLAYER_PROJECTILE_VELOCITY 5
+#define TICKS_BETWEEN_SHOTS 30
 
 struct _projectile;
 
@@ -31,6 +32,7 @@ typedef struct _player{
 	bitmap* life;
 	bitmap* destroy;
 	unsigned int score;
+	unsigned short ticks_since_last_fire;
 } player;
 
 static char SHIP_RES_NAME[] = "player_ship.bmp";

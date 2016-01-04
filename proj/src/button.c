@@ -46,8 +46,12 @@ void button_draw(button* b, font* f){
 
 	if(b->background != NULL)
 		bitmap_draw(b->background, b->x, b->y, ALIGN_LEFT);
-	else
+	else{
+#ifdef DEBUG
 		vg_draw_frame(b->x, b->y, b->width, b->height, b->color);
+#endif
+	}
+
 }
 
 char collides_with_button(button* b, short x, short y){
