@@ -6,6 +6,11 @@
 #include "font.h"
 #include "video_gr.h"
 
+/** @defgroup player player
+ * @{
+ * player
+ */
+
 #define NUM_LIVES 3
 #define SHIP_WIDTH 63
 #define SHIP_HEIGHT 45

@@ -3,6 +3,11 @@
 
 #include "menu.h"
 
+/** @defgroup options optiojns
+ * @{
+ * options
+ */
+
 menu* options_menu;
 static char options_path[] = "/home/proj/cfg/options.cfg";
 extern font* space_invaders_font;

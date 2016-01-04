@@ -1,6 +1,11 @@
 #ifndef ALIENS_H
 #define ALIENS_H
 
+/** @defgroup Aliens Aliens
+ * @{
+ * Aliens handling and structs
+ */
+
 #include "animation.h"
 #include "projectile.h"
 

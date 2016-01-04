@@ -1,6 +1,11 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
+/** @defgroup Animation Animation
+ * @{
+ * Animations handling and structs
+ */
+
 #include "proj.h"
 
 typedef struct sprite sprite;

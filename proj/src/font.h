@@ -3,6 +3,11 @@
 
 #include "bitmap.h"
 
+/** @defgroup Font Font
+ * @{
+ * Font drawing and struct
+ */
+
 #define LETTER_HEIGHT 44
 #define LETTER_WIDTH 32
 #define LETTER_SPACEMENT 3

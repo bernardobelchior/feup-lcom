@@ -6,6 +6,11 @@
 #include "options.h"
 #include "start_menu.h"
 
+/** @defgroup Events Events
+ * @{
+ * Events handling
+ */
+
 //Event Handlers
 
 /**

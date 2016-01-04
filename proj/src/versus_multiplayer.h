@@ -4,6 +4,11 @@
 #include "state.h"
 #include "singleplayer.h"
 
+/** @defgroup versus_multiplayer versus_multiplayer
+ * @{
+ * versus multiplayer
+ */
+
 #define DEFAULT_TIME_LIMIT 		90 //in seconds
 #define GAME_OVER_SCREEN_TIME 	5
 

@@ -3,6 +3,11 @@
 
 #include "menu.h"
 
+/** @defgroup start_menu start_menu
+ * @{
+ * start menu
+ */
+
 extern font* space_invaders_font;
 menu* start_menu;
 bitmap* title;

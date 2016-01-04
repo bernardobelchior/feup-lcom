@@ -9,6 +9,11 @@
 #include "player.h"
 #include "bitmap.h"
 
+/** @defgroup projectile projectile
+ * @{
+ * projectile
+ */
+
 struct _player;
 
 typedef struct _projectile{

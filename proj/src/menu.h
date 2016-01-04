@@ -3,6 +3,11 @@
 
 #include "button.h"
 
+/** @defgroup menu menu
+ * @{
+ * menu
+ */
+
 /** @name Menu Information Struct*/
 /**@{
  *

@@ -1,6 +1,11 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
+/** @defgroup Button Button
+ * @{
+ * Button handling and struct
+ */
+
 #include "bitmap.h"
 #include "font.h"
 

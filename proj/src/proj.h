@@ -16,6 +16,11 @@
 #include "menu.h"
 
 
+/** @defgroup proj proj
+ * @{
+ * proj
+ */
+
 font* space_invaders_font;
 enum singleplayer_controller { keyboard = 0, mouse = 1 } controller;
 

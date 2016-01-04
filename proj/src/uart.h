@@ -4,6 +4,11 @@
 #include <minix/syslib.h>
 #include <minix/drivers.h>
 
+/** @defgroup uart uart
+ * @{
+ * uart
+ */
+
 #ifndef UART_H
 #define UART_H
 

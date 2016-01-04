@@ -5,6 +5,11 @@
 #include "state.h"
 #include "rtc.h"
 
+/** @defgroup highscore highscore
+ * @{
+ * highscore
+ */
+
 #define MAX_NUMBER_OF_SCORES 10
 
 typedef struct{

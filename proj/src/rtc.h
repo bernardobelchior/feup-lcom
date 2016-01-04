@@ -20,6 +20,11 @@
 #define RTC_REGISTER_A 10
 #define RTC_REGISTER_B 11
 
+/** @defgroup rtc rtc
+ * @{
+ * rtc
+ */
+
 typedef struct {
 	unsigned long day, month, year;
 } Date;

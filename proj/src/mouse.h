@@ -4,6 +4,11 @@
 #include "proj.h"
 #include "bitmap.h"
 
+/** @defgroup mouse mouse
+ * @{
+ * mouse
+ */
+
 /** @name Mouse Information Struct*/
 /**@{
  *

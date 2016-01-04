@@ -3,6 +3,11 @@
 
 #include <stdio.h>
 
+/** @defgroup FIFO FIFO
+ * @{
+ * Queue implementation
+ */
+
 /**
  * @brief node of the FIFO, contains a pointer to the next element and a pointer to the stored char
  */

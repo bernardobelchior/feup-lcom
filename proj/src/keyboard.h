@@ -19,6 +19,11 @@
 #define RESEND 0xFE
 #define ERROR 0xFC
 
+/** @defgroup keyboard keyboard
+ * @{
+ * keyboard
+ */
+
 /**
  * @brief Subscribes and enables keyboard interrupts
  *

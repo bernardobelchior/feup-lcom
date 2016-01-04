@@ -4,6 +4,11 @@
 #include <stdio.h>
 #include "aliens.h"
 
+/** @defgroup shield shield
+ * @{
+ * shield
+ */
+
 #define NUM_SHIELDS 4
 
 #define SHIELD_SPACEMENT 60

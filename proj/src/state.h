@@ -3,6 +3,11 @@
 
 #include "game_over_menu.h"
 
+/** @defgroup state state
+ * @{
+ * state
+ */
+
 enum game_state { main_menu, singleplayer, game_over, multiplayer, highscore, options} state;
 
 /**

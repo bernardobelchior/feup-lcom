@@ -6,6 +6,11 @@
 #include "font.h"
 #include "state.h"
 
+/** @defgroup Game_over_menu Game_over_menu
+ * @{
+ * Game over menu
+ */
+
 typedef struct {
 	char letters[4];
 	unsigned int points;

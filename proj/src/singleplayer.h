@@ -5,6 +5,12 @@
 #include "state.h"
 #include "rtc.h"
 #include "game_over_menu.h"
+
+/** @defgroup singleplayer singleplayer
+ * @{
+ * singleplayer
+ */
+
 typedef struct {
 	shield* (*shields);
 	player* play;
