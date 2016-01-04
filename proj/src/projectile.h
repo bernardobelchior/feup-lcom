@@ -45,10 +45,30 @@ int projectile_init(struct _player* p, unsigned short x, unsigned short y, int v
  * @param proj projectile to draw
  */
 int projectile_draw(projectile *proj);
+
+/**
+ * @brief deletes a projectile
+ */
 int projectile_delete(projectile *proj);
+
+/**
+ * @brief updates the position of a projectile
+ */
 int projectile_move(projectile *proj);
-int collision(projectile* proj, unsigned char color, unsigned short x, unsigned short y); //checks what kind of target was hit and throws the appropriate destruction event
+
+/**
+ * @brief checks what kind of target was hit and throws the appropriate destruction event
+ */
+int collision(projectile* proj, unsigned char color, unsigned short x, unsigned short y);
+
+/**
+ * @brief returns 1 if the projectile has reached the end of the screen
+ */
 int projectile_reached_end(projectile *proj);
+
+/**
+ * @brief deletes the projectile list
+ */
 void projectile_list_destruct();
 
 #endif

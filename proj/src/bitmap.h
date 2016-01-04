@@ -43,12 +43,31 @@ typedef struct {
 
 static char res_path[] = "/home/proj/res/";
 
+/**
+ * @brief loads a bitmap
+ *
+ * @ret bitmap struct
+ */
 bitmap* bitmap_load(const char* filename);
 
+/**
+ * @draws a bitmap on the screen
+ *
+ * @param bmp bitmap to draw
+ * @param x x position to draw the bitmap
+ * @param y y position to draw the bitmap
+ * @param alignment alignment along the x axis
+ */
 void bitmap_draw(bitmap* bmp, short x, short y, Alignment alignment);
 
+/**
+ * @brief flips a bitmap along the x axis
+ */
 void bitmap_mirror_horizontally(bitmap* bmp);
 
+/**
+ * @brief deletes a bitmap
+ */
 void bitmap_delete(bitmap* bmp);
 
 #endif
