@@ -1,7 +1,7 @@
 #ifndef PROJ_H
 #define PROJ_H
 
-#define DEBUG
+//#define DEBUG
 
 #include <minix/drivers.h>
 #include <stdlib.h>

@@ -5,6 +5,7 @@
 
 extern font* space_invaders_font;
 menu* start_menu;
+bitmap* title;
 
 void start_menu_init();
 
