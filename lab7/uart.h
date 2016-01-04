@@ -7,6 +7,11 @@
 #ifndef UART_H
 #define UART_H
 
+static fifo *com1_receive_fifo;
+static fifo *com1_transmit_fifo;
+static fifo *com2_receive_fifo;
+static fifo *com2_transmit_fifo;
+
 #define UART_FREQ 115200
 
 #define COM1_BASE_ADDR 0x3F8
@@ -53,8 +58,8 @@
 
 
 int serial_subscribe_int(unsigned short base_addr);
-int serial_unsubscribe_int(unsigned short base_addr, int hook_id);
-int serial_int_handler(unsigned short base_addr);
+int serial_unsubscribe_int(unsigned short base_addr);
+int serial_int_handler(unsigned short base_addr, char tx, char rx);
 
 /* LCR funcs*/
 int serial_get_conf(unsigned short base_addr, char *st);
@@ -72,6 +77,9 @@ int serial_toggle_rx(unsigned short base_addr);
 
 int serial_check_tx(unsigned short base_addr);
 int serial_toggle_tx(unsigned short base_addr);
+
+int serial_check_lsr_ints(unsigned short base_addr);
+int serial_toggle_lsr_ints(unsigned short base_addr);
 
 /*IIR Funcs*/
 int serial_get_iir(unsigned short base_addr, char *st);
@@ -92,7 +100,7 @@ int serial_put_in_fifo(unsigned short base_addr, char word);
 int serial_get_from_fifo(unsigned short base_addr, char *word);
 int serial_fill_transmit(unsigned short base_addr);
 int serial_clear_receive(unsigned short base_addr);
-
+void print_receiver_fifo(unsigned short base_addr);
 
 
 #endif

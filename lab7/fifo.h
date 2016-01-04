@@ -15,9 +15,10 @@ typedef struct	{
 fifo* fifo_init();
 fifo_element *new_element(char word);
 int fifo_is_empty(fifo *f1);
+void fifo_print(fifo *f1);
 char fifo_top(fifo *f1);
 int fifo_pop(fifo *f1);
-int fifo_push(fifo *f1,fifo_element *fe1);
+int fifo_push(fifo *f1, char word);
 int fifo_delete(fifo *f1);
 
 #endif

@@ -157,7 +157,7 @@ int ser_test_set(unsigned short base_addr, unsigned long bits, unsigned long sto
 		break;
 	}
 
-	printf("\nnova conf %d\n",new_conf);
+	//printf("\nnova conf %d\n",new_conf);
 
 	serial_set_conf(base_addr,new_conf);
 	divider_latch = UART_FREQ / rate;
@@ -165,7 +165,7 @@ int ser_test_set(unsigned short base_addr, unsigned long bits, unsigned long sto
 	dll = (unsigned char) divider_latch;
 	dlm = (unsigned char) (divider_latch >> 8);
 
-	printf("%d\n",divider_latch);
+	//printf("%d\n",divider_latch);
 	serial_set_dll(base_addr, dll);
 	serial_set_dlm(base_addr, dlm);
 
@@ -174,9 +174,63 @@ int ser_test_set(unsigned short base_addr, unsigned long bits, unsigned long sto
 }
 
 int ser_test_poll(unsigned short base_addr, unsigned char tx, unsigned long bits, 
-		unsigned long stop, long parity, unsigned long rate,
-		int stringc, char *strings[]) {
-	/* To be completed */
+		unsigned long stop, long parity, unsigned long rate) {
+
+	int ipc_status;
+	char transmit;
+	message msg;
+	int uart_irq_set;
+	int r;
+
+	printf("base addr %d\n\n",base_addr);
+
+	ser_test_set(base_addr, bits, stop, parity, rate);
+
+	if(!serial_check_rx(base_addr))
+		serial_toggle_rx(base_addr);
+
+	if(!serial_check_tx(base_addr))
+		serial_toggle_tx(base_addr);
+
+	uart_irq_set = serial_subscribe_int(base_addr);
+
+
+	while(1) {/* You may want to use a different condition */
+
+		if(tx)
+			print_receiver_fifo(base_addr);
+		else {
+			/*printf("\tInsert char: ");
+			scanf(" %d", &transmit);
+			printf("%d",transmit);
+			fifo_push(com1_transmit_fifo,transmit);
+			fifo_push(com1_transmit_fifo,46);
+			printf("Done pushing\n");*/
+		}
+		/* Get a request message. */
+		if ( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) {
+			printf("driver_receive failed with: %d", r);
+			continue;
+		}
+		if (is_ipc_notify(ipc_status)) {/* received notification */
+			switch (_ENDPOINT_P(msg.m_source)) {
+			case HARDWARE: /* hardware interrupt notification */
+				if (msg.NOTIFY_ARG & uart_irq_set) { /* subscribed interrupt */
+					serial_int_handler(base_addr,!tx,tx);
+					/* process it */
+				}
+				break;
+			default:
+				break; /* no other notifications expected: do nothing */
+			}
+		} else {/* received a standard message, not a notification */
+		/* no standard messages expected: do nothing */
+		}
+	}
+
+	printf("Saiu do ciclo das ints");
+
+	serial_unsubscribe_int(base_addr);
 }
 
 int ser_test_int(/* details to be provided */) { 

@@ -1,87 +1,126 @@
 #include "uart.h"
 
 int hook_id;
-static fifo *com1_receive_fifo;
-static fifo *com1_transmit_fifo;
-static fifo *com2_receive_fifo;
-static fifo *com2_transmit_fifo;
 
 int serial_subscribe_int(unsigned short base_addr) {
 
 	hook_id = 7;
 	int temp = hook_id;
 
+	if(hook_id >= 0)
+			temp = BIT(hook_id);
+		else
+			temp = 0;
+
 	if (base_addr == 1) {
 		if (sys_irqsetpolicy(COM1_IRQ, IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_id)
-				!= 0)
+				!= 0){
+			printf("\tserial_subscribe_int::irqsetpolicy failed!\n");
 			return -1;
+		}
+
 	}
 
 	else if (base_addr == 2) {
 		if (sys_irqsetpolicy(COM2_IRQ, IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_id)
-				!= 0)
+				!= 0){
+			printf("\tserial_subscribe_int::irqsetpolicy failed!\n");
 			return -1;
+		}
 	}
 
-	serial_enable_fifo(base_addr,1);
+	if(serial_enable_fifo(base_addr,1)!=OK)
+		printf("Enable fifo failed!!\n");
 
 	if(base_addr == 1){
-		if((com1_receive_fifo = fifo_init()) == NULL)
+		if((com1_receive_fifo = fifo_init()) == NULL){
+			printf("\tserial_subscribe_int::fifo_init failed!\n");
 			return -1;
+		}
 
-		if((com1_transmit_fifo = fifo_init()) == NULL)
+		if((com1_transmit_fifo = fifo_init()) == NULL){
+			printf("\tserial_subscribe_int::fifo_init failed!\n");
 			return -1;
+		}
 	}
 
 	else if(base_addr == 2){
-		if((com2_receive_fifo = fifo_init()) == NULL)
+		if((com2_receive_fifo = fifo_init()) == NULL){
+			printf("\tserial_subscribe_int::fifo_init failed!\n");
 			return -1;
-
-		if((com2_transmit_fifo = fifo_init()) == NULL)
+		}
+		if((com2_transmit_fifo = fifo_init()) == NULL){
+			printf("\tserial_subscribe_int::fifo_init failed!\n");
 			return -1;
+		}
 	}
 
-	if (sys_irqenable(&hook_id) != 0)
+	/*if (sys_irqenable(&hook_id) != 0){
+		printf("\tserial_subscribe_int::sys_irqenable failed!\n");
 		return -1;
+	}*/
 
 	return temp;
 }
 
-int serial_unsubscribe_int(unsigned short base_addr, int hook_id){
+int serial_unsubscribe_int(unsigned short base_addr){
 
+	if(base_addr == 1){
+		fifo_delete(com1_transmit_fifo);
+		fifo_delete(com1_receive_fifo);
 
+		return sys_irqrmpolicy(&hook_id);
+	}
+
+	if(base_addr == 2){
+		fifo_delete(com2_transmit_fifo);
+		fifo_delete(com2_receive_fifo);
+
+		return sys_irqrmpolicy(&hook_id);
+	}
+
+	if(!serial_check_lsr_ints(base_addr))
+		serial_toggle_lsr_ints(base_addr);
 }
 
-int serial_int_handler(unsigned short base_addr){
+int serial_int_handler(unsigned short base_addr, char tx, char rx){
 
 	char iir, int_origin;
 
-	if(serial_get_iir(base_addr, &iir) != OK)
+	if(serial_get_iir(base_addr, &iir) != OK){
+		printf("\tserial_int_handler::get_iir failed!\n");
 		return 1;
+	}
 
 	if(iir & BIT(0))
 		return -1;
 
 	int_origin = (iir & (BIT(3) | BIT(2) | BIT(1))) >> 1;
+	//printf("\nInt Origin : %d\n",int_origin);
 
 	switch(int_origin){
 	case 0:
 		break;
 	case 1: //Transmiter Empty
+		printf("\tTX Empty\n");//if(tx)
 		serial_fill_transmit(base_addr);
 		break;
 	case 2: //Received Data Available
+		printf("Received Data \n");
+		serial_clear_receive(base_addr);
 		break;
 	case 3: //Line Status
 		break;
 	case 4: //Character Timeout Indication
+		//if(rx)
+		printf("\tChar timeout\n");
 		serial_clear_receive(base_addr);
 		break;
 	}
 
+	//printf("\tLeaving int handler\n");
+
 	return 0;
-
-
 }
 
 /* LCR functions*/
@@ -194,6 +233,35 @@ int serial_toggle_tx(unsigned short base_addr){
 		return 1;
 
 	input = (unsigned long) (ier ^ IER_ENABLE_TX);
+
+	if(base_addr == 1)
+		ret = sys_outb(COM1_BASE_ADDR + UART_INT_REG, input);
+
+	else if(base_addr == 2)
+		ret = sys_outb(COM2_BASE_ADDR + UART_INT_REG, input);
+
+	return ret;
+}
+
+int serial_check_lsr_ints(unsigned short base_addr){
+	char ier;
+
+	if(serial_get_ier(base_addr, &ier) != OK)
+		return -1;
+
+	return (ier & IER_ENABLE_RECEIVER_LINE_STATUS_INT ) >> 2;
+}
+
+int serial_toggle_lsr_ints(unsigned short base_addr){
+
+	unsigned long input;
+	char ier;
+	int ret;
+
+	if(serial_get_ier(base_addr, &ier) != OK)
+		return 1;
+
+	input = (unsigned long) (ier ^ IER_ENABLE_RECEIVER_LINE_STATUS_INT );
 
 	if(base_addr == 1)
 		ret = sys_outb(COM1_BASE_ADDR + UART_INT_REG, input);
@@ -366,6 +434,9 @@ int serial_put_in_fifo(unsigned short base_addr, char word){
 int serial_get_from_fifo(unsigned short base_addr, char *word){
 	unsigned long hold;
 
+	if(serial_check_dlab(base_addr))
+		serial_toggle_dlab(base_addr);
+
 	if(base_addr == 1)
 		if(sys_inb(COM1_BASE_ADDR + UART_RECEIVER_BUFFER, &hold) != OK)
 			return -1;
@@ -382,6 +453,9 @@ int serial_get_from_fifo(unsigned short base_addr, char *word){
 int serial_fill_transmit(unsigned short base_addr){
 
 	char lsr;
+
+	if(serial_check_dlab(base_addr))
+		serial_toggle_dlab(base_addr);
 
 	if(base_addr == 1){
 		while(!fifo_is_empty(com1_transmit_fifo)){
@@ -424,6 +498,10 @@ int serial_clear_receive(unsigned short base_addr){
 
 	while(lsr & LSR_RECEIVER_READY){
 
+		//printf("\tLSR::Receiver Ready\n");
+
+		//printf("\tLSR = 0x%x\n",lsr);
+
 		if((lsr & LSR_OVERRUN_ERROR) >> 1){
 			printf("\tLSR :: Overrun Error\n");
 			return 1;
@@ -440,14 +518,39 @@ int serial_clear_receive(unsigned short base_addr){
 		}
 
 		serial_get_from_fifo(base_addr, &temp);
-		novo = new_element(temp);
+
+		//printf("\tchar = %c\n",temp);
 
 		if(base_addr == 1)
-			fifo_push(com1_receive_fifo,novo);
+			fifo_push(com1_receive_fifo,temp);
 
 		else if(base_addr == 2)
-			fifo_push(com2_receive_fifo,novo);
+			fifo_push(com2_receive_fifo,temp);
+
+
+		if(serial_get_lsr(base_addr, &lsr) != OK)
+			printf("\n\tserial_clear_receive::serial_get_lsr failed\n");
+
+
+	//	printf("\tchar again = %c\n",temp);
+		if(temp == 46)
+				break;
 	}
 
+	//printf("\tLeft clear_receiver\n");
+
 	return 0;
+}
+
+void print_receiver_fifo(unsigned short base_addr){
+
+//	printf("\tCalled print_receiver_fifo\n");
+	if(base_addr == 1){
+		fifo_print(com1_receive_fifo);
+	}
+
+	else if(base_addr == 2){
+		fifo_print(com2_receive_fifo);
+	}
+
 }

@@ -88,7 +88,7 @@ static int proc_args(int argc, char *argv[]) {
 	}
 
 	else if (strncmp(argv[1], "com", strlen("com")) == 0) {
-		if (argc <	 9) {
+		if (argc !=	 8) {
 			printf("lab7::wrong num of args for com() \n");
 			return 1;
 		}
@@ -105,19 +105,19 @@ static int proc_args(int argc, char *argv[]) {
 		if((stop = parse_ulong(argv[5],10)) == ULONG_MAX)
 			return 1;
 
-		if((rate = parse_ulong(argv[6],10)) == ULONG_MAX)
+		if((rate = parse_ulong(argv[7],10)) == ULONG_MAX)
 			return 1;
 
-		if(strncmp(argv[7],"none",strlen("even")) == 0)
+		if(strncmp(argv[6],"even",strlen("even")) == 0)
 			parity = 2;
 
-		else if(strncmp(argv[7], "odd",strlen("odd")) == 0)
+		else if(strncmp(argv[6], "odd",strlen("odd")) == 0)
 			parity = 1;
 
-		else if(strncmp(argv[7],"none",strlen("none")) == 0)
+		else if(strncmp(argv[6],"none",strlen("none")) == 0)
 			parity = 0;
 
-		strings = (char **)malloc(0);
+		/*strings = (char **)malloc(0);
 
 		for(i = 8; i < argc; i++){
 
@@ -126,12 +126,11 @@ static int proc_args(int argc, char *argv[]) {
 			strings[stringc - 1] = argv[i];
 			printf("%s ", strings[stringc - 1]);
 			stringc++;
-		}
+		}*/
 
-		printf("lab7::set(%d, %d, %d, %d, %d, %d, %d\n", base_addr,
+		printf("lab7::set(%d, %d, %d, %d, %d, %d)\n", base_addr,
 				tx, bits, stop, parity, rate, stringc);
-		return ser_test_poll(base_addr, tx, bits, stop, parity, rate,
-				stringc, strings);
+		return ser_test_poll(1, tx, bits, stop, parity, rate);
 	}
 
 	else {
