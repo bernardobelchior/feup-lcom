@@ -48,7 +48,7 @@ long kb_int_handler(void) {
 			}
 
 			if (last == KB_2BYTE_SCODE) {
-				word = (last << 4 | word); // completes the 2 byte scancode
+				word = (last << 8 | word); // completes the 2 byte scancode
 				last = 0x00;
 				return word;
 			}
